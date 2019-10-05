@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="4dp"
+        android:elevation="3dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Peminjam"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/namapeminjam"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama mu disini"/>
+
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah disini"/>
+
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tenor"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/tenor"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tenor disini"/>
+
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jatuh Tempo"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/jatuh"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jatuh Tempo disini"/>
+
+            </TableRow>
+
+
+        </TableLayout>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Tolak"
+                    android:textColor="@color/colorPrimary"/>
+                <Button
+                    android:id="@+id/btnSetuju"
+                    android:layout_margin="8dp"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Setujui"/>
+
+            </TableRow>
+        </TableLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

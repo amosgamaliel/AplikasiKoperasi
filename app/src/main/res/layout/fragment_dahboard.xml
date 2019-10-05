@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".AjukanFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        >
+
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amos Gamaliel"
+                android:textSize="24dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/nama"
+                style="@style/text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="19772304"
+                style="@style/text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.circularreveal.CircularRevealGridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:rowCount="2"
+        android:columnCount="2"
+        android:layout_marginTop="30dp">
+        <androidx.cardview.widget.CardView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            app:cardBackgroundColor="#fdfdfd"
+            card_view:cardElevation="4dp"
+            style="@style/card_dashboard">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="12dp">
+
+
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#797979"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. 900.000"
+                    android:textSize="24dp"/>
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total iuran tahara"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>        <androidx.cardview.widget.CardView
+        android:layout_columnWeight="1"
+        android:layout_rowWeight="1"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        app:cardBackgroundColor="#fdfdfd"
+        card_view:cardElevation="4dp"
+        style="@style/card_dashboard">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="12dp">
+
+
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:textColor="#797979"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 900.000"
+                android:textSize="24dp"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total iuran tahara"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            app:cardBackgroundColor="#fdfdfd"
+            card_view:cardElevation="4dp"
+            style="@style/card_dashboard">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="12dp">
+
+
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#797979"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. 900.000"
+                    android:textSize="24dp"/>
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total iuran tahara"/>
+            </LinearLayout>
+    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+        android:layout_columnWeight="1"
+        android:layout_rowWeight="1"
+        android:layout_marginRight="28dp"
+        android:padding="8dp"
+        app:cardBackgroundColor="#fdfdfd"
+        card_view:cardElevation="4dp"
+        style="@style/card_dashboard"
+        android:layout_marginBottom="8dp"    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="12dp">
+
+
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:textColor="#797979"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 900.000"
+                android:textSize="24dp"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total iuran tahara"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    </com.google.android.material.circularreveal.CircularRevealGridLayout>
+    </LinearLayout>

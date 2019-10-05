@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Koperasi</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="bulan">
+        <item>3</item>
+        <item>6</item>
+        <item>10</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="bulanvalue">
+        <item>3 bulan</item>
+        <item>6 bulan</item>
+        <item>10 bulan</item>
+        <item>12 bulan</item>
+    </string-array>
+</resources>

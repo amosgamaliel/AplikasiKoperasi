@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="140dp"
+        android:layout_height="220dp"
+        android:background="@drawable/atas">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bawah"></FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="223dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Koperaskuy"
+            android:textColor="@color/colorPrimary"
+            android:textSize="38dp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/edtID"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:background="@drawable/radius"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:hint="ID Anggota"
+            android:paddingLeft="12dp"
+            android:textColor="#595959"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.431" />
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/radius"
+            android:drawableLeft="@drawable/ic_lock_black_20dp"
+            android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="12dp"
+            android:textColor="#595959"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtID"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button"
+            android:drawableStart="@drawable/ic_open_in_new_white_20dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Login"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtPass"
+            app:layout_constraintVertical_bias="0.0" />
+    </LinearLayout>
+
+</RelativeLayout>

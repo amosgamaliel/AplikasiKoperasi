@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context=".AjukanFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ajukan Peminjaman"
+            style="@style/text"
+            android:textSize="28dp"
+            android:gravity="center"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@color/colorPrimary"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                app:theme="@style/EditText">
+                <EditText
+                    android:id="@+id/jumlah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:hint="Jumlah Pinjaman"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/colorPrimary"
+                    style="@style/EditText"/>
+            </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:hintTextAppearance="@color/colorPrimary"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                app:theme="@style/EditText">-->
+<!--                <EditText-->
+<!--                    android:id="@+id/tenor"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/colorPrimary"-->
+<!--                    android:hint="Tenor"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textColorHint="@color/colorPrimary"-->
+<!--                    style="@style/EditText"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:entries="@array/bulanvalue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:hint="Jumlah Pinjaman"
+                    android:textSize="16sp"
+                    android:layout_margin="8dp"
+                    android:textColorHint="@color/colorPrimary"
+                    style="@style/EditText"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:text="Total Jumlah : Rp. sekian"-->
+<!--                style="@style/text"-->
+<!--                android:textSize="18sp" />-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:text="Terbilang : Tiga juta dua ratus lima puluh dua ribu sekian"-->
+<!--                style="@style/text"-->
+<!--                android:textSize="18sp" />-->
+
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total"
+                            android:textSize="16dp"
+                            android:layout_marginLeft="8dp"/>
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="150000"
+                            android:textSize="16dp"
+                            android:layout_marginLeft="8dp"/>
+
+                    </TableRow>
+
+
+                </TableLayout>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Terbilang"
+                        android:textSize="16dp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="Tiga juta dua ratus lima \npuluh ribu rupiah"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </TableRow>
+
+
+            </TableLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_margin="8dp">
+
+                <Button
+                    android:id="@+id/detail"
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lihat Detail"/>
+
+                <Button
+                    android:id="@+id/ajukan"
+                    android:layout_width="225dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Ajukan"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</ScrollView>
