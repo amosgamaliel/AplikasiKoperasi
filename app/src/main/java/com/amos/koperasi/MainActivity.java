@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText id,pass;
     Button btn;
     String idInput, passInput;
+    SharedPreferenceConfig preferenceConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         id = findViewById(R.id.edtID);
         pass = findViewById(R.id.edtPass);
+        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
+
+        if (preferenceConfig.readLoginStatus()){
+            startActivity(new Intent(this,Main2Activity.class));
+            finish();
+        }
 
         idInput = id.getText().toString();
         passInput = pass.getText().toString();
@@ -44,17 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 userLogin();
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,Main2Activity.class);
-                startActivity(i);
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this,Main2Activity.class);
+//                startActivity(i);
+//            }
+//        });
         }
 
     public void userLogin() {
-        String url= "http://169.254.8.62/koperasi/login.php";
+        String url= "http://192.168.1.8/koperasi_API/login.php";
         StringRequest request = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
@@ -62,9 +69,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         if (response.contains("1")){
                             Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                            preferenceConfig.writeLoginStatus(true);
                             startActivity(intent);
+                            finish();
                         }else{
                             Toast.makeText(getApplicationContext(),"Email atau password salah",Toast.LENGTH_SHORT).show();
+                            id.setText("");
+                            pass.setText("");
                         }
                     }
                 }, new Response.ErrorListener(){
