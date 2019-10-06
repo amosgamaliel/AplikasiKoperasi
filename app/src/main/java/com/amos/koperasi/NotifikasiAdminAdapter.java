@@ -1,5 +1,6 @@
 package com.amos.koperasi;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,41 +9,50 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NotifikasiAdminAdapter extends RecyclerView.Adapter {
+import java.util.List;
+
+public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdminAdapter.InfoPengajuanViewHolder> {
+    List<InfoPengajuan> pengajuanList;
+    Context mCtx;
+
+    public NotifikasiAdminAdapter(List<InfoPengajuan> pengajuanList, Context mCtx) {
+        this.pengajuanList = pengajuanList;
+        this.mCtx = mCtx;
+    }
+
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InfoPengajuanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_pengajuan,parent,false);
-        return new ViewHolder(view);
+        return new InfoPengajuanViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).bindData(position);
+    public void onBindViewHolder(InfoPengajuanViewHolder holder, int position) {
+        InfoPengajuan infoPengajuan = pengajuanList.get(position);
+
+        holder.namapeminjam.setText(infoPengajuan.getNama());
+        holder.jumlah.setText(String.valueOf(infoPengajuan.getJumlah()));
+        holder.tenor.setText(String.valueOf(infoPengajuan.getTenor()));
+        holder.total.setText(String.valueOf(infoPengajuan.getJatuh()));
     }
+
 
     @Override
     public int getItemCount() {
-        return DataDummy.nama.length;
+        return pengajuanList.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
-        TextView nama,jumlah,tenor,total;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+    class InfoPengajuanViewHolder extends RecyclerView.ViewHolder{
+        TextView namapeminjam,jumlah,tenor,total;
 
-            nama = itemView.findViewById(R.id.namapeminjam);
+        public InfoPengajuanViewHolder(@NonNull View itemView) {
+            super(itemView);
+            namapeminjam = itemView.findViewById(R.id.namapeminjam);
             jumlah = itemView.findViewById(R.id.jumlahpinjaman);
             tenor = itemView.findViewById(R.id.tenorp);
             total = itemView.findViewById(R.id.jatuh);
-        }
-
-        public void bindData(int position){
-            nama.setText(DataDummy.nama[position]);
-            jumlah.setText(DataDummy.jumlah[position]);
-            tenor.setText(DataDummy.tenor[position]);
-            total.setText(DataDummy.total[position]);
         }
     }
 
