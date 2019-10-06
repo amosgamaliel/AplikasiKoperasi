@@ -74,6 +74,7 @@
 
 
                 <TextView
+                    android:id="@+id/total"
                     android:layout_marginLeft="8dp"
                     android:textColor="#797979"
                     android:layout_width="wrap_content"
@@ -85,7 +86,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Total iuran tahara"/>
+                    android:text="Total iuran keseluruhan"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>        <androidx.cardview.widget.CardView
         android:layout_columnWeight="1"
@@ -105,6 +106,7 @@
 
 
             <TextView
+                android:id="@+id/tahara"
                 android:layout_marginLeft="8dp"
                 android:textColor="#797979"
                 android:layout_width="wrap_content"
@@ -138,6 +140,7 @@
 
 
                 <TextView
+                    android:id="@+id/wajib"
                     android:layout_marginLeft="8dp"
                     android:textColor="#797979"
                     android:layout_width="wrap_content"
@@ -149,7 +152,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Total iuran tahara"/>
+                    android:text="Total iuran wajib"/>
             </LinearLayout>
     </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -170,6 +173,7 @@
 
 
             <TextView
+                android:id="@+id/sukarela"
                 android:layout_marginLeft="8dp"
                 android:textColor="#797979"
                 android:layout_width="wrap_content"
@@ -181,7 +185,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total iuran tahara"/>
+                android:text="Total iuran sukarela"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     </com.google.android.material.circularreveal.CircularRevealGridLayout>

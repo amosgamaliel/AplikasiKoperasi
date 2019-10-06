@@ -42,7 +42,7 @@ public class Main2Activity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_item_notif:
-                    selectedFragment = new NotifikasiFragment();
+                    selectedFragment = new NotifikasiAdminFragment();
                     break;
                 case R.id.nav_history:
                     selectedFragment = new RiwayatFragment();
