@@ -1,4 +1,4 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Fragment;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amos.koperasi.R;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

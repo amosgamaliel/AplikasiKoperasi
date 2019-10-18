@@ -1,4 +1,4 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Utility;
 
 import android.content.Context;
 

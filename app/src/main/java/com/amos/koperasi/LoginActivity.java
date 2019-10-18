@@ -2,9 +2,7 @@ package com.amos.koperasi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     EditText id,pass;
     Button btn;
     String idInput, passInput;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
         if (preferenceConfig.readLoginStatus()){
-            startActivity(new Intent(this,Main2Activity.class));
+            startActivity(new Intent(this, UserActivity.class));
             finish();
         }
 
@@ -51,24 +50,24 @@ public class MainActivity extends AppCompatActivity {
                 userLogin();
             }
         });
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this,Main2Activity.class);
-//                startActivity(i);
-//            }
-//        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, UserActivity.class);
+                startActivity(i);
+            }
+        });
         }
 
     public void userLogin() {
-        String url= "http://192.168.1.8/koperasi_API/login.php";
+        String url= "http://192.168.42.205/koperasi_API/login.php";
         StringRequest request = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("1")){
-                            Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                             preferenceConfig.writeLoginStatus(true);
                             startActivity(intent);
                             finish();

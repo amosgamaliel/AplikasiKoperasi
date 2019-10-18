@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.amos.koperasi.Fragment.AjukanFragment;
+import com.amos.koperasi.Fragment.DahboardFragment;
+import com.amos.koperasi.Fragment.NotifikasiAdminFragment;
+import com.amos.koperasi.Fragment.CicilanFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Main2Activity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     FrameLayout frameLayout;
@@ -35,7 +39,7 @@ public class Main2Activity extends AppCompatActivity {
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    selectedFragment = new DahboardFragment();
+                    selectedFragment = new DalamCicilan();
                     break;
                 case R.id.nav_ajuan:
                     selectedFragment = new AjukanFragment();
@@ -45,7 +49,7 @@ public class Main2Activity extends AppCompatActivity {
                     selectedFragment = new NotifikasiAdminFragment();
                     break;
                 case R.id.nav_history:
-                    selectedFragment = new RiwayatFragment();
+                    selectedFragment = new CicilanFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack(null).commit();

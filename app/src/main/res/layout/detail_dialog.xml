@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:background="#CECECE"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="Detail Pengajuan"
+            android:textSize="24sp"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/bulan1"
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 1"/>
+        <TextView
+            android:id="@+id/bulan1_detail"
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 1 detail"/>
+        <TextView
+            android:id="@+id/bulan2"
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 2"/>
+        <TextView
+            android:id="@+id/bulan2_detail"
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 2 detail"/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 3"/>
+        <TextView
+            android:id="@+id/bulan3"
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bulan ke 3"/>
+        <TextView
+            android:id="@+id/bulan3_detail"
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetailHead"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+        <TextView
+            style="@style/teksDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:text=""/>
+
+    </LinearLayout>
+
+</RelativeLayout>

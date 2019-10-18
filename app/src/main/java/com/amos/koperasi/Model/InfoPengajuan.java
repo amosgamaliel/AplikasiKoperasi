@@ -1,11 +1,20 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Model;
 
 public class InfoPengajuan {
 
-    private String nama;
-    private int jumlah,tenor,jatuh;
+    private String nama, tanggal;
+    private int id,jumlah,tenor,jatuh;
 
-    public InfoPengajuan(String nama, int jumlah, int tenor, int jatuh) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public InfoPengajuan(int id, String nama, int jumlah, int tenor, int jatuh) {
+        this.id= id;
         this.nama = nama;
         this.jumlah = jumlah;
         this.tenor = tenor;
@@ -42,5 +51,13 @@ public class InfoPengajuan {
 
     public void setJatuh(int jatuh) {
         this.jatuh = jatuh;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
     }
 }

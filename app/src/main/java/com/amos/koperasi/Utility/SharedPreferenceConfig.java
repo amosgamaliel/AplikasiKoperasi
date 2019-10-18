@@ -1,7 +1,9 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.amos.koperasi.R;
 
 public class SharedPreferenceConfig {
     private SharedPreferences sharedPreferences;
@@ -23,5 +25,9 @@ public class SharedPreferenceConfig {
         boolean status = false;
         status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
         return status;
+    }
+
+    public void getUsername(){
+
     }
 }

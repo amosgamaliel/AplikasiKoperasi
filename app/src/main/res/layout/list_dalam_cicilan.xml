@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvDC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/npeminjamc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Peminjam Disini"/>
+        <TextView
+            android:id="@+id/totalDC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Pinjaman Disini"/>
+        <TextView
+            android:id="@+id/sisa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sisa Cicilan Disini"/>
+        <TextView
+            android:id="@+id/cicilanKe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cicilan ke "/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

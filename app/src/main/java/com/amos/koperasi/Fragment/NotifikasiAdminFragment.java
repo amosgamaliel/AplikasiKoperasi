@@ -1,4 +1,4 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Fragment;
 
 
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amos.koperasi.Adapter.NotifikasiAdminAdapter;
+import com.amos.koperasi.Model.InfoPengajuan;
+import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -52,7 +56,7 @@ public class NotifikasiAdminFragment extends Fragment {
         recyclerView.setAdapter(notifikasiAdminAdapter);
         notifikasiAdminAdapter.notifyDataSetChanged();
 
-        String url = "http://192.168.1.8/koperasi_API/listpinjaman.php";
+        String url = "http://192.168.42.205/koperasi_API/listpinjaman.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url, new Response.Listener<String>() {
             @Override
@@ -62,8 +66,8 @@ public class NotifikasiAdminFragment extends Fragment {
 
                     for (int i = 0 ; i< array.length();i++){
                         JSONObject product = array.getJSONObject(i);
-
                         list.add(new InfoPengajuan(
+                                product.getInt("id"),
                                 product.getString("nama"),
                                 product.getInt("jumlah"),
                                 product.getInt("tenor"),
@@ -86,7 +90,6 @@ public class NotifikasiAdminFragment extends Fragment {
             }
         });
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
-        Volley.newRequestQueue(getActivity()).add(stringRequest);
         return view;
     }
 
