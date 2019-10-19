@@ -9,9 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amos.koperasi.DalamCicilan;
 import com.amos.koperasi.Model.DalamCicilanModel;
-import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     EditText id,pass;
-    Button btn;
+    Button btn,btnAdmin;
     String idInput, passInput;
     SharedPreferenceConfig preferenceConfig;
     @Override
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         id = findViewById(R.id.edtID);
         pass = findViewById(R.id.edtPass);
+        btnAdmin= findViewById(R.id.buttonadmin);
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
         if (preferenceConfig.readLoginStatus()){
@@ -57,10 +59,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        btnAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+                startActivity(intent);
+            }
+        });
         }
 
     public void userLogin() {
-        String url= "http://192.168.42.205/koperasi_API/login.php";
+        String url= "http://192.168.1.8/koperasi_API/login.php";
         StringRequest request = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {

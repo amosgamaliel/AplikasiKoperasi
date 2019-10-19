@@ -2,7 +2,18 @@ package com.amos.koperasi.Model;
 
 public class InfoPengajuan {
 
-    private String nama, tanggal;
+    private String nama;
+    private String tanggal;
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    private String idUser;
     private int id,jumlah,tenor,jatuh;
 
     public int getId() {
@@ -13,8 +24,9 @@ public class InfoPengajuan {
         this.id = id;
     }
 
-    public InfoPengajuan(int id, String nama, int jumlah, int tenor, int jatuh) {
+    public InfoPengajuan(int id, String idUser, String nama, int jumlah, int tenor, int jatuh) {
         this.id= id;
+        this.idUser=idUser;
         this.nama = nama;
         this.jumlah = jumlah;
         this.tenor = tenor;

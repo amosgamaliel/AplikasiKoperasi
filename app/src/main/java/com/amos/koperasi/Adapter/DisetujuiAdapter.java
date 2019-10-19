@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amos.koperasi.Fragment.CicilanFragment;
+import com.amos.koperasi.Fragment.User.CicilanFragment;
 import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 

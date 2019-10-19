@@ -1,4 +1,4 @@
-package com.amos.koperasi.Fragment;
+package com.amos.koperasi.Fragment.User;
 
 
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amos.koperasi.Adapter.DisetujuiAdapter;
-import com.amos.koperasi.LoginActivity;
+import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -93,9 +93,6 @@ public class DahboardFragment extends Fragment {
                                 DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(listp,getActivity());
                                 recyclerView.setAdapter(disetujuiAdapter);
                                 disetujuiAdapter.notifyDataSetChanged();
-
-
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -114,27 +111,7 @@ public class DahboardFragment extends Fragment {
         return view;
     }
 
-    private void loadData() {
 
-    }
-
-    private void tampilRekap() {
-        String url = "http://102.168.1.8/tampilrekap.php";
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-    }
     public void userLogout(){
         SharedPreferenceConfig sharedPreferenceConfig;
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());

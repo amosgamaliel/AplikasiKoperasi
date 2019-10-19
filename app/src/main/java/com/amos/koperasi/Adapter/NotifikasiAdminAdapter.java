@@ -52,26 +52,30 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         holder.setuju.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.42.205/koperasi_API/menyetujui.php";
+                String url = "http://192.168.1.8/koperasi_API/menyetujui.php";
                 final String id = String.valueOf(infoPengajuan.getId());
+                final String iduser = infoPengajuan.getIdUser();
+                final String total = String.valueOf(infoPengajuan.getJumlah());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,
                         url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.d("Cek id", "onResponse: "+id);
+                                Log.d("Respon sukses Cek id", "onResponse: "+id);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("Error", "Error: "+id);
+                                Log.d("VoleyError", "Error: "+id);
                             }
                         }){
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("id",id);
+                        params.put("idu",iduser);
+                        params.put("idpin",id);
+                        params.put("total",total);
                         return params;
                     }
                 };

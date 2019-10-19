@@ -1,4 +1,4 @@
-package com.amos.koperasi.Fragment;
+package com.amos.koperasi.Fragment.Admin;
 
 
 import android.os.Bundle;
@@ -56,7 +56,7 @@ public class NotifikasiAdminFragment extends Fragment {
         recyclerView.setAdapter(notifikasiAdminAdapter);
         notifikasiAdminAdapter.notifyDataSetChanged();
 
-        String url = "http://192.168.42.205/koperasi_API/listpinjaman.php";
+        String url = "http://192.168.1.8/koperasi_API/listpinjaman.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url, new Response.Listener<String>() {
             @Override
@@ -68,6 +68,7 @@ public class NotifikasiAdminFragment extends Fragment {
                         JSONObject product = array.getJSONObject(i);
                         list.add(new InfoPengajuan(
                                 product.getInt("id"),
+                                product.getString("iduser"),
                                 product.getString("nama"),
                                 product.getInt("jumlah"),
                                 product.getInt("tenor"),

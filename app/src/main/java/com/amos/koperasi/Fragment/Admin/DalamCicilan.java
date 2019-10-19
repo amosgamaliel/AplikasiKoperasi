@@ -1,4 +1,4 @@
-package com.amos.koperasi;
+package com.amos.koperasi.Fragment.Admin;
 
 
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.amos.koperasi.Adapter.DalamCicilanAdapter;
 import com.amos.koperasi.Adapter.NotifikasiAdminAdapter;
 import com.amos.koperasi.Model.DalamCicilanModel;
+import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -59,7 +60,7 @@ public class DalamCicilan extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        String url= "http://192.168.42.205/koperasi_API/dalamcicilan.php";
+        String url= "http://192.168.1.8/koperasi_API/dalamcicilan.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

@@ -1,4 +1,4 @@
-package com.amos.koperasi.Fragment;
+package com.amos.koperasi.Fragment.User;
 
 
 import android.app.AlertDialog;
@@ -49,13 +49,14 @@ public class AjukanFragment extends Fragment {
 //        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
         final EditText jumlah,tenor;
-        final TextView total;
+        final TextView total,terbilang;
         final AlertDialog.Builder builder ;
-        final String url = "http://192.168.42.205/koperasi_API/peminjaman.php";
+        final String url = "http://192.168.1.8/koperasi_API/peminjaman.php";
         View view = inflater.inflate(R.layout.fragment_ajukan, container, false);
         btnAjukan = view.findViewById(R.id.ajukan);
         btnDetail = view.findViewById(R.id.detail);
         spinner = view.findViewById(R.id.spinner);
+        terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
 //        tenor = view.findViewById(R.id.tenor);
         total = view.findViewById(R.id.total);
@@ -71,7 +72,7 @@ public class AjukanFragment extends Fragment {
             public void onClick(View v) {
 
                 int iJumlah = Integer.parseInt(jumlah.getText().toString());
-                total.setText(kekata(iJumlah));
+                terbilang.setText(kekata(iJumlah));
 
             }
         });
