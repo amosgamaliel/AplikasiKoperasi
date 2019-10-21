@@ -2,12 +2,14 @@ package com.amos.koperasi.Fragment.User;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,7 +33,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -74,6 +79,7 @@ public class DahboardFragment extends Fragment {
         DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(listp,getActivity());
         recyclerView.setAdapter(disetujuiAdapter);
         disetujuiAdapter.notifyDataSetChanged();
+        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String url = "http://192.168.1.8/koperasi_API/disetujui.php" ;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -82,10 +88,8 @@ public class DahboardFragment extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONArray list = new JSONArray(response);
-
                             for (int i = 0; i<list.length();i++){
                                 JSONObject info = list.getJSONObject(i);
-
                                 listp.add(new NotifikasiDisetujui(
                                         info.getString("tanggal"),
                                         info.getInt("jumlah")
@@ -103,11 +107,14 @@ public class DahboardFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){@Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("id",mSettings.getString("userid","1"));
+            return params;
+        }};
+
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
-
-
-
         return view;
     }
 

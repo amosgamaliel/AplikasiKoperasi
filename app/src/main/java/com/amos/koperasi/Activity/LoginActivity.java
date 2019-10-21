@@ -3,7 +3,9 @@ package com.amos.koperasi.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,20 +58,20 @@ public class LoginActivity extends AppCompatActivity {
                 userLogin();
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, UserActivity.class);
-                startActivity(i);
-            }
-        });
-        btnAdmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(LoginActivity.this, UserActivity.class);
+//                startActivity(i);
+//            }
+//        });
+//        btnAdmin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         }
 
     public void userLogin() {
@@ -75,15 +81,32 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.contains("1")){
-                            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                            preferenceConfig.writeLoginStatus(true);
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            Toast.makeText(getApplicationContext(),"Email atau password salah",Toast.LENGTH_SHORT).show();
-                            id.setText("");
-                            pass.setText("");
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String jabatan = jsonObject.getString("jabatan");
+                            String id = jsonObject.getString("id");
+//                            SharedPreferenceConfig sharedPreferenceConfig = new SharedPreferenceConfig(getApplicationContext());
+//                            sharedPreferenceConfig.setIdUser(id);
+                            SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                            SharedPreferences.Editor editor = mSettings.edit();
+                            editor.putString("userid",id);
+                            editor.apply();
+
+                            if (jabatan.equals("2")){
+                                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+                                preferenceConfig.writeLoginStatus(true);
+                                startActivity(intent);
+                                finish();
+                                Log.d("berhasil user", "onResponse: "+response);
+                            }else if (jabatan.equals("1")){
+                                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                                preferenceConfig.writeLoginStatus(true);
+                                startActivity(intent);
+                                finish();
+                                Log.d("berhasil admin", "onResponse: "+response);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener(){

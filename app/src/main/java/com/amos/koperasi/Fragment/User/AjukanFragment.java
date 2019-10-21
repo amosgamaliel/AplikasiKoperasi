@@ -2,10 +2,13 @@ package com.amos.koperasi.Fragment.User;
 
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -49,9 +54,10 @@ public class AjukanFragment extends Fragment {
 //        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
         final EditText jumlah,tenor;
+        final SharedPreferenceConfig sharedPreferenceConfig;
         final TextView total,terbilang;
         final AlertDialog.Builder builder ;
-        final String url = "http://192.168.1.8/koperasi_API/peminjaman.php";
+        final String url = "http://192.168.42.12/koperasi_API/peminjaman.php";
         View view = inflater.inflate(R.layout.fragment_ajukan, container, false);
         btnAjukan = view.findViewById(R.id.ajukan);
         btnDetail = view.findViewById(R.id.detail);
@@ -60,13 +66,13 @@ public class AjukanFragment extends Fragment {
         jumlah = view.findViewById(R.id.jumlah);
 //        tenor = view.findViewById(R.id.tenor);
         total = view.findViewById(R.id.total);
+        sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
+        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
 
         builder = new AlertDialog.Builder(getContext());
 
 
-
-
-//
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +111,9 @@ public class AjukanFragment extends Fragment {
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         String code = jsonObject.getString("code");
                                         String message = jsonObject.getString("message");
+
+                                        Log.d("berhasil tapi bagus", "wleeee"+mSettings.getString("userid","1"));
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -113,7 +122,7 @@ public class AjukanFragment extends Fragment {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-
+                                    Log.d("gagal tapi bae", "wleeee"+mSettings.getString("userid","1"));
                                 }
                             }){
                         @Override
@@ -123,7 +132,7 @@ public class AjukanFragment extends Fragment {
                             params.put("jumlah_pinjaman",jumlah.getText().toString());
                             params.put("tenor",bulan);
                             params.put("total_pinjaman",total.getText().toString());
-                            params.put("id_user","1");
+                            params.put("id_user",mSettings.getString("userid","1"));
                             return params;
                         }
                     };

@@ -32,7 +32,7 @@ public class AdminActivity extends AppCompatActivity {
 
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_containera, new DahboardFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_containera, new DashboardAdminFragment()).commit();
         }
     }
 
