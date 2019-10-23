@@ -56,7 +56,7 @@ public class NotifikasiAdminFragment extends Fragment {
         recyclerView.setAdapter(notifikasiAdminAdapter);
         notifikasiAdminAdapter.notifyDataSetChanged();
 
-        String url = "http://192.168.1.8/koperasi_API/listpinjaman.php";
+        String url = "http://192.168.1.6/koperasi_API/listpinjaman.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url, new Response.Listener<String>() {
             @Override

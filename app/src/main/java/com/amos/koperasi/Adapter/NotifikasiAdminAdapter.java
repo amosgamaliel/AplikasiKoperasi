@@ -52,7 +52,7 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         holder.setuju.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.1.8/koperasi_API/menyetujui.php";
+                String url = "http://192.168.1.6/koperasi_API/menyetujui.php";
                 final String id = String.valueOf(infoPengajuan.getId());
                 final String iduser = infoPengajuan.getIdUser();
                 final String total = String.valueOf(infoPengajuan.getJumlah());
@@ -91,7 +91,7 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
 
     class InfoPengajuanViewHolder extends RecyclerView.ViewHolder{
         TextView namapeminjam,jumlah,tenor,total;
-        Button setuju,tolak;
+         Button setuju,tolak;
 
         public InfoPengajuanViewHolder(@NonNull View itemView) {
             super(itemView);

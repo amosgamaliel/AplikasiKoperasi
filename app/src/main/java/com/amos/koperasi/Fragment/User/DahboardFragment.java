@@ -47,10 +47,8 @@ public class DahboardFragment extends Fragment {
     public DahboardFragment() {
         // Required empty public constructor
     }
-
     List<NotifikasiDisetujui> listp;
     RecyclerView recyclerView;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +80,7 @@ public class DahboardFragment extends Fragment {
         final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String url = "http://192.168.1.8/koperasi_API/disetujui.php" ;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -122,7 +120,7 @@ public class DahboardFragment extends Fragment {
     public void userLogout(){
         SharedPreferenceConfig sharedPreferenceConfig;
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        sharedPreferenceConfig.writeLoginStatus(false);
+        sharedPreferenceConfig.writeLoginUserStatus(false);
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 

@@ -31,7 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -53,11 +56,13 @@ public class AjukanFragment extends Fragment {
 //        Calendar calendar = Calendar.getInstance();
 //        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
+
+
         final EditText jumlah,tenor;
         final SharedPreferenceConfig sharedPreferenceConfig;
         final TextView total,terbilang;
         final AlertDialog.Builder builder ;
-        final String url = "http://192.168.42.12/koperasi_API/peminjaman.php";
+        final String url = "http://192.168.1.6/koperasi_API/peminjaman.php";
         View view = inflater.inflate(R.layout.fragment_ajukan, container, false);
         btnAjukan = view.findViewById(R.id.ajukan);
         btnDetail = view.findViewById(R.id.detail);
@@ -106,17 +111,13 @@ public class AjukanFragment extends Fragment {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    try {
-                                        JSONArray jsonArray = new JSONArray(response);
-                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                        String code = jsonObject.getString("code");
-                                        String message = jsonObject.getString("message");
+                                    //                                        JSONArray jsonArray = new JSONArray(response);
+//                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+//                                        String code = jsonObject.getString("code");
+//                                        String message = jsonObject.getString("message");
 
-                                        Log.d("berhasil tapi bagus", "wleeee"+mSettings.getString("userid","1"));
+                                    Log.d("berhasil tapi bagus", "wleeee"+getDateTime()+mSettings.getString("userid","1"));
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
                                 }
                             },
                             new Response.ErrorListener() {
@@ -133,6 +134,7 @@ public class AjukanFragment extends Fragment {
                             params.put("tenor",bulan);
                             params.put("total_pinjaman",total.getText().toString());
                             params.put("id_user",mSettings.getString("userid","1"));
+                            params.put("tanggal",getDateTime());
                             return params;
                         }
                     };
@@ -171,5 +173,11 @@ public class AjukanFragment extends Fragment {
             $temp = kekata(x/1000000) + " juta" + kekata(x % 1000000);
         }
         return $temp;
+    }
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

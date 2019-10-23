@@ -41,10 +41,15 @@ public class LoginActivity extends AppCompatActivity {
 
         id = findViewById(R.id.edtID);
         pass = findViewById(R.id.edtPass);
-        btnAdmin= findViewById(R.id.buttonadmin);
-        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
-        if (preferenceConfig.readLoginStatus()){
+        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
+        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+
+        if (preferenceConfig.readLoginAdninStatus()){
+            startActivity(new Intent(this, AdminActivity.class));
+            finish();
+        }else if (preferenceConfig.readLoginUserStatus()){
             startActivity(new Intent(this, UserActivity.class));
             finish();
         }
@@ -65,17 +70,11 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(i);
 //            }
 //        });
-//        btnAdmin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
         }
 
     public void userLogin() {
-        String url= "http://192.168.1.8/koperasi_API/login.php";
+        String url= "http://192.168.1.6/koperasi_API/login.php";
         StringRequest request = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
@@ -94,13 +93,13 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (jabatan.equals("2")){
                                 Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                                preferenceConfig.writeLoginStatus(true);
+                                preferenceConfig.writeLoginUserStatus(true);
                                 startActivity(intent);
                                 finish();
                                 Log.d("berhasil user", "onResponse: "+response);
                             }else if (jabatan.equals("1")){
                                 Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                                preferenceConfig.writeLoginStatus(true);
+                                preferenceConfig.writeLoginAdminStatus(true);
                                 startActivity(intent);
                                 finish();
                                 Log.d("berhasil admin", "onResponse: "+response);

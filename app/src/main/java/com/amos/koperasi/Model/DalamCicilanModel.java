@@ -7,11 +7,10 @@ public class DalamCicilanModel {
     String sisaCicilan;
     String cicilanKe;
 
-    public DalamCicilanModel(String nama, String total, String sisaCicilan, String id, String cicilanKe) {
+    public DalamCicilanModel(String nama, String total, String sisaCicilan, String id) {
         this.nama = nama;
         this.total = total;
         this.sisaCicilan = sisaCicilan;
-        this.cicilanKe = cicilanKe;
     }
 
     public String getNama() {

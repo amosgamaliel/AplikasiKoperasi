@@ -33,8 +33,6 @@ public class ProfileFragment extends Fragment {
         namalengkap = view.findViewById(R.id.namalengkap);
         password = view.findViewById(R.id.passworduser);
 
-
-
         return view;
     }
 

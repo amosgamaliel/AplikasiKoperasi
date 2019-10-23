@@ -55,4 +55,9 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
             sisa = itemView.findViewById(R.id.sisa);
         }
     }
+    public void clear() {
+        int size = list.size();
+        list.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

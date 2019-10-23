@@ -24,12 +24,22 @@ public class SharedPreferenceConfig {
         sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.login_preferences),Context.MODE_PRIVATE);
     }
 
-    public void writeLoginStatus(boolean status){
+    public void writeLoginAdminStatus(boolean status){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(context.getResources().getString(R.string.login_status_preferences),status);
         editor.commit();
     }
-    public boolean readLoginStatus(){
+    public void writeLoginUserStatus(boolean status){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(context.getResources().getString(R.string.login_status_preferences),status);
+        editor.commit();
+    }
+    public boolean readLoginUserStatus(){
+        boolean status = false;
+        status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
+        return status;
+    }
+    public boolean readLoginAdninStatus(){
         boolean status = false;
         status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
         return status;
