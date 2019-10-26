@@ -32,10 +32,10 @@
             android:layout_height="wrap_content"
             android:text="Sisa Cicilan Disini"/>
         <TextView
-            android:id="@+id/cicilanKe"
+            android:id="@+id/tenor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cicilan ke "/>
+            android:text="tenor"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

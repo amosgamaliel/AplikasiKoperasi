@@ -134,7 +134,7 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:text="Terbilang"
-                        android:textSize="16dp" />
+                        android:textSize="16dp"/>
 
 
                     <LinearLayout
@@ -156,6 +156,10 @@
 
 
             </TableLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvdetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,7 +193,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
 </ScrollView>

@@ -6,23 +6,32 @@
     android:orientation="vertical"
     tools:context=".Fragment.Admin.DalamCicilan">
 
-    <TextView
-        android:id="@+id/tvBulan"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="November 2019"
-        android:textSize="32dp"
-        android:gravity="center"/>
-    <EditText
-        android:id="@+id/edtBulan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="bulan"/>
-    <Button
-        android:id="@+id/btnCek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cek"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnPrev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PREV"/>
+        <TextView
+            android:id="@+id/tvBulan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="November 2019"
+            android:textSize="32dp"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"/>
+
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -36,6 +36,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         holder.nama.setText(cicilanModel.getNama());
         holder.sisa.setText(cicilanModel.getSisaCicilan());
         holder.total.setText(cicilanModel.getTotal());
+        holder.tenor.setText(cicilanModel.getTenor());
     }
 
 
@@ -46,13 +47,14 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
     public class DisetujuiViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nama,total,sisa;
+        TextView nama,total,sisa,tenor;
 
         public DisetujuiViewHolder(@NonNull View itemView) {
             super(itemView);
             nama = itemView.findViewById(R.id.npeminjamc);
             total = itemView.findViewById(R.id.totalDC);
             sisa = itemView.findViewById(R.id.sisa);
+            tenor=itemView.findViewById(R.id.tenor);
         }
     }
     public void clear() {

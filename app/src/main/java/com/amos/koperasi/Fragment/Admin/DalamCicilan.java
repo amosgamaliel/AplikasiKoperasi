@@ -30,7 +30,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +59,7 @@ public class DalamCicilan extends Fragment {
         final DalamCicilanAdapter adapter;
         RecyclerView.LayoutManager layoutManager;
         final List<DalamCicilanModel> list;
-        Button cek;
+        Button cek,next,prev;
         final EditText blne;
         final TextView blnt;
         final View view = inflater.inflate(R.layout.fragment_dalam_cicilan, container, false);
@@ -66,16 +70,23 @@ public class DalamCicilan extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-        blne = view.findViewById(R.id.edtBulan);
+        
         blnt = view.findViewById(R.id.tvBulan);
-        cek = view.findViewById(R.id.btnCek);
-
-
-        cek.setOnClickListener(new View.OnClickListener() {
+        next = view.findViewById(R.id.btnNext);
+        prev = view.findViewById(R.id.btnPrev);
+        final DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
+        final Date date = new Date();
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        final String bulan = dateFormat.format(date);
+        blnt.setText(bulan);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                blnt.setText(blne.getText().toString());
+                calendar.add(Calendar.MONTH,1);
+                Date dude = calendar.getTime();
+                String bulan = dateFormat.format(dude);
+                blnt.setText(bulan);
                 adapter.clear();
                 String url= "http://192.168.1.6/koperasi_API/dalamcicilan.php";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -92,7 +103,8 @@ public class DalamCicilan extends Fragment {
                                                 product.getString("nama"),
                                                 product.getString("total"),
                                                 product.getString("sisa_cicilan"),
-                                                product.getString("id_pinjaman")
+                                                product.getString("id_pinjaman"),
+                                                product.getString("tenor")
 
                                         ));
                                     }
@@ -119,6 +131,58 @@ public class DalamCicilan extends Fragment {
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
             }
         });
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.MONTH,-1);
+                Date dude = calendar.getTime();
+                String bulan = dateFormat.format(dude);
+                blnt.setText(bulan);
+                adapter.clear();
+                String url= "http://192.168.1.6/koperasi_API/dalamcicilan.php";
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                JSONArray jsonArray = null;
+                                try {
+                                    jsonArray = new JSONArray(response);
+                                    for (int i = 0 ; i< jsonArray.length();i++) {
+                                        JSONObject product = jsonArray.getJSONObject(i);
+                                        list.add(new DalamCicilanModel(
+                                                product.getString("nama"),
+                                                product.getString("total"),
+                                                product.getString("sisa_cicilan"),
+                                                product.getString("id_pinjaman"),
+                                                product.getString("tenor")
+
+                                        ));
+                                    }
+                                    DalamCicilanAdapter notifikasiAdminAdapter = new DalamCicilanAdapter(getActivity(),list);
+                                    recyclerView.setAdapter(notifikasiAdminAdapter);
+                                    notifikasiAdminAdapter.notifyDataSetChanged();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("gagal dude", "onErrorResponse: "+error.toString());
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<>();
+                        params.put("bulan",blnt.getText().toString());
+                        return params;
+                    }
+                };
+                Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
+            }
+        });
+
         return view;
     }
 

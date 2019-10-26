@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.amos.koperasi.Activity.LoginActivity;
+import com.amos.koperasi.Adapter.DalamCicilanAdapter;
+import com.amos.koperasi.Adapter.DetailCicilanAdapter;
+import com.amos.koperasi.Fragment.Admin.DalamCicilan;
+import com.amos.koperasi.Model.DalamCicilanModel;
+import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -32,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -44,6 +52,13 @@ import java.util.Map;
 public class AjukanFragment extends Fragment {
     Button btnAjukan,btnDetail;
     Spinner spinner;
+    EditText jumlah,tenor;
+    SharedPreferenceConfig sharedPreferenceConfig;
+    TextView total,terbilang;
+    AlertDialog.Builder builder ;
+    String url = "http://192.168.1.6/koperasi_API/peminjaman.php";
+    ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
+
     public AjukanFragment() {
         // Required empty public constructor
     }
@@ -53,52 +68,60 @@ public class AjukanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        Calendar calendar = Calendar.getInstance();
-//        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
 
-
-        final EditText jumlah,tenor;
-        final SharedPreferenceConfig sharedPreferenceConfig;
-        final TextView total,terbilang;
-        final AlertDialog.Builder builder ;
-        final String url = "http://192.168.1.6/koperasi_API/peminjaman.php";
         View view = inflater.inflate(R.layout.fragment_ajukan, container, false);
         btnAjukan = view.findViewById(R.id.ajukan);
         btnDetail = view.findViewById(R.id.detail);
         spinner = view.findViewById(R.id.spinner);
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
-//        tenor = view.findViewById(R.id.tenor);
         total = view.findViewById(R.id.total);
-        sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
 
-
-        builder = new AlertDialog.Builder(getContext());
-
+        final String bulan = spinner.getSelectedItem().toString();
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int iJumlah = Integer.parseInt(jumlah.getText().toString());
-                terbilang.setText(kekata(iJumlah));
-
-            }
-        });
-        btnAjukan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int iJumlah, iTenor, iTotal;
-                final String bulan = spinner.getSelectedItem().toString();
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
                 final int bulann = Integer.valueOf(value[pos]);
-                iJumlah = Integer.parseInt(jumlah.getText().toString());
-//                iTenor = Integer.parseInt(tenor.getText().toString());
-                iTotal = Integer.parseInt(total.getText().toString());
+                final int bln = bulann;
+                int iJumlah = Integer.parseInt(jumlah.getText().toString());
+                final int perBulan = iJumlah/bln;
+                ArrayList<Integer> integers = new ArrayList<>();
+                terbilang.setText(kekata(iJumlah));
+                for (int i = 0; i< bln ; i++){
+                    DetailCicilanModel model = new DetailCicilanModel();
+                    int sisa = iJumlah - perBulan*i;
+                    int cicilan = (int) (perBulan+(sisa*0.02));
+                    integers.add(cicilan);
+                    model.setJmlCicilan(integers.get(i));
+                    arrayList.add(model);
+                }
 
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapter);
+                Log.d("isi array", "onClick: "+arrayList);
+
+
+
+
+            }
+        });
+
+
+        btnAjukan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos= spinner.getSelectedItemPosition();
+                String[] value = getResources().getStringArray(R.array.bulan);
+                final int bulann = Integer.valueOf(value[pos]);
                 if (jumlah.getText().toString().equals("")||
                     total.getText().toString().equals("")
                 ){
@@ -111,13 +134,7 @@ public class AjukanFragment extends Fragment {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    //                                        JSONArray jsonArray = new JSONArray(response);
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-//                                        String code = jsonObject.getString("code");
-//                                        String message = jsonObject.getString("message");
-
                                     Log.d("berhasil tapi bagus", "wleeee"+getDateTime()+mSettings.getString("userid","1"));
-
                                 }
                             },
                             new Response.ErrorListener() {
@@ -143,7 +160,6 @@ public class AjukanFragment extends Fragment {
             }
         });
     return view;
-
 }
 
     String kekata (int x) {

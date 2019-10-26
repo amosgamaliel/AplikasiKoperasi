@@ -4,12 +4,33 @@ public class DalamCicilanModel {
     String id;
     String nama;
     String total;
+
+    public String getCicilan() {
+        return cicilan;
+    }
+
+    public void setCicilan(String cicilan) {
+        this.cicilan = cicilan;
+    }
+
+    String cicilan;
+
+    public String getTenor() {
+        return tenor;
+    }
+
+    public void setTenor(String tenor) {
+        this.tenor = tenor;
+    }
+
     String sisaCicilan;
     String cicilanKe;
+    String tenor;
 
-    public DalamCicilanModel(String nama, String total, String sisaCicilan, String id) {
+    public DalamCicilanModel(String nama, String total, String sisaCicilan, String id,String tenor) {
         this.nama = nama;
         this.total = total;
+        this.tenor=tenor;
         this.sisaCicilan = sisaCicilan;
     }
 
