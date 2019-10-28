@@ -5,6 +5,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv"
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
@@ -14,10 +15,10 @@
             android:orientation="vertical"
             android:layout_margin="8dp">
     <TextView
-
+        android:id="@+id/namap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pengajuan anda disetujui"
+        android:text="Nama"
         android:textSize="21dp"
         android:textColor="@color/colorPrimary"/>
     <TextView
@@ -30,7 +31,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="jumlah"/>
+            <TextView
+                android:id="@+id/tenorpe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tenor disini"/>
+            <TextView
+                android:id="@+id/jatuhpe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="jumlah"
+                android:layout_marginBottom="32dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
 

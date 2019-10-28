@@ -49,19 +49,20 @@ public class DalamCicilan extends Fragment {
     public DalamCicilan() {
         // Required empty public constructor
     }
+    RecyclerView recyclerView;
+    DalamCicilanAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<DalamCicilanModel> list;
+    Button cek,next,prev;
+    EditText blne;
+    TextView blnt;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final RecyclerView recyclerView;
-        final DalamCicilanAdapter adapter;
-        RecyclerView.LayoutManager layoutManager;
-        final List<DalamCicilanModel> list;
-        Button cek,next,prev;
-        final EditText blne;
-        final TextView blnt;
+
         final View view = inflater.inflate(R.layout.fragment_dalam_cicilan, container, false);
         recyclerView = view.findViewById(R.id.rvdalamcicilan);
         list = new ArrayList<>();
@@ -88,15 +89,16 @@ public class DalamCicilan extends Fragment {
                 String bulan = dateFormat.format(dude);
                 blnt.setText(bulan);
                 adapter.clear();
-                String url= "http://192.168.1.6/koperasi_API/dalamcicilan.php";
+                adapter.tambahBulan(1);
+                adapter.notifyDataSetChanged();
+                String url= "http://192.168.42.13/koperasi_API/dalamcicilan.php";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
 
-                                JSONArray jsonArray = null;
                                 try {
-                                    jsonArray = new JSONArray(response);
+                                    JSONArray jsonArray = new JSONArray(response);
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
@@ -104,13 +106,14 @@ public class DalamCicilan extends Fragment {
                                                 product.getString("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
-                                                product.getString("tenor")
+                                                product.getString("tenor"),
+                                                product.getString("id_user")
 
                                         ));
                                     }
-                                    DalamCicilanAdapter notifikasiAdminAdapter = new DalamCicilanAdapter(getActivity(),list);
-                                    recyclerView.setAdapter(notifikasiAdminAdapter);
-                                    notifikasiAdminAdapter.notifyDataSetChanged();
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                    Log.d("sukses", "onResponse: "+response);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -137,7 +140,9 @@ public class DalamCicilan extends Fragment {
                 calendar.add(Calendar.MONTH,-1);
                 Date dude = calendar.getTime();
                 String bulan = dateFormat.format(dude);
+                adapter.notifyDataSetChanged();
                 blnt.setText(bulan);
+                adapter.kurangBulan(1);
                 adapter.clear();
                 String url= "http://192.168.1.6/koperasi_API/dalamcicilan.php";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -145,9 +150,9 @@ public class DalamCicilan extends Fragment {
                             @Override
                             public void onResponse(String response) {
 
-                                JSONArray jsonArray = null;
+
                                 try {
-                                    jsonArray = new JSONArray(response);
+                                    JSONArray jsonArray = new JSONArray(response);
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
@@ -155,13 +160,13 @@ public class DalamCicilan extends Fragment {
                                                 product.getString("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
-                                                product.getString("tenor")
+                                                product.getString("tenor"),
+                                                product.getString("id_user")
 
                                         ));
                                     }
-                                    DalamCicilanAdapter notifikasiAdminAdapter = new DalamCicilanAdapter(getActivity(),list);
-                                    recyclerView.setAdapter(notifikasiAdminAdapter);
-                                    notifikasiAdminAdapter.notifyDataSetChanged();
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

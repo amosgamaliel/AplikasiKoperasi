@@ -39,7 +39,7 @@ public class SharedPreferenceConfig {
         status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
         return status;
     }
-    public boolean readLoginAdninStatus(){
+    public boolean readLoginAdminStatus(){
         boolean status = false;
         status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
         return status;

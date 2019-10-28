@@ -35,7 +35,6 @@ public class AdminActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_containera, new DashboardAdminFragment()).commit();
         }
     }
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
+import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,10 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.edtPass);
 
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
-        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-
-        if (preferenceConfig.readLoginAdninStatus()){
+        if (preferenceConfig.readLoginAdminStatus()){
             startActivity(new Intent(this, AdminActivity.class));
             finish();
         }else if (preferenceConfig.readLoginUserStatus()){
@@ -81,11 +80,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            //get data dari server
                             JSONObject jsonObject = new JSONObject(response);
                             String jabatan = jsonObject.getString("jabatan");
                             String id = jsonObject.getString("id");
-//                            SharedPreferenceConfig sharedPreferenceConfig = new SharedPreferenceConfig(getApplicationContext());
-//                            sharedPreferenceConfig.setIdUser(id);
+
+                            //menyimpan user id kedalam shared preferences untuk dipanggil kembali di setiap action transaksi
                             SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                             SharedPreferences.Editor editor = mSettings.edit();
                             editor.putString("userid",id);
@@ -124,6 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                 return params;
             }
         };
-        Volley.newRequestQueue(this).add(request);
+        Singleton.getInstance(LoginActivity.this).addToRequestQue(request);
     }
 }

@@ -19,10 +19,10 @@ import java.util.List;
 public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdapter.DetailCicilanViewHolder> {
 
     Context mCtx;
-    List<DetailCicilanModel> list;
+    List<DetailCicilanModel> modelList;
     public DetailCicilanAdapter(Context mCtx, List<DetailCicilanModel> list) {
         this.mCtx = mCtx;
-        this.list = list;
+        this.modelList = list;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
 
     @Override
     public void onBindViewHolder(@NonNull DetailCicilanViewHolder holder, int position) {
-        DetailCicilanModel model =list.get(position);
+        DetailCicilanModel model =modelList.get(position);
         holder.tv.setText(String.valueOf(model.getJmlCicilan(position)));
         holder.header.setText("Cicilan ke "+String.valueOf(position+1));
 
@@ -42,7 +42,7 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return modelList.size();
     }
 
     public class DetailCicilanViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +54,7 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
         }
     }
     public void delete(int position) { //removes the row
-        list.remove(position);
+        modelList.remove(position);
         notifyItemRemoved(position);
     }
 }

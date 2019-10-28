@@ -7,178 +7,57 @@
     tools:context=".Fragment.User.CicilanFragment"
     android:background="#F0F0F0">
 
-    <TextView
-        android:layout_marginTop="16dp"
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/rvriwayat"/>-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rp. 900.000"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center"
-        android:textSize="30dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="Total Cicilan"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"/>
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FCFCFC">
-
-        <TableRow
-            android:layout_marginTop="16dp"
+        android:padding="8dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="8dp">
             <TextView
+                android:id="@+id/namapw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="28dp"
-                android:text="Amos Gamaliel"
-                android:textAlignment="center"/>
+                android:text="Nama"
+                android:textSize="21dp"
+                android:textColor="@color/colorPrimary"/>
             <TextView
+                android:id="@+id/tanggalpw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:text="Nama Peminjaman"
-                android:textAlignment="center"/>
-
-            </LinearLayout>
-
-        </TableRow>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"/>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="16dp">
-
-
-            <LinearLayout
-                android:layout_width="189dp"
-                android:layout_marginLeft="16dp"
+                android:text="tanggal"/>
+            <TextView
+                android:id="@+id/jumlahpew"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24dp"
-                    android:text="Rp. 60.000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="Cicilan/bulan"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="189dp"
-                android:layout_marginRight="16dp"
+                android:text="jumlah"/>
+            <TextView
+                android:id="@+id/tenorpew"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="fill_vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24dp"
-                    android:text="Rp. 60.000"
-                    android:textAlignment="textEnd"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="textEnd"
-                    android:textSize="14dp"
-                    android:text="Cicilan/bulan"/>
-            </LinearLayout>
-
-
-        </TableRow>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"/>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="16dp">
-
-
-            <LinearLayout
-                android:layout_width="189dp"
-                android:layout_marginLeft="16dp"
+                android:text="tenor disini"/>
+            <TextView
+                android:id="@+id/jatuhpew"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="jumlah"
+                android:layout_marginBottom="32dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24dp"
-                    android:text="Rp. 60.000"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="Cicilan/bulan"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="189dp"
-                android:layout_marginRight="16dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="fill_vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24dp"
-                    android:text="Rp. 60.000"
-                    android:textAlignment="viewEnd"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="viewEnd"
-                    android:textSize="14dp"
-                    android:text="Cicilan/bulan"/>
-            </LinearLayout>
-
-        </TableRow>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"/>
-    </TableLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvdetailcicilanuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Saya menyetujui"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tolak Peminjaman"/>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

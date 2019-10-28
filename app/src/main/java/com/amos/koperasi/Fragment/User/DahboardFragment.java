@@ -59,7 +59,6 @@ public class DahboardFragment extends Fragment {
         Button logout,amos;
         listp = new ArrayList<>();
 
-        amos=view.findViewById(R.id.amos);
         recyclerView = view.findViewById(R.id.disetujui_container);
         total = view.findViewById(R.id.total);
         sukarela = view.findViewById(R.id.sukarela);
@@ -72,47 +71,8 @@ public class DahboardFragment extends Fragment {
                 userLogout();
             }
         });
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(listp,getActivity());
-        recyclerView.setAdapter(disetujuiAdapter);
-        disetujuiAdapter.notifyDataSetChanged();
         final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String url = "http://192.168.1.8/koperasi_API/disetujui.php" ;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray list = new JSONArray(response);
-                            for (int i = 0; i<list.length();i++){
-                                JSONObject info = list.getJSONObject(i);
-                                listp.add(new NotifikasiDisetujui(
-                                        info.getString("tanggal"),
-                                        info.getInt("jumlah")
-                                ));
-                                DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(listp,getActivity());
-                                recyclerView.setAdapter(disetujuiAdapter);
-                                disetujuiAdapter.notifyDataSetChanged();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("id",mSettings.getString("userid","1"));
-            return params;
-        }};
-
-        Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
         return view;
     }
 

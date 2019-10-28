@@ -40,10 +40,12 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 
 /**
@@ -56,6 +58,7 @@ public class AjukanFragment extends Fragment {
     SharedPreferenceConfig sharedPreferenceConfig;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
+    int hasil;
     String url = "http://192.168.1.6/koperasi_API/peminjaman.php";
     ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
 
@@ -81,7 +84,6 @@ public class AjukanFragment extends Fragment {
         final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
-
         final String bulan = spinner.getSelectedItem().toString();
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +107,12 @@ public class AjukanFragment extends Fragment {
                     arrayList.add(model);
                 }
 
+                int sum = 0;
+                for(int i = 0; i < integers.size(); i++)
+                    hasil =sum += integers.get(i);
+                 total.setText(String.valueOf(hasil));   ;
+
+
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
                 Log.d("isi array", "onClick: "+arrayList);
@@ -121,7 +129,6 @@ public class AjukanFragment extends Fragment {
             public void onClick(View v) {
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
-                final int bulann = Integer.valueOf(value[pos]);
                 if (jumlah.getText().toString().equals("")||
                     total.getText().toString().equals("")
                 ){
@@ -190,6 +197,7 @@ public class AjukanFragment extends Fragment {
         }
         return $temp;
     }
+
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd", Locale.getDefault());
