@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btn,btnAdmin;
     String idInput, passInput;
     SharedPreferenceConfig preferenceConfig;
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.edtPass);
 
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
+
 
         if (preferenceConfig.readLoginAdminStatus()){
             startActivity(new Intent(this, AdminActivity.class));
@@ -73,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     public void userLogin() {
-        String url= "http://192.168.1.6/koperasi_API/login.php";
+        url = preferenceConfig.getUrl();
+        url= url+"login.php";
         StringRequest request = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {

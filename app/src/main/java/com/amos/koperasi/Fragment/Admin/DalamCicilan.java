@@ -16,9 +16,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amos.koperasi.Adapter.DalamCicilanAdapter;
+import com.amos.koperasi.Adapter.DisetujuiAdapter;
 import com.amos.koperasi.Adapter.NotifikasiAdminAdapter;
 import com.amos.koperasi.Model.DalamCicilanModel;
+import com.amos.koperasi.Model.DetailCicilanModel;
+import com.amos.koperasi.Model.DetailCicilanUserModel;
+import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,6 +42,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -56,6 +62,18 @@ public class DalamCicilan extends Fragment {
     Button cek,next,prev;
     EditText blne;
     TextView blnt;
+    SharedPreferenceConfig sharedPreferenceConfig;
+    static String url;
+
+    public String getDuar() {
+        return duar;
+    }
+
+    public void setDuar(String duar) {
+        this.duar = duar;
+    }
+
+    String duar;
 
 
     @Override
@@ -63,15 +81,9 @@ public class DalamCicilan extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View view = inflater.inflate(R.layout.fragment_dalam_cicilan, container, false);
+        View view = inflater.inflate(R.layout.fragment_dalam_cicilan, container, false);
         recyclerView = view.findViewById(R.id.rvdalamcicilan);
-        list = new ArrayList<>();
-        adapter = new DalamCicilanAdapter(getActivity(),list);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        
+        sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
         blnt = view.findViewById(R.id.tvBulan);
         next = view.findViewById(R.id.btnNext);
         prev = view.findViewById(R.id.btnPrev);
@@ -81,17 +93,33 @@ public class DalamCicilan extends Fragment {
         calendar.setTime(date);
         final String bulan = dateFormat.format(date);
         blnt.setText(bulan);
+        url = sharedPreferenceConfig.getUrl()+"dalamcicilan.php";
+        list = new ArrayList<>();
+        final DalamCicilanAdapter adapter = new DalamCicilanAdapter(getActivity(),list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
+
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH,1);
                 Date dude = calendar.getTime();
                 String bulan = dateFormat.format(dude);
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
+                        "yyyy-MM-01");
+                Date date =  calendar.getTime();
+                duar = dateFormat.format(date);
                 blnt.setText(bulan);
                 adapter.clear();
                 adapter.tambahBulan(1);
                 adapter.notifyDataSetChanged();
-                String url= "http://192.168.42.13/koperasi_API/dalamcicilan.php";
+                Log.d("tanggal", "cektanggal: "+getDuar());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -102,8 +130,9 @@ public class DalamCicilan extends Fragment {
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
+                                                duar,
                                                 product.getString("nama"),
-                                                product.getString("total"),
+                                                product.getInt("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
@@ -113,6 +142,7 @@ public class DalamCicilan extends Fragment {
                                     }
                                     recyclerView.setAdapter(adapter);
                                     adapter.notifyDataSetChanged();
+
                                     Log.d("sukses", "onResponse: "+response);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -127,10 +157,11 @@ public class DalamCicilan extends Fragment {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("bulan",blnt.getText().toString());
+                        params.put("bulan",duar);
                         return params;
                     }
                 };
+                setDuar(dateFormat.format(date));
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
             }
         });
@@ -140,11 +171,18 @@ public class DalamCicilan extends Fragment {
                 calendar.add(Calendar.MONTH,-1);
                 Date dude = calendar.getTime();
                 String bulan = dateFormat.format(dude);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
+                        "yyyy-MM-01");
+                Date date =  calendar.getTime();
+                duar = dateFormat.format(date);
+
+                Log.d("tanggal", "cektanggal: "+getDuar());
                 adapter.notifyDataSetChanged();
                 blnt.setText(bulan);
                 adapter.kurangBulan(1);
                 adapter.clear();
-                String url= "http://192.168.1.6/koperasi_API/dalamcicilan.php";
+
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -156,8 +194,9 @@ public class DalamCicilan extends Fragment {
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
+                                                duar,
                                                 product.getString("nama"),
-                                                product.getString("total"),
+                                                product.getInt("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
@@ -180,10 +219,11 @@ public class DalamCicilan extends Fragment {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("bulan",blnt.getText().toString());
+                        params.put("bulan",duar);
                         return params;
                     }
                 };
+                setDuar(dateFormat.format(date));
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
             }
         });

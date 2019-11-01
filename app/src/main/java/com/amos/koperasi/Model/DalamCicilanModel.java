@@ -4,13 +4,24 @@ public class DalamCicilanModel {
     String id;
     String iduser;
     String nama;
-    String total;
+    int total;
     String sisaCicilan;
     String cicilanKe;
     String tenor;
     String cicilan;
 
-    public DalamCicilanModel(String nama, String total, String sisaCicilan, String id,String tenor,String iduser) {
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    String tanggal;
+
+    public DalamCicilanModel(String tanggal, String nama, int total, String sisaCicilan, String id,String tenor,String iduser) {
+        this.tanggal = tanggal;
         this.nama = nama;
         this.total = total;
         this.tenor=tenor;
@@ -36,10 +47,10 @@ public class DalamCicilanModel {
     public void setNama(String nama) {
         this.nama = nama;
     }
-    public String getTotal() {
+    public int getTotal() {
         return total;
     }
-    public void setTotal(String total) {
+    public void setTotal(int total) {
         this.total = total;
     }
     public String getSisaCicilan() {
@@ -66,5 +77,4 @@ public class DalamCicilanModel {
     public void setIduser(String iduser) {
         this.iduser = iduser;
     }
-
 }

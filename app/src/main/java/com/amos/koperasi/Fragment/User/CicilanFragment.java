@@ -20,6 +20,7 @@ import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
 import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,7 +51,8 @@ public class CicilanFragment extends Fragment {
     TextView jumlah,nama,tenor,jatuh,tanggal;
     RecyclerView recyclerView;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
-    String url = "http://192.168.1.6/koperasi_API/disetujui.php";
+    SharedPreferenceConfig sharedPreferenceConfig;
+    String url = sharedPreferenceConfig.getUrl()+"disetujui.php";
 
 
     @Override
@@ -64,6 +66,8 @@ public class CicilanFragment extends Fragment {
         jatuh = view.findViewById(R.id.jatuhpew);
         tanggal =view.findViewById(R.id.tanggalpw);
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
+        sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
+        url = sharedPreferenceConfig.getUrl()+"disetujui.php";
         DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(getActivity(),arrayList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

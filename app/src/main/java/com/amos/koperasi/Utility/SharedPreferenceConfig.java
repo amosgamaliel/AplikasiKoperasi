@@ -9,15 +9,13 @@ public class SharedPreferenceConfig {
     private SharedPreferences sharedPreferences;
     private Context context;
 
-    public String getIdUser() {
-        return idUser;
+    public static final String url ="http://192.168.1.6/koperasi_API/";
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
 
-    private String idUser;
 
     public SharedPreferenceConfig(Context context){
         this.context = context;

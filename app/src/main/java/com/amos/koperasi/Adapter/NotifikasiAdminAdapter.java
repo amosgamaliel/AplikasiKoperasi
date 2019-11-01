@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +28,8 @@ import java.util.Map;
 public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdminAdapter.InfoPengajuanViewHolder> {
     List<InfoPengajuan> pengajuanList;
     Context mCtx;
+    SharedPreferenceConfig sharedPreferenceConfig;
+    String url;
 
     public NotifikasiAdminAdapter(List<InfoPengajuan> pengajuanList, Context mCtx) {
         this.pengajuanList = pengajuanList;
@@ -52,7 +55,6 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         holder.setuju.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.1.6/koperasi_API/menyetujui.php";
                 final String id = String.valueOf(infoPengajuan.getId());
                 final String iduser = infoPengajuan.getIdUser();
                 final String total = String.valueOf(infoPengajuan.getJumlah());
@@ -100,6 +102,8 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
             tenor = itemView.findViewById(R.id.tenorp);
             setuju = itemView.findViewById(R.id.btnSetuju);
             tolak = itemView.findViewById(R.id.btnTolak);
+            sharedPreferenceConfig =  new SharedPreferenceConfig(mCtx);
+            url = sharedPreferenceConfig.getUrl()+"menyetujui.php";
         }
     }
 

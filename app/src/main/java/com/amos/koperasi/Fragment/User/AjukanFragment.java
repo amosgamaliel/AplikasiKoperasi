@@ -2,6 +2,7 @@ package com.amos.koperasi.Fragment.User;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -52,14 +53,15 @@ import java.util.stream.IntStream;
  * A simple {@link Fragment} subclass.
  */
 public class AjukanFragment extends Fragment {
+    Context mCtx;
     Button btnAjukan,btnDetail;
     Spinner spinner;
     EditText jumlah,tenor;
-    SharedPreferenceConfig sharedPreferenceConfig;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
     int hasil;
-    String url = "http://192.168.1.6/koperasi_API/peminjaman.php";
+    SharedPreferenceConfig sharedPreferenceConfig;
+    String url;
     ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
 
     public AjukanFragment() {
@@ -80,6 +82,8 @@ public class AjukanFragment extends Fragment {
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
         total = view.findViewById(R.id.total);
+        sharedPreferenceConfig =  new SharedPreferenceConfig(getContext());
+        url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
         final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getContext());
         final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -106,6 +110,8 @@ public class AjukanFragment extends Fragment {
                     model.setJmlCicilan(integers.get(i));
                     arrayList.add(model);
                 }
+                Log.d("tes", "cektanggal "+getDateTime());
+
 
                 int sum = 0;
                 for(int i = 0; i < integers.size(); i++)
@@ -198,9 +204,10 @@ public class AjukanFragment extends Fragment {
         return $temp;
     }
 
-    private String getDateTime() {
+    public String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd", Locale.getDefault());
+                "yyyyMMdd", Locale.getDefault());
+//        Date date = new Date();
         Date date = new Date();
         return dateFormat.format(date);
     }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.amos.koperasi.Adapter.NotifikasiAdminAdapter;
 import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
+import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,6 +38,8 @@ public class NotifikasiAdminFragment extends Fragment {
 
     List<InfoPengajuan> list;
     RecyclerView recyclerView;
+    SharedPreferenceConfig sharedPreferenceConfig;
+    String url;
     public NotifikasiAdminFragment() {
         // Required empty public constructor
     }
@@ -48,6 +51,8 @@ public class NotifikasiAdminFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notifikasi_admin, container, false);
         list = new ArrayList<>();
+        sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
+        url = sharedPreferenceConfig.getUrl()+"listpinjaman.php";
         recyclerView = view.findViewById(R.id.rvcontainer);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -56,7 +61,7 @@ public class NotifikasiAdminFragment extends Fragment {
         recyclerView.setAdapter(notifikasiAdminAdapter);
         notifikasiAdminAdapter.notifyDataSetChanged();
 
-        String url = "http://192.168.1.6/koperasi_API/listpinjaman.php";
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url, new Response.Listener<String>() {
             @Override
