@@ -8,25 +8,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_margin="16dp"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnPrev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PREV"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:background="@drawable/ic_navigate_before_black_24dp"
+            />
         <TextView
+            android:layout_marginTop="2dp"
             android:id="@+id/tvBulan"
             android:layout_width="wrap_content"
+            android:layout_weight="4"
             android:layout_height="wrap_content"
             android:text="November 2019"
-            android:textSize="32dp"
+            android:textSize="24sp"
             android:gravity="center"/>
         <Button
             android:id="@+id/btnNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:background="@drawable/ic_navigate_next_black_24dp"/>
 
 
 

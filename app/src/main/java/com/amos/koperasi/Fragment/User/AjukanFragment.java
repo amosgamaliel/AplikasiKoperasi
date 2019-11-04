@@ -2,10 +2,14 @@ package com.amos.koperasi.Fragment.User;
 
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,11 +24,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.amos.koperasi.Activity.LoginActivity;
-import com.amos.koperasi.Adapter.DalamCicilanAdapter;
+import com.amos.koperasi.Activity.AdminActivity;
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
-import com.amos.koperasi.Fragment.Admin.DalamCicilan;
-import com.amos.koperasi.Model.DalamCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -35,18 +36,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 
 /**
@@ -59,10 +57,14 @@ public class AjukanFragment extends Fragment {
     EditText jumlah,tenor;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
+    private final String CHANNEL_ID = "personal_notification";
+    private final int NOTIFICATION_ID = 001;
+
     int hasil;
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url;
     ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
+    String url;
+    String jabatan;
 
     public AjukanFragment() {
         // Required empty public constructor
@@ -82,9 +84,13 @@ public class AjukanFragment extends Fragment {
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
         total = view.findViewById(R.id.total);
+//        sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
+//        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         sharedPreferenceConfig =  new SharedPreferenceConfig(getContext());
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
         final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        jabatan = mSettings.getString("jabatan","user");
         final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
@@ -147,7 +153,40 @@ public class AjukanFragment extends Fragment {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    Log.d("berhasil tapi bagus", "wleeee"+getDateTime()+mSettings.getString("userid","1"));
+
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+
+                                        Log.d("cek", "onResponse: "+response);
+
+
+                                        String nama = jsonObject.getString("nama");
+                                        String status = jsonObject.getString("code");
+                                        if (status.equals("200")){
+                                            Log.d("cek status", "statusnya apa"+status);
+                                            if (jabatan.equals("admin")){
+                                                Log.d("cek status", "namanya apa"+nama);
+                                                Intent landingIntent = new Intent(getActivity(), AdminActivity.class);
+                                                landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                landingIntent.putExtra("menuFragment","notifikasiAdmin");
+
+                                                PendingIntent landingPendingIntent = PendingIntent.getActivity(getActivity(),0,landingIntent,PendingIntent.FLAG_ONE_SHOT);
+                                                NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),CHANNEL_ID);
+                                                builder.setSmallIcon(R.drawable.ic_collections_bookmark_white_24dp);
+                                                builder.setContentTitle("Ada Pengajuan Baru");
+                                                builder.setContentText(nama+" mengajukan pinjaman");
+                                                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                                builder.setContentIntent(landingPendingIntent);
+
+                                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+                                                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+                                            }
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             },
                             new Response.ErrorListener() {

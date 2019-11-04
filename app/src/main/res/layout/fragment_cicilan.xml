@@ -27,29 +27,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama"
+                android:layout_marginBottom="6dp"
                 android:textSize="21dp"
                 android:textColor="@color/colorPrimary"/>
             <TextView
                 android:id="@+id/tanggalpw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="tanggal"/>
             <TextView
                 android:id="@+id/jumlahpew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="jumlah"/>
             <TextView
                 android:id="@+id/tenorpew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="tenor disini"/>
+                android:text="tenor disini"
+                android:layout_marginBottom="4dp"/>
             <TextView
                 android:id="@+id/jatuhpew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="jumlah"
-                android:layout_marginBottom="32dp"/>
+                android:layout_marginBottom="12dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvdetailcicilanuser"

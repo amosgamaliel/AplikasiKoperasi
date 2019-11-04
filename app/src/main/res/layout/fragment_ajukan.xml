@@ -26,7 +26,7 @@
             android:layout_marginTop="8dp"
             android:text="Ajukan Peminjaman"
             style="@style/text"
-            android:textSize="28dp"
+            android:textSize="24sp"
             android:gravity="center"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -42,29 +42,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:hint="Jumlah Pinjaman"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:inputType="number"
                     android:textColorHint="@color/colorPrimary"
                     style="@style/EditText"/>
             </com.google.android.material.textfield.TextInputLayout>
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:hintTextAppearance="@color/colorPrimary"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginLeft="8dp"-->
-<!--                android:layout_marginRight="8dp"-->
-<!--                app:theme="@style/EditText">-->
-<!--                <EditText-->
-<!--                    android:id="@+id/tenor"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textColor="@color/colorPrimary"-->
-<!--                    android:hint="Tenor"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColorHint="@color/colorPrimary"-->
-<!--                    style="@style/EditText"/>-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
                 <Spinner
                     android:id="@+id/spinner"
                     android:entries="@array/bulanvalue"
@@ -72,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:hint="Jumlah Pinjaman"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_margin="8dp"
                     android:textColorHint="@color/colorPrimary"
                     style="@style/EditText"/>
@@ -97,7 +80,7 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
+                    >
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -106,19 +89,17 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:text="Total"
-                            android:textSize="16dp"
+                            android:textSize="14sp"
                             android:layout_marginLeft="8dp"/>
                         <TextView
                             android:id="@+id/total"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="1500"
-                            android:textSize="16dp"
+                            android:textSize="14sp"
                             android:layout_marginLeft="8dp"/>
 
                     </TableRow>
-
-
                 </TableLayout>
             <TableLayout
                 android:layout_width="match_parent"
@@ -134,7 +115,7 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:text="Terbilang"
-                        android:textSize="16dp"/>
+                        android:textSize="14sp"/>
 
 
                     <LinearLayout
@@ -146,9 +127,9 @@
                         <TextView
                             android:id="@+id/terbilang"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text=""
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -169,21 +150,22 @@
 
                 <Button
                     android:id="@+id/detail"
-                    android:layout_marginTop="16dp"
+                    android:textSize="13sp"
                     android:background="@drawable/buttoninside"
                     android:layout_width="225dp"
                     android:textColor="#fff"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:text="Lihat Detail"/>
 
                 <Button
                     android:layout_marginTop="8dp"
                     android:textColor="#fff"
                     android:layout_marginBottom="8dp"
+                    android:textSize="13sp"
                     android:background="@drawable/buttoninside"
                     android:id="@+id/ajukan"
                     android:layout_width="225dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:gravity="center"
                     android:text="Ajukan"/>
 

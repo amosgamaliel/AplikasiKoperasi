@@ -65,14 +65,6 @@ public class DalamCicilan extends Fragment {
     SharedPreferenceConfig sharedPreferenceConfig;
     static String url;
 
-    public String getDuar() {
-        return duar;
-    }
-
-    public void setDuar(String duar) {
-        this.duar = duar;
-    }
-
     String duar;
 
 
@@ -119,7 +111,6 @@ public class DalamCicilan extends Fragment {
                 adapter.clear();
                 adapter.tambahBulan(1);
                 adapter.notifyDataSetChanged();
-                Log.d("tanggal", "cektanggal: "+getDuar());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -161,7 +152,6 @@ public class DalamCicilan extends Fragment {
                         return params;
                     }
                 };
-                setDuar(dateFormat.format(date));
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
             }
         });
@@ -177,7 +167,6 @@ public class DalamCicilan extends Fragment {
                 Date date =  calendar.getTime();
                 duar = dateFormat.format(date);
 
-                Log.d("tanggal", "cektanggal: "+getDuar());
                 adapter.notifyDataSetChanged();
                 blnt.setText(bulan);
                 adapter.kurangBulan(1);
@@ -223,7 +212,7 @@ public class DalamCicilan extends Fragment {
                         return params;
                     }
                 };
-                setDuar(dateFormat.format(date));
+
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
             }
         });

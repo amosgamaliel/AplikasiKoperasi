@@ -92,8 +92,8 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
     }
 
     class InfoPengajuanViewHolder extends RecyclerView.ViewHolder{
-        TextView namapeminjam,jumlah,tenor,total;
-         Button setuju,tolak;
+        TextView namapeminjam,jumlah,tenor,total,tolak;
+         Button setuju;
 
         public InfoPengajuanViewHolder(@NonNull View itemView) {
             super(itemView);

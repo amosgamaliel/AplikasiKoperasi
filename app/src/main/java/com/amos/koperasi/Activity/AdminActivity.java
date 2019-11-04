@@ -31,8 +31,18 @@ public class AdminActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.fragment_containera);
 
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        String menuFragment = getIntent().getStringExtra("menuFragment");
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_containera, new DashboardAdminFragment()).commit();
+            if (menuFragment != null) {
+                if (menuFragment.equals("notifikasiAdmin")) {
+                    NotifikasiAdminFragment notifikasiAdminFragment = new NotifikasiAdminFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containera, notifikasiAdminFragment).commit();
+                    bottomNav.setOnNavigationItemSelectedListener(navListener);
+                    bottomNav.setSelectedItemId(R.id.nav_item_notif);
+                }
+            }
         }
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
