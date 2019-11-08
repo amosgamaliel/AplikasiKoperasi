@@ -64,7 +64,6 @@ public class DalamCicilan extends Fragment {
     TextView blnt;
     SharedPreferenceConfig sharedPreferenceConfig;
     static String url;
-
     String duar;
 
 

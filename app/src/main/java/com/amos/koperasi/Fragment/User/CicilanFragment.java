@@ -15,10 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amos.koperasi.Adapter.DetailCicilanAdapter;
 import com.amos.koperasi.Adapter.DisetujuiAdapter;
-import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
-import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -48,11 +47,11 @@ public class CicilanFragment extends Fragment {
         // Required empty public constructor
     }
     List<DetailCicilanUserModel> listp;
-    TextView jumlah,nama,tenor,jatuh,tanggal;
+    TextView jumlah,nama,tenor,tanggals,tanggalm;
     RecyclerView recyclerView;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url = sharedPreferenceConfig.getUrl()+"disetujui.php";
+    String url;
 
 
     @Override
@@ -63,12 +62,12 @@ public class CicilanFragment extends Fragment {
         jumlah = view.findViewById(R.id.jumlahpew);
         nama = view.findViewById(R.id.namapw);
         tenor = view.findViewById(R.id.tenorpew);
-        jatuh = view.findViewById(R.id.jatuhpew);
-        tanggal =view.findViewById(R.id.tanggalpw);
+        tanggals = view.findViewById(R.id.tanggals);
+        tanggalm =view.findViewById(R.id.tanggalm);
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
         sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"disetujui.php";
-        DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(getActivity(),arrayList);
+        DetailCicilanAdapter disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(disetujuiAdapter);
@@ -82,14 +81,15 @@ public class CicilanFragment extends Fragment {
                                     JSONArray jsonArray = new JSONArray(response);
                                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                                     String namaw = jsonObject.getString("nama");
-                                    String tanggalw = jsonObject.getString("tanggal");
+                                    String tanggalw = jsonObject.getString("tanggal_mulai");
+                                    String tanggale = jsonObject.getString("tanggal_selesai");
                                     int jumlahw = jsonObject.getInt("jumlah");
                                     int tenorw = jsonObject.getInt("tenor");
                                     int jatuhw = jsonObject.getInt("jatuh");
                                     nama.setText(namaw);
-                                    tanggal.setText(tanggalw);
+                                    tanggalm.setText(tanggalw);
                                     tenor.setText(String.valueOf(tenorw));
-                                    jatuh.setText(String.valueOf(jatuhw));
+                                    tanggals.setText(tanggale);
                                     jumlah.setText(String.valueOf(jumlahw));
                                     Log.d("tes", "isiResponse: "+response);
                                     ArrayList<Integer> integers = new ArrayList<>();
@@ -106,7 +106,7 @@ public class CicilanFragment extends Fragment {
                                     Log.d("haha", "tes isi array: "+arrayList.toString());
 
 
-                                    DisetujuiAdapter disetujuiAdapter = new DisetujuiAdapter(getActivity(),arrayList);
+                                    DetailCicilanAdapter disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
                                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                                     recyclerView.setLayoutManager(layoutManager);
                                     recyclerView.setAdapter(disetujuiAdapter);
@@ -116,10 +116,6 @@ public class CicilanFragment extends Fragment {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
-
-;
-
                             }
                         }, new Response.ErrorListener() {
                     @Override

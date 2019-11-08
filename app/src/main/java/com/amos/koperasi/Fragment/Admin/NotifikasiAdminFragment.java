@@ -11,12 +11,14 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.amos.koperasi.Activity.AdminActivity;
 import com.amos.koperasi.Activity.LoginActivity;
@@ -50,6 +52,7 @@ public class NotifikasiAdminFragment extends Fragment {
     RecyclerView recyclerView;
     SharedPreferenceConfig sharedPreferenceConfig;
     String url,status;
+    SwipeRefreshLayout swipeRefreshLayout;
     public NotifikasiAdminFragment() {
         // Required empty public constructor
     }
@@ -65,6 +68,7 @@ public class NotifikasiAdminFragment extends Fragment {
         SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = mSettings.edit();
         status = mSettings.getString("jabatan","user");
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         url = sharedPreferenceConfig.getUrl()+"listpinjaman.php";
         recyclerView = view.findViewById(R.id.rvcontainer);
@@ -75,14 +79,25 @@ public class NotifikasiAdminFragment extends Fragment {
         recyclerView.setAdapter(notifikasiAdminAdapter);
         notifikasiAdminAdapter.notifyDataSetChanged();
 
+        getData();
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                Toast.makeText(getActivity(),"refreshed",Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
+    }
+
+    public void getData(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONArray array = new JSONArray(response);
-
                     for (int i = 0 ; i< array.length();i++){
                         JSONObject product = array.getJSONObject(i);
                         list.add(new InfoPengajuan(
@@ -93,24 +108,7 @@ public class NotifikasiAdminFragment extends Fragment {
                                 product.getInt("tenor"),
                                 product.getInt("jatuh")
                         ));
-//                        Log.d("cek status", "statusnya apa"+status);
-//                        if (status.equals("admin")){
-//                            Intent landingIntent = new Intent(getActivity(), AdminActivity.class);
-//                            landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            landingIntent.putExtra("menuFragment","notifikasiAdmin");
-//
-//                            PendingIntent landingPendingIntent = PendingIntent.getActivity(getActivity(),0,landingIntent,PendingIntent.FLAG_ONE_SHOT);
-//                            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),CHANNEL_ID);
-//                            builder.setSmallIcon(R.drawable.ic_collections_bookmark_white_24dp);
-//                            builder.setContentTitle("Ada Pengajuan Baru");
-//                            builder.setContentText(product.getString("nama")+" mengajukan pinjaman");
-//                            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//                            builder.setContentIntent(landingPendingIntent);
-//
-//                            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
-//                            notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
-//                        }
-
+                        Log.d("hm", "onResponse: "+list.toString());
                     }NotifikasiAdminAdapter notifikasiAdminAdapter = new NotifikasiAdminAdapter(list,getActivity());
                     recyclerView.setAdapter(notifikasiAdminAdapter);
                     notifikasiAdminAdapter.notifyDataSetChanged();
@@ -127,7 +125,6 @@ public class NotifikasiAdminFragment extends Fragment {
             }
         });
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
-        return view;
     }
 
     }

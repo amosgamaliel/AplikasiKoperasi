@@ -7,10 +7,6 @@
     tools:context=".Fragment.User.CicilanFragment"
     android:background="#F0F0F0">
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/rvriwayat"/>-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv"
         android:layout_margin="16dp"
@@ -26,39 +22,101 @@
                 android:id="@+id/namapw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nama"
+                android:text="Pinjaman Anda"
+                android:gravity="center"
                 android:layout_marginBottom="6dp"
                 android:textSize="21dp"
                 android:textColor="@color/colorPrimary"/>
-            <TextView
-                android:id="@+id/tanggalpw"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="tanggal"/>
-            <TextView
-                android:id="@+id/jumlahpew"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:text="Jumlah Pinjaman"/>
+                <TextView
+                    android:id="@+id/jumlahpew"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Pinjaman disini"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="jumlah"/>
-            <TextView
-                android:id="@+id/tenorpew"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="4dp"
+                    android:text="Lama Pinjaman"/>
+                <TextView
+                    android:id="@+id/tenorpew"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Tenor disini"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="tenor disini"
-                android:layout_marginBottom="4dp"/>
-            <TextView
-                android:id="@+id/jatuhpew"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="4dp"
+                    android:text="Tanggal Mulai"/>
+                <TextView
+                    android:id="@+id/tanggalm"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Mulai disini"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="jumlah"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="4dp"
+                    android:text="Tanggal Selesai"/>
+                <TextView
+                    android:id="@+id/tanggals"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Selesai disini"/>
+
+            </LinearLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvdetailcicilanuser"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
         </LinearLayout>
 
 
