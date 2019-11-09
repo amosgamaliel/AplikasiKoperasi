@@ -1,16 +1,25 @@
 package com.amos.koperasi.Adapter;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amos.koperasi.Activity.AdminActivity;
 import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -29,7 +38,10 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
     List<InfoPengajuan> pengajuanList;
     Context mCtx;
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url;
+    String url,jabatan;
+
+    private final String CHANNEL_ID = "personal_notification";
+    private final int NOTIFICATION_ID = 001;
 
     public NotifikasiAdminAdapter(List<InfoPengajuan> pengajuanList, Context mCtx) {
         this.pengajuanList = pengajuanList;
@@ -51,7 +63,7 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         holder.namapeminjam.setText(infoPengajuan.getNama());
         holder.jumlah.setText(String.valueOf(infoPengajuan.getJumlah()));
         holder.tenor.setText(String.valueOf(infoPengajuan.getTenor()));
-
+        holder.cardView.setAnimation(AnimationUtils.loadAnimation(mCtx,R.anim.fade_kiri_ke_kanan));
         holder.setuju.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +76,24 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
                             @Override
                             public void onResponse(String response) {
                                 Log.d("Respon sukses Cek id", "onResponse: "+id);
+                                if (jabatan.equals("admin")){
+                                    createNotificationChannel();
+
+                                    Intent landingIntent = new Intent(mCtx, AdminActivity.class);
+                                    landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    landingIntent.putExtra("menuFragment","notifikasiAdmin");
+
+                                    PendingIntent landingPendingIntent = PendingIntent.getActivity(mCtx,0,landingIntent,PendingIntent.FLAG_ONE_SHOT);
+                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(mCtx,CHANNEL_ID);
+                                    builder.setSmallIcon(R.drawable.ic_collections_bookmark_white_24dp);
+                                    builder.setContentTitle("Ada Pengajuan Baru");
+                                    builder.setContentText("Pengajuan anda diterima oleh admin");
+                                    builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                    builder.setContentIntent(landingPendingIntent);
+
+                                    NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(mCtx);
+                                    notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+                                }
                             }
                         },
                         new Response.ErrorListener() {
@@ -86,6 +116,10 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
             }
         });
     }
+
+    private void createNotificationChannel() {
+    }
+
     @Override
     public int getItemCount() {
         return pengajuanList.size();
@@ -94,16 +128,21 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
     class InfoPengajuanViewHolder extends RecyclerView.ViewHolder{
         TextView namapeminjam,jumlah,tenor,total,tolak;
          Button setuju;
+         CardView cardView;
+        SharedPreferences mSettings;
 
         public InfoPengajuanViewHolder(@NonNull View itemView) {
             super(itemView);
+            SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(mCtx);
             namapeminjam = itemView.findViewById(R.id.namapeminjam);
             jumlah = itemView.findViewById(R.id.jumlahpinjaman);
             tenor = itemView.findViewById(R.id.tenorp);
             setuju = itemView.findViewById(R.id.btnSetuju);
             tolak = itemView.findViewById(R.id.btnTolak);
+            cardView = itemView.findViewById(R.id.cardviewp);
             sharedPreferenceConfig =  new SharedPreferenceConfig(mCtx);
             url = sharedPreferenceConfig.getUrl()+"menyetujui.php";
+            jabatan = mSettings.getString("jabatan","admin");
         }
     }
 

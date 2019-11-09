@@ -30,7 +30,6 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         username = view.findViewById(R.id.username);
         namalengkap = view.findViewById(R.id.namalengkap);
-        password = view.findViewById(R.id.passworduser);
 
         return view;
     }

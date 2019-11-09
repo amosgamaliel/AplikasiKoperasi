@@ -1,6 +1,7 @@
 package com.amos.koperasi.Model;
 
 public class DalamCicilanModel {
+    String tanggal;
     String id;
     String iduser;
     String nama;
@@ -10,17 +11,19 @@ public class DalamCicilanModel {
     String tenor;
     String cicilan;
 
-    public String getTanggal() {
-        return tanggal;
+    public String getJumlah() {
+        return jumlah;
     }
 
-    public void setTanggal(String tanggal) {
-        this.tanggal = tanggal;
+    public void setJumlah(String jumlah) {
+        this.jumlah = jumlah;
     }
 
-    String tanggal;
+    String jumlah,tanggalMulai,idCicilan;
 
-    public DalamCicilanModel(String tanggal, String nama, int total, String sisaCicilan, String id,String tenor,String iduser) {
+    public DalamCicilanModel(String tanggalMulai, String idCicilan, String tanggal, String nama, int total, String sisaCicilan, String id, String tenor, String iduser, String jumlah) {
+        this.tanggalMulai = tanggalMulai;
+        this.idCicilan = idCicilan;
         this.tanggal = tanggal;
         this.nama = nama;
         this.total = total;
@@ -28,6 +31,7 @@ public class DalamCicilanModel {
         this.id= id;
         this.sisaCicilan = sisaCicilan;
         this.iduser = iduser;
+        this.jumlah = jumlah;
     }
     public String getCicilan() {
         return cicilan;
@@ -76,5 +80,27 @@ public class DalamCicilanModel {
     }
     public void setIduser(String iduser) {
         this.iduser = iduser;
+    }
+    public String getTanggalMulai() {
+        return tanggalMulai;
+    }
+
+    public void setTanggalMulai(String tanggalMulai) {
+        this.tanggalMulai = tanggalMulai;
+    }
+
+    public String getIdCicilan() {
+        return idCicilan;
+    }
+
+    public void setIdCicilan(String idCicilan) {
+        this.idCicilan = idCicilan;
+    }
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
     }
 }

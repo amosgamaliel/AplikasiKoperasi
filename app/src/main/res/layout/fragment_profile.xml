@@ -8,19 +8,106 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Nama anda" />
-    <TextView
         android:id="@+id/namalengkap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Nama anda" />
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="Amos Gamaliel"
+        android:gravity="center"/>
     <TextView
-        android:id="@+id/passworduser"
+        android:id="@+id/idanggota"
+        android:gravity="center"
+        android:textSize="13sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Nama anda" />
+        android:layout_height="wrap_content"
+        android:text="ID Anggota: 120101" />
+    <TextView
+        android:id="@+id/username"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Username"/>
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/radius8"
+        android:drawablePadding="8dp"
+        android:hint="username"
+        android:paddingLeft="12dp"
+        android:textColor="#595959"
+        android:textSize="13sp"/>
+<!--        android:drawableLeft="@drawable/ic_person_black_24dp"-->
+
+    <TextView
+        android:id="@+id/notelp"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Nomor Telepon"/>
+
+    <EditText
+        android:id="@+id/editNotelp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/radius8"
+        android:drawablePadding="8dp"
+        android:hint="081221316060"
+        android:paddingLeft="12dp"
+        android:textColor="#595959"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/statusKeanggotaan"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Status"/>
+
+    <EditText
+        android:id="@+id/edtStatus"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/radius8"
+        android:drawablePadding="8dp"
+        android:hint="Aktif"
+        android:paddingLeft="12dp"
+        android:textColor="#595959"
+        android:textSize="13sp"/>
+
+    <Button
+        android:id="@+id/btnGantiPassword"
+        android:background="@drawable/buttoninside"
+        android:layout_marginTop="16dp"
+        android:layout_width="325dp"
+        android:layout_height="35dp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:text="Ganti Password" />
+    <Button
+        android:id="@+id/buttonSave"
+        android:background="@drawable/buttoninside"
+        android:layout_marginTop="8dp"
+        android:layout_width="325dp"
+        android:layout_height="35dp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:text="simpan"/>
 
 </LinearLayout>

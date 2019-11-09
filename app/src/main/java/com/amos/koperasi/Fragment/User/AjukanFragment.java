@@ -2,10 +2,13 @@ package com.amos.koperasi.Fragment.User;
 
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 import com.amos.koperasi.Activity.AdminActivity;
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
 import com.amos.koperasi.Model.DetailCicilanModel;
+import com.amos.koperasi.Model.DetailCicilanUserModel;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -41,10 +45,13 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -57,13 +64,14 @@ public class AjukanFragment extends Fragment {
     EditText jumlah,tenor;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
+    int bln;
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
 
     int hasil;
     SharedPreferenceConfig sharedPreferenceConfig;
-    ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
-    String url;
+    ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
+    String url,bulan;
     String jabatan;
 
     public AjukanFragment() {
@@ -94,7 +102,7 @@ public class AjukanFragment extends Fragment {
         final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
-        final String bulan = spinner.getSelectedItem().toString();
+        bulan = spinner.getSelectedItem().toString();
 
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,21 +111,19 @@ public class AjukanFragment extends Fragment {
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
                 final int bulann = Integer.valueOf(value[pos]);
-                final int bln = bulann;
+                bln = bulann;
                 int iJumlah = Integer.parseInt(jumlah.getText().toString());
                 final int perBulan = iJumlah/bln;
                 ArrayList<Integer> integers = new ArrayList<>();
                 terbilang.setText(kekata(iJumlah));
                 for (int i = 0; i< bln ; i++){
-                    DetailCicilanModel model = new DetailCicilanModel();
+                    DetailCicilanUserModel model = new DetailCicilanUserModel();
                     int sisa = iJumlah - perBulan*i;
                     int cicilan = (int) (perBulan+(sisa*0.02));
                     integers.add(cicilan);
                     model.setJmlCicilan(integers.get(i));
                     arrayList.add(model);
                 }
-                Log.d("tes", "cektanggal "+getDateTime());
-
 
                 int sum = 0;
                 for(int i = 0; i < integers.size(); i++)
@@ -127,11 +133,7 @@ public class AjukanFragment extends Fragment {
 
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
-                Log.d("isi array", "onClick: "+arrayList);
-
-
-
-
+                Log.d("ba", "cekJabatan"+jabatan);
             }
         });
 
@@ -156,16 +158,14 @@ public class AjukanFragment extends Fragment {
 
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
-
                                         Log.d("cek", "onResponse: "+response);
-
-
                                         String nama = jsonObject.getString("nama");
                                         String status = jsonObject.getString("code");
                                         if (status.equals("200")){
                                             Log.d("cek status", "statusnya apa"+status);
                                             if (jabatan.equals("admin")){
-                                                Log.d("cek status", "namanya apa"+nama);
+                                                createNotificationChannel();
+
                                                 Intent landingIntent = new Intent(getActivity(), AdminActivity.class);
                                                 landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 landingIntent.putExtra("menuFragment","notifikasiAdmin");
@@ -204,6 +204,7 @@ public class AjukanFragment extends Fragment {
                             params.put("total_pinjaman",total.getText().toString());
                             params.put("id_user",mSettings.getString("userid","1"));
                             params.put("tanggal",getDateTime());
+                            params.put("tanggal_selesai",getDateAkhir());
                             return params;
                         }
                     };
@@ -249,5 +250,28 @@ public class AjukanFragment extends Fragment {
 //        Date date = new Date();
         Date date = new Date();
         return dateFormat.format(date);
+    }
+    public String getDateAkhir() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyyMMdd", Locale.getDefault());
+//        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,bln);
+        Date date = calendar.getTime();
+
+        return dateFormat.format(date);
+    }
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            CharSequence name = "Personal Notification";
+            String description = "Include all the personal notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,name,importance);
+            notificationChannel.setDescription(description);
+
+            NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 }
