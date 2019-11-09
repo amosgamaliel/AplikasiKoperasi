@@ -11,48 +11,101 @@
         android:layout_marginRight="8dp"
         app:cardCornerRadius="8dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <TextView
-            android:id="@+id/npeminjamc"
-            android:layout_marginBottom="3dp"
-            android:textSize="13sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:text="Nama Pinjaman"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/npeminjamc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:text="Nama Pinjaman disini"/>
+
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama Peminjam Disini"/>
-        <TextView
-            android:id="@+id/totalDC"
-            android:textSize="13sp"
-            android:layout_marginBottom="3dp"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:text="Jumlah"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/jumlahc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:layout_marginBottom="4dp"
+                android:text="Jumlah"/>
+
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Pinjaman Disini"/>
-        <TextView
-            android:id="@+id/sisa"
-            android:textSize="13sp"
-            android:layout_marginBottom="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sisa Cicilan Disini"/>
-        <TextView
-            android:id="@+id/tenor"
-            android:textSize="13sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="tenor"
-            android:layout_marginBottom="8dp"/>
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:text="Cicilan ke"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tenorc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:layout_marginBottom="8dp"
+                android:text="Tenor"/>
+
+
+        </LinearLayout>
         <Button
             android:id="@+id/btnLunas"
             android:textSize="13sp"
             android:layout_marginBottom="3dp"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:text="lunasin"
             android:textColor="#fff"
             android:background="@drawable/buttoninside"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

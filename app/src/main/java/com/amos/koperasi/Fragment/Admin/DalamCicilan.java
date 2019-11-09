@@ -16,12 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amos.koperasi.Adapter.DalamCicilanAdapter;
-import com.amos.koperasi.Adapter.DisetujuiAdapter;
-import com.amos.koperasi.Adapter.NotifikasiAdminAdapter;
 import com.amos.koperasi.Model.DalamCicilanModel;
-import com.amos.koperasi.Model.DetailCicilanModel;
-import com.amos.koperasi.Model.DetailCicilanUserModel;
-import com.amos.koperasi.Model.NotifikasiDisetujui;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -42,7 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -120,14 +114,16 @@ public class DalamCicilan extends Fragment {
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
+                                                product.getString("tanggal_mulai"),
+                                                product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),
                                                 product.getInt("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
-                                                product.getString("id_user")
-
+                                                product.getString("id_user"),
+                                                product.getString("jumlah")
                                         ));
                                     }
                                     recyclerView.setAdapter(adapter);
@@ -176,21 +172,22 @@ public class DalamCicilan extends Fragment {
                             @Override
                             public void onResponse(String response) {
 
-
                                 try {
                                     JSONArray jsonArray = new JSONArray(response);
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
+                                                product.getString("tanggal_mulai"),
+                                                product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),
                                                 product.getInt("total"),
                                                 product.getString("sisa_cicilan"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
-                                                product.getString("id_user")
+                                                product.getString("id_user"),
 
-                                        ));
+                                                product.getString("jumlah")));
                                     }
                                     recyclerView.setAdapter(adapter);
                                     adapter.notifyDataSetChanged();

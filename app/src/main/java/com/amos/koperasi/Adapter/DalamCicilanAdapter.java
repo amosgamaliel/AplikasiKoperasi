@@ -64,22 +64,8 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         final DalamCicilanModel cicilanModel = list.get(position);
 
         holder.nama.setText(cicilanModel.getNama());
-        holder.total.setText(String.valueOf(cicilanModel.getTotal()));
+        holder.jumlah.setText(cicilanModel.getJumlah());
         holder.tenor.setText(cicilanModel.getTenor());
-        int iJumlah = cicilanModel.getTotal();
-        int bln = Integer.parseInt(cicilanModel.getTenor());
-        final int perBulan = iJumlah/bln;
-        final ArrayList<Integer> integers = new ArrayList<>();
-        ArrayList<DetailCicilanModel> arrayList = new ArrayList<>();
-        for (int i = 0; i< bln+1 ; i++){
-            DetailCicilanModel model = new DetailCicilanModel();
-            int sisa = iJumlah - perBulan*i;
-            int cicilan = (int) (perBulan+(sisa*0.02));
-            integers.add(cicilan);
-            model.setJmlCicilan(integers.get(i));
-            arrayList.add(model);
-        }
-        holder.sisa.setText(integers.get(angka).toString());
 
         holder.lunas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +73,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
                 final String iduser = String.valueOf(cicilanModel.getIduser());
                 final String id = String.valueOf(cicilanModel.getId());
-                final String jumlah = (integers.get(angka).toString());
+                final String jumlah = (cicilanModel.getJumlah());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,
                         url,
                         new Response.Listener<String>() {
@@ -117,10 +103,10 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("idpin",id);
-                        params.put("iduser",iduser);
-                        params.put("jumlah",jumlah);
-                        params.put("bulan",cicilanModel.getTanggal());
+                        params.put("id_pinjaman",id);
+                        params.put("id_cicilan",cicilanModel.getIdCicilan());
+                        params.put("id_user",iduser);
+                        params.put("tanggal_mulai",cicilanModel.getTanggalMulai());
                         params.put("tanggal",getDateTime());
                         return params;
                     }
@@ -139,7 +125,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
     public class DisetujuiViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nama,total,sisa,tenor;
+        TextView nama,jumlah,tenor;
         Button lunas;
 
         public DisetujuiViewHolder(@NonNull View itemView) {
@@ -147,9 +133,8 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
             sharedPreferenceConfig =  new SharedPreferenceConfig(mCtx);
             url = sharedPreferenceConfig.getUrl()+"cicilan.php";
             nama = itemView.findViewById(R.id.npeminjamc);
-            total = itemView.findViewById(R.id.totalDC);
-            sisa = itemView.findViewById(R.id.sisa);
-            tenor=itemView.findViewById(R.id.tenor);
+            jumlah = itemView.findViewById(R.id.jumlahc);
+            tenor=itemView.findViewById(R.id.tenorc);
             lunas = itemView.findViewById(R.id.btnLunas);
 
         }
