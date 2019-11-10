@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.Admin.DashboardAdminFragment;
+import com.amos.koperasi.Fragment.Admin.HistoryFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
 import com.amos.koperasi.Fragment.User.AjukanFragment;
 import com.amos.koperasi.Fragment.User.CicilanFragment;
@@ -51,7 +52,7 @@ public class AdminActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    selectedFragment = new DashboardAdminFragment();
+                    selectedFragment = new HistoryFragment();
                     break;
                 case R.id.nav_ajuan:
                     selectedFragment = new AjukanFragment();

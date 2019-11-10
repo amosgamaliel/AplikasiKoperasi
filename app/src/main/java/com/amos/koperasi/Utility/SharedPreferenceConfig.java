@@ -9,7 +9,7 @@ public class SharedPreferenceConfig {
     private SharedPreferences sharedPreferences;
     private Context context;
 
-    public static final String url ="http://192.168.42.205/koperasi_API/";
+    public static final String url ="http://192.168.1.6/koperasi_API/";
 
     public String getUrl() {
         return url;
