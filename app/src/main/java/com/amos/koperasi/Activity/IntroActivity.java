@@ -158,7 +158,6 @@ public class IntroActivity extends AppCompatActivity {
                 // also we need to save a boolean value to storage so next time when the user run the app
                 // we could know that he is already checked the intro screen activity
                 // i'm going to use shared preferences to that process
-                savePrefsData();
                 finish();
 
 
@@ -186,8 +185,6 @@ public class IntroActivity extends AppCompatActivity {
         Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
         return  isIntroActivityOpnendBefore;
 
-
-
     }
 
     private void savePrefsData() {
@@ -210,7 +207,6 @@ public class IntroActivity extends AppCompatActivity {
         // TODO : ADD an animation the getstarted button
         // setup animation
         btnGetStarted.setAnimation(btnAnim);
-
 
 
     }
