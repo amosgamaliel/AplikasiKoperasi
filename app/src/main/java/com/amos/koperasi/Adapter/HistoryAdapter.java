@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.Admin.DashboardAdminFragment;
+import com.amos.koperasi.Fragment.Admin.DetailHistoryFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
 import com.amos.koperasi.Fragment.User.CicilanFragment;
 import com.amos.koperasi.Model.HistoryModel;
@@ -42,7 +43,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.HistoryViewHolder holder, int position) {
-        HistoryModel model = modelList.get(position);
+        final HistoryModel model = modelList.get(position);
         holder.nama.setText(model.getNama());
         holder.tanggalm.setText(model.getTanggalMulai());
         holder.tanggals.setText(model.getTanggalSelesai());
@@ -52,9 +53,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clear();
+                DetailHistoryFragment detailHistoryFragment = new DetailHistoryFragment();
                  ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new NotifikasiAdminFragment())
+                        .replace(R.id.fragment_containera, detailHistoryFragment).addToBackStack(null)
                         .commit();
+                 Bundle bundle = new Bundle();
+                 bundle.putString("ID_USER",idUser);
+                 bundle.putString("ID_PINJAMAN",idPinjaman);
+                 bundle.putString("NAMA",model.getNama());
+                 bundle.putString("TANGGAL_MULAI",model.getTanggalMulai());
+                 bundle.putString("TANGGAL_SELESAI",model.getTanggalSelesai());
+                 detailHistoryFragment.setArguments(bundle);
+
             }
         });
     }
@@ -76,5 +87,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             tanggals = itemView.findViewById(R.id.tanggalsh);
             cv = itemView.findViewById(R.id.cvh);
         }
+    }
+    public void clear() {
+        int size = modelList.size();
+        modelList.clear();
+        notifyItemRangeRemoved(0, size);
     }
 }

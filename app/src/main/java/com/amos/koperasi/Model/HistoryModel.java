@@ -7,6 +7,26 @@ public class HistoryModel {
     String idUser;
     String tanggalMulai;
     String tanggalSelesai;
+    String tanggalBayar,jumlah;
+
+    public String getTanggalBayar() {
+        return tanggalBayar;
+    }
+
+    public void setTanggalBayar(String tanggalBayar) {
+        this.tanggalBayar = tanggalBayar;
+    }
+
+    public String getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(String jumlah) {
+        this.jumlah = jumlah;
+    }
+
+
+
 
     public String getNama() {
         return nama;
@@ -63,6 +83,10 @@ public class HistoryModel {
         this.idUser = idUser;
         this.tanggalMulai = tanggalMulai;
         this.tanggalSelesai = tanggalSelesai;
+    }
+    public HistoryModel(String tanggalBayar,String jumlah) {
+        this.tanggalBayar = tanggalBayar;
+        this.jumlah = jumlah;
     }
 
 }

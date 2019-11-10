@@ -11,9 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.amos.koperasi.Adapter.DetailHistoryAdapter;
 import com.amos.koperasi.Adapter.HistoryAdapter;
-import com.amos.koperasi.Model.DalamCicilanModel;
 import com.amos.koperasi.Model.HistoryModel;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -29,24 +30,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoryFragment extends Fragment {
+public class DetailHistoryFragment extends Fragment {
 
 
-    public HistoryFragment() {
+    public DetailHistoryFragment() {
         // Required empty public constructor
     }
-
+    String nama,tanggalm,tanggals,idUser,idPinjaman;
+    TextView tvnama,tvtanggal;
     List<HistoryModel> list = new ArrayList<>();
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    HistoryAdapter historyAdapter;
+    DetailHistoryAdapter historyAdapter;
     SharedPreferenceConfig sharedPreferenceConfig;
     String url;
 
@@ -55,24 +57,29 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
-        recyclerView = view.findViewById(R.id.history_rv);
-        historyAdapter = new HistoryAdapter(list,getActivity());
+        View view = inflater.inflate(R.layout.fragment_detail_history, container, false);
+        recyclerView = view.findViewById(R.id.rvdh);
+        historyAdapter = new DetailHistoryAdapter(list,getActivity());
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(historyAdapter);
         historyAdapter.notifyDataSetChanged();
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        url = sharedPreferenceConfig.getUrl()+ "history.php";
-
-
+        url = sharedPreferenceConfig.getUrl()+ "detailhistory.php";
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            nama = bundle.getString("NAMA","kosong");
+            tanggalm = bundle.getString("TANGGAL_MULAI","kosong");
+            tanggals = bundle.getString("TANGGAL_SELESAI","kosng");
+            idUser = bundle.getString("ID_USER","user");
+            idPinjaman = bundle.getString("ID_PINJAMAN","pinjaman");
+        }
         getData();
-
         return view;
     }
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -82,12 +89,8 @@ public class HistoryFragment extends Fragment {
                             for (int i = 0 ; i< jsonArray.length();i++) {
                                 JSONObject product = jsonArray.getJSONObject(i);
                                 list.add(new HistoryModel(
-                                        product.getString("nama"),
-                                        product.getString("id"),
-                                        product.getString("id_pinjaman"),
-                                        product.getString("id_user"),
-                                        product.getString("tanggal_mulai"),
-                                        product.getString("tanggal_selesai")
+                                        product.getString("tanggal_bayar"),
+                                        product.getString("jumlah")
 
                                 ));
                                 recyclerView.setAdapter(historyAdapter);
@@ -100,17 +103,21 @@ public class HistoryFragment extends Fragment {
 
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        return super.getParams();
-                    }
-                };
-                Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("idpin",idPinjaman);
+                params.put("iduser",idUser);
+                return params;
+            }
+        };
+        Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
     }
+
 
 }
