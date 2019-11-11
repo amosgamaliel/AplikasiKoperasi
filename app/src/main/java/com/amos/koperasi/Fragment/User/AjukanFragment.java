@@ -117,12 +117,14 @@ public class AjukanFragment extends Fragment {
                 ArrayList<Integer> integers = new ArrayList<>();
                 terbilang.setText(kekata(iJumlah));
                 for (int i = 0; i< bln ; i++){
-                    DetailCicilanUserModel model = new DetailCicilanUserModel();
                     int sisa = iJumlah - perBulan*i;
                     int cicilan = (int) (perBulan+(sisa*0.02));
-                    integers.add(cicilan);
-                    model.setJmlCicilan(integers.get(i));
-                    arrayList.add(model);
+
+                    arrayList.add(new DetailCicilanUserModel(
+                            cicilan,
+                            "tanggal bebas",
+                            "kosong"
+                    ));
                 }
 
                 int sum = 0;

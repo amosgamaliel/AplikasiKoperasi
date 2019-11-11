@@ -39,10 +39,9 @@ public class UsernameActivity extends AppCompatActivity {
 
         if (restorePrefData()) {
 
-            Intent mainActivity = new Intent(getApplicationContext(),UsernameActivity.class );
+            Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class );
             startActivity(mainActivity);
             finish();
-
 
         }
 

@@ -187,15 +187,6 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
-    private void savePrefsData() {
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("isIntroOpnend",true);
-        editor.commit();
-
-
-    }
 
     // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {

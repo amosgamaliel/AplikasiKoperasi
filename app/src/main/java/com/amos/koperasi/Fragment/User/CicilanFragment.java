@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
 import com.amos.koperasi.Adapter.DisetujuiAdapter;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
+import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -47,11 +48,14 @@ public class CicilanFragment extends Fragment {
         // Required empty public constructor
     }
     List<DetailCicilanUserModel> listp;
+    SharedPreferences mSettings;
     TextView jumlah,nama,tenor,tanggals,tanggalm;
     RecyclerView recyclerView;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url;
+    String url,idpinjaman;
+    DetailCicilanAdapter disetujuiAdapter;
+    LinearLayoutManager layoutManager;
 
 
     @Override
@@ -67,12 +71,12 @@ public class CicilanFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
         sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"disetujui.php";
-        DetailCicilanAdapter disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(disetujuiAdapter);
         disetujuiAdapter.notifyDataSetChanged();
-        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -81,6 +85,7 @@ public class CicilanFragment extends Fragment {
                                     JSONArray jsonArray = new JSONArray(response);
                                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                                     String namaw = jsonObject.getString("nama");
+                                    idpinjaman = jsonObject.getString("id_pinjaman");
                                     String tanggalw = jsonObject.getString("tanggal_mulai");
                                     String tanggale = jsonObject.getString("tanggal_selesai");
                                     int jumlahw = jsonObject.getInt("jumlah");
@@ -92,22 +97,7 @@ public class CicilanFragment extends Fragment {
                                     tanggals.setText(tanggale);
                                     jumlah.setText(String.valueOf(jumlahw));
                                     Log.d("tes", "isiResponse: "+response);
-                                    ArrayList<Integer> integers = new ArrayList<>();
-
-                                    for (int i = 0; i< tenorw ; i++) {
-                                        DetailCicilanUserModel model = new DetailCicilanUserModel();
-                                        int perBulan = jumlahw / tenorw;
-                                        int sisa = jumlahw - perBulan * i;
-                                        int cicilan = (int) (perBulan + (sisa * 0.02));
-                                        integers.add(cicilan);
-                                        model.setJmlCicilan(integers.get(i));
-                                        arrayList.add(model);
-                                    }
-                                    Log.d("haha", "tes isi array: "+arrayList.toString());
-
-
-                                    DetailCicilanAdapter disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
-                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                                    getData2();
                                     recyclerView.setLayoutManager(layoutManager);
                                     recyclerView.setAdapter(disetujuiAdapter);
                                     disetujuiAdapter.notifyDataSetChanged();
@@ -128,9 +118,49 @@ public class CicilanFragment extends Fragment {
                     params.put("id",mSettings.getString("userid","1"));
                     return params;
                 }};
-
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
         return view;
+    }
+
+    private void getData2(){
+        url = sharedPreferenceConfig.getUrl()+"disetujui2.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        try {
+                            ArrayList<DetailCicilanUserModel> list = new ArrayList<>();
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0 ; i< array.length();i++){
+                                JSONObject product = array.getJSONObject(i);
+                                list.add(new DetailCicilanUserModel(
+                                        product.getInt("jumlah"),
+                                        product.getString("tanggal_bayar"),
+                                        product.getString("status")
+                                ));
+                                Log.d("hm", "onResponse: "+response);
+                            }
+                            disetujuiAdapter = new DetailCicilanAdapter(getActivity(),list);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(disetujuiAdapter);
+                            disetujuiAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "error: "+error.toString());
+            }
+        }){@Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("id",mSettings.getString("userid","1"));
+            params.put("idpin",idpinjaman);
+            return params;
+        }};
+        Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
     }
 
 }
