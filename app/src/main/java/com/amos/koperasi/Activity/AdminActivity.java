@@ -12,6 +12,7 @@ import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.Admin.DashboardAdminFragment;
 import com.amos.koperasi.Fragment.Admin.HistoryFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
+import com.amos.koperasi.Fragment.Admin.SimpananFragment;
 import com.amos.koperasi.Fragment.User.AjukanFragment;
 import com.amos.koperasi.Fragment.User.CicilanFragment;
 import com.amos.koperasi.Fragment.User.DahboardFragment;
@@ -55,7 +56,7 @@ public class AdminActivity extends AppCompatActivity {
                     selectedFragment = new HistoryFragment();
                     break;
                 case R.id.nav_ajuan:
-                    selectedFragment = new AjukanFragment();
+                    selectedFragment = new SimpananFragment();
                     break;
 
                 case R.id.nav_item_notif:

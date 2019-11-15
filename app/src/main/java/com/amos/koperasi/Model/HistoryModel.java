@@ -1,6 +1,15 @@
 package com.amos.koperasi.Model;
 
 public class HistoryModel {
+    public String getTenor() {
+        return tenor;
+    }
+
+    public void setTenor(String tenor) {
+        this.tenor = tenor;
+    }
+
+    String tenor;
     String nama;
     String idCicilan;
     String idPinjaman;
@@ -76,8 +85,9 @@ public class HistoryModel {
         this.tanggalSelesai = tanggalSelesai;
     }
 
-    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai) {
+    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai,String tenor) {
         this.nama = nama;
+        this.tenor = tenor;
         this.idCicilan = idCicilan;
         this.idPinjaman = idPinjaman;
         this.idUser = idUser;

@@ -43,7 +43,8 @@ public class DetailHistoryFragment extends Fragment {
     public DetailHistoryFragment() {
         // Required empty public constructor
     }
-    String nama,tanggalm,tanggals,idUser,idPinjaman;
+    String nama,tanggalm,tanggals,idUser,idPinjaman,jumlah,tenor;
+    TextView tvJumlah,tvNama,tvTenor,tvTs,tvTm;
     TextView tvnama,tvtanggal;
     List<HistoryModel> list = new ArrayList<>();
     RecyclerView recyclerView;
@@ -58,6 +59,18 @@ public class DetailHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail_history, container, false);
+        tvJumlah = view.findViewById(R.id.jumlahpew);
+        tvnama = view.findViewById(R.id.namapw);
+        tvTenor = view.findViewById(R.id.tenorpew);
+        tvTs = view.findViewById(R.id.tanggals);
+        tvTm =view.findViewById(R.id.tanggalm);
+
+        tvJumlah.setText(jumlah);
+        tvTm.setText(tanggalm);
+        tvTs.setText(tanggals);
+        tvTenor.setText(tenor);
+        tvnama.setText(nama);
+
         recyclerView = view.findViewById(R.id.rvdh);
         historyAdapter = new DetailHistoryAdapter(list,getActivity());
         layoutManager = new LinearLayoutManager(getActivity());

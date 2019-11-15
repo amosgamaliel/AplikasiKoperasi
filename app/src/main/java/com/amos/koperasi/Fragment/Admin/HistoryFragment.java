@@ -87,7 +87,8 @@ public class HistoryFragment extends Fragment {
                                         product.getString("id_pinjaman"),
                                         product.getString("id_user"),
                                         product.getString("tanggal_mulai"),
-                                        product.getString("tanggal_selesai")
+                                        product.getString("tanggal_selesai"),
+                                        product.getString("tenor")
 
                                 ));
                                 recyclerView.setAdapter(historyAdapter);

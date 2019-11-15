@@ -47,7 +47,6 @@ public class CicilanFragment extends Fragment {
     public CicilanFragment() {
         // Required empty public constructor
     }
-    List<DetailCicilanUserModel> listp;
     SharedPreferences mSettings;
     TextView jumlah,nama,tenor,tanggals,tanggalm;
     RecyclerView recyclerView;

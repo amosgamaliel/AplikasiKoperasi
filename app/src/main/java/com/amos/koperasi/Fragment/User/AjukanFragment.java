@@ -202,7 +202,7 @@ public class AjukanFragment extends Fragment {
                             Map<String, String> params = new HashMap<String, String>();
 
                             params.put("jumlah_pinjaman",jumlah.getText().toString());
-                            params.put("tenor",bulan);
+                            params.put("tenor",String.valueOf(bln));
                             params.put("total_pinjaman",total.getText().toString());
                             params.put("id_user",mSettings.getString("userid","1"));
                             params.put("tanggal",getDateTime());
