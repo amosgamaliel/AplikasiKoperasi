@@ -74,4 +74,9 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
         modelList.remove(position);
         notifyItemRemoved(position);
     }
+    public void clear() {
+        int size = modelList.size();
+        modelList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

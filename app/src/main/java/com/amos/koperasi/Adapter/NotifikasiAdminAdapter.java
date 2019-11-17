@@ -30,6 +30,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,9 +107,11 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
-                        params.put("idu",iduser);
+                        params.put("id_user",iduser);
                         params.put("idpin",id);
-                        params.put("total",total);
+                        params.put("jumlah",total);
+                        params.put("tenor",String.valueOf(infoPengajuan.getTenor()));
+                        params.put("tanggal",getDateTime());
                         return params;
                     }
                 };
@@ -150,6 +154,13 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         pengajuanList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,pengajuanList.size());
+    }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
 }

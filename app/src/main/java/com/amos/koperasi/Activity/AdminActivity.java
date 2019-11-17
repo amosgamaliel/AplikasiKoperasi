@@ -53,7 +53,7 @@ public class AdminActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    selectedFragment = new HistoryFragment();
+                    selectedFragment = new DashboardAdminFragment();
                     break;
                 case R.id.nav_ajuan:
                     selectedFragment = new SimpananFragment();

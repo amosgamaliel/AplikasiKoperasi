@@ -1,21 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:backgroundTint="#F8F8FA"
     tools:context=".Fragment.Admin.DashboardAdminFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/logoutadmin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="logout" />
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Halo, Admin"
+            android:textSize="18dp"/>
+        <TextView
+            android:layout_marginTop="1dp"
+            android:id="@+id/today"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hari ini, Senin, 16 November"
+            android:textSize="13sp"/>
 
-</LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="#009DFF"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="#C6C6FF"
+                    android:text="Total Saldo"/>
+                <TextView
+                    android:id="@+id/totalUang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    android:text="Rp. 300.000.000"
+                    android:textStyle="bold"
+                    android:textColor="#fff"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.gridlayout.widget.GridLayout
+            app:columnCount="3"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_width="match_parent"
+            app:alignmentMode="alignMargins"
+            android:layout_height="105dp"
+            app:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/logoutadmin"
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp">
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/history"
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp"
+                android:elevation="8dp">
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp"></androidx.cardview.widget.CardView>
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:cardCornerRadius="4dp"
+            android:backgroundTint="#fff"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:elevation="20dp"
+            android:layout_marginBottom="20dp">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:columnCount="2"
+                app:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/pemasukan"
+                    app:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="#414141"
+                        android:text="Pemasukan"/>
+                    <TextView
+                        android:id="@+id/totalPemasukan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Rp. 300.000.000"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/pengeluaran"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_gravity="center_vertical"
+                    app:layout_columnWeight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="#414141"
+                        android:text="Pengeluaran"/>
+                    <TextView
+                        android:id="@+id/totalPengeluaran"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Rp. 300.000.000"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"/>
+
+
+                </LinearLayout>
+
+            </androidx.gridlayout.widget.GridLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activity"
+            android:textSize="20dp"
+            android:elevation="1dp"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_daily_detail"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>

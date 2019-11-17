@@ -106,7 +106,9 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
                         params.put("id_pinjaman",id);
                         params.put("id_cicilan",cicilanModel.getIdCicilan());
                         params.put("id_user",iduser);
+                        params.put("tanggal_mulai",cicilanModel.getTanggalMulai());
                         params.put("tanggal",getDateTime());
+                        params.put("jumlah",cicilanModel.getJumlah());
                         return params;
                     }
                 };

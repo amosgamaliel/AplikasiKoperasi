@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -92,8 +95,6 @@ public class AjukanFragment extends Fragment {
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
         total = view.findViewById(R.id.total);
-//        sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
-//        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         sharedPreferenceConfig =  new SharedPreferenceConfig(getContext());
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
@@ -104,15 +105,80 @@ public class AjukanFragment extends Fragment {
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
         bulan = spinner.getSelectedItem().toString();
 
-        btnDetail.setOnClickListener(new View.OnClickListener() {
+        jumlah.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.clear();
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
                 final int bulann = Integer.valueOf(value[pos]);
                 bln = bulann;
-                int iJumlah = Integer.parseInt(jumlah.getText().toString());
+                String jumlahs = jumlah.getText().toString();
+                int iJumlah ;
+                if (jumlahs.equals("")){
+                    iJumlah = 0;
+                    adapter.clear();
+                    recyclerView.setVisibility(View.GONE);
+                }else{
+                    recyclerView.setVisibility(View.VISIBLE);
+                    iJumlah =Integer.parseInt(jumlahs);
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            adapter.clear();
+                            int pos= spinner.getSelectedItemPosition();
+                            String[] value = getResources().getStringArray(R.array.bulan);
+                            final int bulann = Integer.valueOf(value[pos]);
+                            bln = bulann;
+                            String jumlahs = jumlah.getText().toString();
+                            int iJumlah ;
+                            if (jumlahs.equals("")){
+                                iJumlah = 0;
+                            }else{
+                                iJumlah =Integer.parseInt(jumlahs);
+                            }
+                            final int perBulan = iJumlah/bln;
+                            ArrayList<Integer> integers = new ArrayList<>();
+                            terbilang.setText(kekata(iJumlah));
+                            for (int i = 0; i< bln ; i++){
+                                int sisa = iJumlah - perBulan*i;
+                                int cicilan = (int) (perBulan+(sisa*0.02));
+
+                                arrayList.add(new DetailCicilanUserModel(
+                                        cicilan,
+                                        "tanggal bebas",
+                                        "kosong"
+                                ));
+                            }
+
+                            int sum = 0;
+                            for(int i = 0; i < integers.size(); i++)
+                                hasil =sum += integers.get(i);
+                            total.setText(String.valueOf(hasil));   ;
+
+
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(adapter);
+                            Log.d("ba", "cekJabatan"+jabatan);
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            recyclerView.setVisibility(View.GONE);
+                        }
+                    });
+                }
                 final int perBulan = iJumlah/bln;
                 ArrayList<Integer> integers = new ArrayList<>();
                 terbilang.setText(kekata(iJumlah));
@@ -130,12 +196,18 @@ public class AjukanFragment extends Fragment {
                 int sum = 0;
                 for(int i = 0; i < integers.size(); i++)
                     hasil =sum += integers.get(i);
-                 total.setText(String.valueOf(hasil));   ;
-
-
+                total.setText(String.valueOf(hasil));   ;
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
-                Log.d("ba", "cekJabatan"+jabatan);
+            }
+        });
+
+
+        btnDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
             }
         });
 

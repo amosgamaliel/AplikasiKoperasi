@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amos.koperasi.Adapter.NamaPenyimpanArrayAdapter;
@@ -60,6 +63,7 @@ public class SimpananFragment extends Fragment{
     NamaPenyimpanArrayAdapter namaPenyimpanAdapter;
     LinearLayoutManager layoutManager;
     AutoCompleteTextView editText;
+    TextView edthasil;
     Button simpan;
 
     @Override
@@ -69,6 +73,7 @@ public class SimpananFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_simpanan, container, false);
 
         nama = view.findViewById(R.id.namaanggota);
+        edthasil = view.findViewById(R.id.hasil);
         jumlah = view.findViewById(R.id.jumlahsimpanan);
         spinner = view.findViewById(R.id.spinnerSimpanan);
         recyclerView = view.findViewById(R.id.rv_simpanan_tahara);
@@ -85,6 +90,26 @@ public class SimpananFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 postSimpanan();
+            }
+        });
+        jumlah.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (jumlah.length()!=0){
+                    int jumlahs = Integer.parseInt(jumlah.getText().toString());
+                    int hasil = jumlahs * 10;
+                    edthasil.setText(String.valueOf(hasil));
+                }
             }
         });
 

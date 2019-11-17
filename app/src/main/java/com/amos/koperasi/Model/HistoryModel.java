@@ -85,8 +85,9 @@ public class HistoryModel {
         this.tanggalSelesai = tanggalSelesai;
     }
 
-    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai,String tenor) {
+    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai,String tenor,String jumlah) {
         this.nama = nama;
+        this.jumlah = jumlah;
         this.tenor = tenor;
         this.idCicilan = idCicilan;
         this.idPinjaman = idPinjaman;

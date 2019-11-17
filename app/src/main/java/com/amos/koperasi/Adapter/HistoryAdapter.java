@@ -64,6 +64,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                  bundle.putString("NAMA",model.getNama());
                  bundle.putString("TANGGAL_MULAI",model.getTanggalMulai());
                  bundle.putString("TANGGAL_SELESAI",model.getTanggalSelesai());
+                 bundle.putString("TENOR",model.getTenor());
+                 bundle.putString("TOTAL",model.getJumlah());
                  detailHistoryFragment.setArguments(bundle);
 
             }

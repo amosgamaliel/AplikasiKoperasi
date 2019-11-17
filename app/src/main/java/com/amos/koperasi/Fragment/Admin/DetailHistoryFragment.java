@@ -65,11 +65,7 @@ public class DetailHistoryFragment extends Fragment {
         tvTs = view.findViewById(R.id.tanggals);
         tvTm =view.findViewById(R.id.tanggalm);
 
-        tvJumlah.setText(jumlah);
-        tvTm.setText(tanggalm);
-        tvTs.setText(tanggals);
-        tvTenor.setText(tenor);
-        tvnama.setText(nama);
+
 
         recyclerView = view.findViewById(R.id.rvdh);
         historyAdapter = new DetailHistoryAdapter(list,getActivity());
@@ -86,6 +82,13 @@ public class DetailHistoryFragment extends Fragment {
             tanggals = bundle.getString("TANGGAL_SELESAI","kosng");
             idUser = bundle.getString("ID_USER","user");
             idPinjaman = bundle.getString("ID_PINJAMAN","pinjaman");
+            jumlah = bundle.getString("TOTAL","total");
+            tenor = bundle.getString("TENOR","tenor");
+            tvJumlah.setText(jumlah);
+            tvTm.setText(tanggalm);
+            tvTs.setText(tanggals);
+            tvTenor.setText(tenor+" bulan");
+            tvnama.setText(nama);
         }
         getData();
         return view;

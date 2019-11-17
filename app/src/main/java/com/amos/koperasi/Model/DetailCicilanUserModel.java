@@ -9,6 +9,10 @@ public class DetailCicilanUserModel {
         this.ke = ke;
         this.status = status;
     }
+
+    public DetailCicilanUserModel() {
+    }
+
     public DetailCicilanUserModel(int jmlCicilan, String ke) {
         this.jmlCicilan = jmlCicilan;
         this.ke = ke;
