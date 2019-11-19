@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.Admin.SetSimpananFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@color/colorPrimary"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:theme="@style/EditText">
+            <AutoCompleteTextView
+                android:id="@+id/namaanggota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:hint="Nama Anggota"
+                android:textSize="14sp"
+                android:textColorHint="@color/colorPrimary"
+                android:completionThreshold="1"
+                style="@style/EditText"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/jumlahsimpanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="jumlah yang akan disimpan"/>
+    </LinearLayout>
+</FrameLayout>

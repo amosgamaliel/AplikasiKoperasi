@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amos.koperasi.Activity.AdminActivity;
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
@@ -64,6 +65,7 @@ public class AjukanFragment extends Fragment {
     Context mCtx;
     Button btnAjukan,btnDetail;
     Spinner spinner;
+    int sum;
     EditText jumlah,tenor;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
@@ -132,6 +134,7 @@ public class AjukanFragment extends Fragment {
                 }else{
                     recyclerView.setVisibility(View.VISIBLE);
                     iJumlah =Integer.parseInt(jumlahs);
+                    total.setText(String.valueOf(sum));
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -159,13 +162,11 @@ public class AjukanFragment extends Fragment {
                                         "tanggal bebas",
                                         "kosong"
                                 ));
+                                integers.add(cicilan);
+                                sum = 0;
+                                sum =+ integers.get(i);
+
                             }
-
-                            int sum = 0;
-                            for(int i = 0; i < integers.size(); i++)
-                                hasil =sum += integers.get(i);
-                            total.setText(String.valueOf(hasil));   ;
-
 
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
@@ -191,25 +192,18 @@ public class AjukanFragment extends Fragment {
                             "tanggal bebas",
                             "kosong"
                     ));
+                    integers.add(cicilan);
+                    hasil =sum += integers.get(i);
                 }
 
-                int sum = 0;
-                for(int i = 0; i < integers.size(); i++)
-                    hasil =sum += integers.get(i);
-                total.setText(String.valueOf(hasil));   ;
+//                sum = 0;
+//                for(int i = 0; i < integers.size(); i++)
+//                total.setText(String.valueOf(hasil));   ;
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
             }
         });
 
-
-        btnDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
 
 
         btnAjukan.setOnClickListener(new View.OnClickListener() {

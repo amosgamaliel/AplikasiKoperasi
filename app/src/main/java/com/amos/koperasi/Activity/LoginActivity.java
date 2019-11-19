@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     EditText id,pass;
+    FrameLayout user;
     Button btn,btnAdmin;
     String idInput, passInput;
     SharedPreferenceConfig preferenceConfig;
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         id = findViewById(R.id.edtID);
         pass = findViewById(R.id.edtPass);
+        user =findViewById(R.id.userlogin);
 
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
@@ -61,6 +64,13 @@ public class LoginActivity extends AppCompatActivity {
                 userLogin();
             }
         });
+//        user.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

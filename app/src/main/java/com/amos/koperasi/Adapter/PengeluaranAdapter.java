@@ -35,15 +35,10 @@ public class PengeluaranAdapter extends RecyclerView.Adapter<PengeluaranAdapter.
     @Override
     public void onBindViewHolder(@NonNull PengeluaranViewHolder holder, int position) {
         ActivityModel model = models.get(position);
-        String tipe = model.getTipe();
-        if (tipe.equals("bayar")||tipe.equals("simpan")){
-            holder.cardView.setVisibility(View.GONE);
-        }else{
             holder.imageView.setImageResource(R.drawable.ic_done_all_black_24dp);
             holder.desc.setText("meminjam pinjaman");
-            holder.nama.setText(model.getNama());
-            holder.jumlah.setText(model.getJumlah());
-        }
+            holder.nama.setText(model.getNama()+"jhaaa");
+            holder.jumlah.setText(model.getJumlah()+"jhaaa");
     }
 
     @Override

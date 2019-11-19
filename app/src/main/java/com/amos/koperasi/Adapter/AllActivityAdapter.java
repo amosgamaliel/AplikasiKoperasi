@@ -37,14 +37,14 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
         ActivityModel model = models.get(position);
         String tipe = model.getTipe();
         if (tipe.equals("bayar")||tipe.equals("simpan")){
-            holder.imageView.setImageResource(R.drawable.ic_indonesia_rupiah_currency_symbol);
+//            holder.imageView.setImageResource(R.drawable.ic_indonesia_rupiah_currency_symbol);
             if (tipe.equals("bayar")){
                 holder.desc.setText("Membayar cicilan");
             }else if (tipe.equals("simpan")){
                 holder.desc.setText("menyimpan ke koperasi");
             }
         }else{
-            holder.imageView.setImageResource(R.drawable.ic_done_all_black_24dp);
+//            holder.imageView.setImageResource(R.drawable.ic_done_all_black_24dp);
             holder.desc.setText("meminjam pinjaman");
         }
         holder.nama.setText(model.getNama());

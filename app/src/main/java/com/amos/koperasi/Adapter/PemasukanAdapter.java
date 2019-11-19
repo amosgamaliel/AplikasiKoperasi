@@ -35,19 +35,10 @@ public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.Pema
     @Override
     public void onBindViewHolder(@NonNull PemasukanViewHolder holder, int position) {
         ActivityModel model = activityModels.get(position);
-        String tipe = model.getTipe();
-        if (tipe.equals("bayar")||tipe.equals("simpan")){
-            holder.imageView.setImageResource(R.drawable.ic_indonesia_rupiah_currency_symbol);
+            holder.imageView.setImageResource(R.drawable.ic_done_all_black_24dp);
+            holder.desc.setText("meminjam pinjaman");
             holder.nama.setText(model.getNama());
             holder.jumlah.setText(model.getJumlah());
-            if (tipe.equals("bayar")){
-                holder.desc.setText("Membayar cicilan");
-            }else if (tipe.equals("simpan")){
-                holder.desc.setText("menyimpan ke koperasi");
-            }
-        }else{
-            holder.cardView.setVisibility(View.GONE);
-        }
 
     }
 

@@ -18,7 +18,7 @@
     <string-array name="simpanan">
         <item>Sukarela</item>
         <item>Wajib</item>
-        <item>Tunjangan Hari Raya</item>
+        <item>tahara</item>
     </string-array>
     <string name="login_preferences">com.amos.koperasi_login_preferences</string>
     <string name="login_status_preferences">com.amos.koperasi_login_status_preferences</string>

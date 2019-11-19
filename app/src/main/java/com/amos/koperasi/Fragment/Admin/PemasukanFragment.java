@@ -72,15 +72,19 @@ public class PemasukanFragment extends Fragment {
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i<array.length();i++){
                                 JSONObject activity = array.getJSONObject(i);
-                                list.add(new ActivityModel(
-                                        activity.getString("id_user"),
-                                        activity.getString("id_pinjaman"),
-                                        activity.getString("nama"),
-                                        activity.getString("jumlah"),
-                                        activity.getString("tanggal"),
-                                        activity.getString("tipe")
-                                ));
+                                String tipe = activity.getString("tipe");
+                                if(tipe.equals("bayar")||tipe.equals("simpan")) {
+                                    list.add(new ActivityModel(
+                                            activity.getString("id_user"),
+                                            activity.getString("id_pinjaman"),
+                                            activity.getString("nama"),
+                                            activity.getString("jumlah"),
+                                            activity.getString("tanggal"),
+                                            activity.getString("tipe")
+                                    ));
+                                }
                                 adapter = new PemasukanAdapter(list,getActivity());
+                                rv.setLayoutManager(layoutManager);
                                 rv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                             }

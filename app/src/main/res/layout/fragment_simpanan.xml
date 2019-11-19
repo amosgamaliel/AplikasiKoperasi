@@ -58,6 +58,7 @@
                 android:textColorHint="@color/colorPrimary"
                 style="@style/EditText"/>
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namaanggotaq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintTextAppearance="@color/colorPrimary"

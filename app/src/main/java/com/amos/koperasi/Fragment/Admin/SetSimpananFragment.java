@@ -1,24 +1,17 @@
 package com.amos.koperasi.Fragment.Admin;
 
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,76 +40,36 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SimpananFragment extends Fragment{
+public class SetSimpananFragment extends Fragment {
 
 
-    public SimpananFragment() {
+    public SetSimpananFragment() {
         // Required empty public constructor
     }
-    Context mCtx;
-    EditText nama,jumlah;
-    Spinner spinner;
-    String url,iduser,jumlahKomitmen,tipe;
-    RecyclerView recyclerView;
-    ArrayList<NamaPenyimpanModel> list;
+    String iduser,jumlahKomitmen,namauser;
     SharedPreferenceConfig sharedPreferenceConfig;
-    NamaPenyimpanArrayAdapter namaPenyimpanAdapter;
-    LinearLayoutManager layoutManager;
-    AutoCompleteTextView editText;
-    TextView edthasil;
-    Button simpan;
+
+    AutoCompleteTextView edtNama;
+    TextView jumlah;
+    ArrayList<NamaPenyimpanModel> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_simpanan, container, false);
+        View view = inflater.inflate(R.layout.fragment_set_simpanan, container, false);
 
-        nama = view.findViewById(R.id.namaanggota);
-        edthasil = view.findViewById(R.id.hasil);
+        edtNama = view.findViewById(R.id.namaanggota);
         jumlah = view.findViewById(R.id.jumlahsimpanan);
-        spinner = view.findViewById(R.id.spinnerSimpanan);
-        recyclerView = view.findViewById(R.id.rv_simpanan_tahara);
+
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        url = sharedPreferenceConfig.getUrl()+"namaanggota.php";
-        layoutManager = new LinearLayoutManager(getActivity());
-        tipe = spinner.getSelectedItem().toString();
-        editText = view.findViewById(R.id.namaanggota);
-
         getAnggota();
-
-        simpan = view.findViewById(R.id.simpan);
-        simpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postSimpanan();
-            }
-        });
-        jumlah.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (jumlah.length()!=0){
-                    int jumlahs = Integer.parseInt(jumlah.getText().toString());
-                    int hasil = jumlahs * 10;
-                    edthasil.setText(String.valueOf(hasil));
-                }
-            }
-        });
-
+        NamaPenyimpanArrayAdapter adapter = new NamaPenyimpanArrayAdapter(getActivity(),list);
+        edtNama.setAdapter(adapter);
         return view;
     }
-
     private void getAnggota(){
+        String url = sharedPreferenceConfig.getUrl()+"namaanggota.php";
         StringRequest string = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -134,17 +87,16 @@ public class SimpananFragment extends Fragment{
                                 ));
                                 Log.d("hm", "onResponse: "+list.toString());
                                 final NamaPenyimpanArrayAdapter arrayAdapter = new NamaPenyimpanArrayAdapter(getActivity(),list);
-                                editText.setAdapter(arrayAdapter);
-                                editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                edtNama.setAdapter(arrayAdapter);
+                                edtNama.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
                                         iduser = pojo.getId();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
-                                        if(jumlahKomitmen.equals("0")){
+                                        if(!jumlahKomitmen.equals("0")){
+                                            jumlah.setText(pojo.getJumlahSimpanan());
 
-                                            jumlah.setText("User tidak memiliki simpanan");
-                                            jumlah.setEnabled(false);
 
                                         }else{
                                             jumlah.setText(pojo.getJumlahSimpanan());
@@ -165,9 +117,8 @@ public class SimpananFragment extends Fragment{
         });
         Singleton.getInstance(getActivity()).addToRequestQue(string);
     }
-
     private void postSimpanan(){
-        url = sharedPreferenceConfig.getUrl()+"simpanan.php";
+        String url = sharedPreferenceConfig.getUrl()+"setsimpanan.php";
         StringRequest string = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -197,8 +148,7 @@ public class SimpananFragment extends Fragment{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_user",iduser);
-                params.put("nominal",jumlah.getText().toString());
-                params.put("tipe_simpanan",tipe);
+                params.put("jumlah",jumlah.getText().toString());
                 params.put("tanggal",getDateTime());
                 return params;
             }
@@ -212,5 +162,6 @@ public class SimpananFragment extends Fragment{
         Date date = new Date();
         return dateFormat.format(date);
     }
+
 
 }
