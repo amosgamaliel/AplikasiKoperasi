@@ -26,25 +26,17 @@
                 style="@style/text"
                 android:textSize="24sp"
                 android:gravity="center"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@color/colorPrimary"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                app:theme="@style/EditText">
+
                 <AutoCompleteTextView
                     android:id="@+id/namaanggota"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingLeft="12dp"
                     android:textColor="@color/colorPrimary"
                     android:hint="Nama Anggota"
+                    android:background="@drawable/radius8"
                     android:textSize="14sp"
-                    android:textColorHint="@color/colorPrimary"
-                    android:completionThreshold="1"
-                    style="@style/EditText"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:completionThreshold="1"/>
 
             <Spinner
                 android:id="@+id/spinnerSimpanan"
@@ -57,42 +49,22 @@
                 android:layout_margin="8dp"
                 android:textColorHint="@color/colorPrimary"
                 style="@style/EditText"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/namaanggotaq"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@color/colorPrimary"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                app:theme="@style/EditText">
+
                 <EditText
                     android:id="@+id/jumlahsimpanan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:textColor="@color/colorPrimary"
                     android:hint="Jumlah simpanan"
                     android:textSize="14sp"
-                    android:inputType="number"
-                    android:textColorHint="@color/colorPrimary"
-                    style="@style/EditText"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_simpanan_tahara"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                    android:paddingLeft="12dp"
+                    android:background="@drawable/radius8"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_margin="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="kosong"
-                    android:id="@+id/hasil"/>
 
                 <Button
                     android:id="@+id/simpan"

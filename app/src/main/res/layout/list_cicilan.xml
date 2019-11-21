@@ -74,12 +74,14 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linearstatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="4dp">
 
             <TextView
+                android:id="@+id/textstatus"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -56,7 +56,7 @@ public class SimpananFragment extends Fragment{
     Context mCtx;
     EditText nama,jumlah;
     Spinner spinner;
-    String url,iduser,jumlahKomitmen,tipe;
+    String url,iduser,jumlahKomitmen,tipe,jumlahwajib;
     RecyclerView recyclerView;
     ArrayList<NamaPenyimpanModel> list;
     SharedPreferenceConfig sharedPreferenceConfig;
@@ -69,18 +69,15 @@ public class SimpananFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_simpanan, container, false);
 
         nama = view.findViewById(R.id.namaanggota);
-        edthasil = view.findViewById(R.id.hasil);
         jumlah = view.findViewById(R.id.jumlahsimpanan);
         spinner = view.findViewById(R.id.spinnerSimpanan);
-        recyclerView = view.findViewById(R.id.rv_simpanan_tahara);
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"namaanggota.php";
         layoutManager = new LinearLayoutManager(getActivity());
-        tipe = spinner.getSelectedItem().toString();
         editText = view.findViewById(R.id.namaanggota);
 
         getAnggota();
@@ -90,29 +87,9 @@ public class SimpananFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 postSimpanan();
+                Toast.makeText(getActivity(), ""+tipe, Toast.LENGTH_SHORT).show();
             }
         });
-        jumlah.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (jumlah.length()!=0){
-                    int jumlahs = Integer.parseInt(jumlah.getText().toString());
-                    int hasil = jumlahs * 10;
-                    edthasil.setText(String.valueOf(hasil));
-                }
-            }
-        });
-
         return view;
     }
 
@@ -123,32 +100,59 @@ public class SimpananFragment extends Fragment{
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray array = new JSONArray(response);
+                            JSONObject data = new JSONObject(response);
+                            JSONArray array = data.getJSONArray("list");
+                            jumlahwajib = data.getString("jumlah");
                             list = new ArrayList<>();
                             for (int i = 0 ; i< array.length();i++){
                                 JSONObject product = array.getJSONObject(i);
                                 list.add(new NamaPenyimpanModel(
                                         product.getString("id_user"),
                                         product.getString("nama"),
+                                        product.getString("id_komitmen"),
                                         product.getString("jumlah_simpanan")
                                 ));
                                 Log.d("hm", "onResponse: "+list.toString());
                                 final NamaPenyimpanArrayAdapter arrayAdapter = new NamaPenyimpanArrayAdapter(getActivity(),list);
                                 editText.setAdapter(arrayAdapter);
+
                                 editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
+                                        final NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
                                         iduser = pojo.getId();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
-                                        if(jumlahKomitmen.equals("0")){
+                                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                            jumlah.setText("User tidak memiliki simpanan");
-                                            jumlah.setEnabled(false);
+                                                tipe = (String)parent.getItemAtPosition(position);
+                                                Toast.makeText(getActivity(), ""+tipe, Toast.LENGTH_SHORT).show();
+                                                if (tipe.equals("tahara")){
+                                                    if(jumlahKomitmen.equals("0")){
 
-                                        }else{
-                                            jumlah.setText(pojo.getJumlahSimpanan());
-                                        }
+                                                        jumlah.setText("User tidak memiliki simpanan");
+                                                        jumlah.setEnabled(false);
+
+                                                    }else{
+                                                        jumlah.setText(pojo.getJumlahSimpanan());
+                                                        jumlah.setEnabled(false);
+                                                    }
+                                                }else if(tipe.equals("Wajib")) {
+                                                    jumlah.setEnabled(false);
+                                                    jumlah.setText(jumlahwajib);
+                                                }else {
+                                                    jumlah.setEnabled(true);
+                                                    jumlah.setText("");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {
+
+                                            }
+                                        });
+
                                     }
                                 });
                             }
@@ -198,7 +202,7 @@ public class SimpananFragment extends Fragment{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_user",iduser);
                 params.put("nominal",jumlah.getText().toString());
-                params.put("tipe_simpanan",tipe);
+                params.put("tipe_simpanan",tipe.toLowerCase());
                 params.put("tanggal",getDateTime());
                 return params;
             }

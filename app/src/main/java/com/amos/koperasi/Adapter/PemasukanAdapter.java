@@ -35,10 +35,10 @@ public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.Pema
     @Override
     public void onBindViewHolder(@NonNull PemasukanViewHolder holder, int position) {
         ActivityModel model = activityModels.get(position);
-            holder.imageView.setImageResource(R.drawable.ic_done_all_black_24dp);
+            holder.imageView.setImageResource(R.drawable.ic_profit);
             holder.desc.setText("meminjam pinjaman");
             holder.nama.setText(model.getNama());
-            holder.jumlah.setText(model.getJumlah());
+            holder.jumlah.setText("+"+model.getJumlah());
 
     }
 

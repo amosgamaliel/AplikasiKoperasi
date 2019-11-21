@@ -3,6 +3,15 @@ package com.amos.koperasi.Model;
 public class NamaPenyimpanModel {
     String id;
     String nama;
+    String idKomitmen;
+
+    public String getIdKomitmen() {
+        return idKomitmen;
+    }
+
+    public void setIdKomitmen(String idKomitmen) {
+        this.idKomitmen = idKomitmen;
+    }
 
     public String getJumlahSimpanan() {
         return jumlahSimpanan;
@@ -14,10 +23,17 @@ public class NamaPenyimpanModel {
 
     String jumlahSimpanan;
 
-    public NamaPenyimpanModel(String id, String nama,String jumlahSimpanan) {
+    public NamaPenyimpanModel(String id, String nama, String jumlahSimpanan) {
         this.id = id;
         this.nama = nama;
         this.jumlahSimpanan = jumlahSimpanan;
+    }
+
+    public NamaPenyimpanModel(String id, String nama, String idKomitmen, String jumlahSimpanan) {
+        this.id = id;
+        this.nama = nama;
+        this.jumlahSimpanan = jumlahSimpanan;
+        this.idKomitmen = idKomitmen;
     }
 
     public String getId() {

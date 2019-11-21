@@ -123,6 +123,7 @@ public class DashboardAdminFragment extends Fragment {
         recyclerView.setAdapter(activityAdapter);
         recyclerView.setLayoutManager(layoutManager);
         activityAdapter.notifyDataSetChanged();
+        recyclerView.setNestedScrollingEnabled(false);
 
         return view;
     }

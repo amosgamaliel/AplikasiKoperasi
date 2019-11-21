@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Admin.SetSimpananFragment">
 
@@ -11,29 +12,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <AutoCompleteTextView
+            android:id="@+id/namaanggota"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="12dp"
+            android:hint="Nama Anggota"
+            android:background="@drawable/radius8"
+            android:textSize="14sp"
+            android:elevation="1dp"
+            android:completionThreshold="1"/>
+
+        <EditText
+            android:id="@+id/jumlahsimpanan"
+            android:layout_width="match_parent"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_height="40dp"
+            android:paddingLeft="12dp"
+            android:elevation="1dp"
+            android:hint="jumlah yang akan disimpan"
+            android:background="@drawable/radius8"/>
+
+        <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintTextAppearance="@color/colorPrimary"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:theme="@style/EditText">
-            <AutoCompleteTextView
-                android:id="@+id/namaanggota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:hint="Nama Anggota"
-                android:textSize="14sp"
-                android:textColorHint="@color/colorPrimary"
-                android:completionThreshold="1"
-                style="@style/EditText"/>
-        </com.google.android.material.textfield.TextInputLayout>
-    <TextView
-        android:id="@+id/jumlahsimpanan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="jumlah yang akan disimpan"/>
+            android:id="@+id/prediksi"/>
+
+        <Button
+            android:id="@+id/buttonsetsimpanan"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:text="Simpan"
+            android:textColor="#fff"
+            android:background="@drawable/buttoninside"/>
     </LinearLayout>
 </FrameLayout>

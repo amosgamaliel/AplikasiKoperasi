@@ -5,12 +5,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,9 +52,10 @@ public class SetSimpananFragment extends Fragment {
     }
     String iduser,jumlahKomitmen,namauser;
     SharedPreferenceConfig sharedPreferenceConfig;
-
+    TextView prediksi;
     AutoCompleteTextView edtNama;
-    TextView jumlah;
+    EditText jumlah;
+    Button btnSimpan;
     ArrayList<NamaPenyimpanModel> list = new ArrayList<>();
 
     @Override
@@ -61,11 +66,20 @@ public class SetSimpananFragment extends Fragment {
 
         edtNama = view.findViewById(R.id.namaanggota);
         jumlah = view.findViewById(R.id.jumlahsimpanan);
+        btnSimpan = view.findViewById(R.id.buttonsetsimpanan);
+        prediksi = view.findViewById(R.id.prediksi);
 
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         getAnggota();
         NamaPenyimpanArrayAdapter adapter = new NamaPenyimpanArrayAdapter(getActivity(),list);
         edtNama.setAdapter(adapter);
+
+        btnSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postSimpanan();
+            }
+        });
         return view;
     }
     private void getAnggota(){
@@ -93,13 +107,33 @@ public class SetSimpananFragment extends Fragment {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
                                         iduser = pojo.getId();
+                                        namauser = pojo.getNama();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
-                                        if(!jumlahKomitmen.equals("0")){
-                                            jumlah.setText(pojo.getJumlahSimpanan());
+                                        if(jumlahKomitmen.equals("0")){
+                                            jumlah.setEnabled(true);
+                                            jumlah.setText("");
+                                            jumlah.addTextChangedListener(new TextWatcher() {
+                                                @Override
+                                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                                                }
 
+                                                @Override
+                                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                                }
+
+                                                @Override
+                                                public void afterTextChanged(Editable s) {
+                                                    prediksi.setVisibility(View.VISIBLE);
+                                                    prediksi.setText("Pada bulan "+getDateAkhir()+" "+namauser+" akan mendapatkan tunjangan sebesar Rp."+jumlah.getText().toString()+"0");
+                                                }
+                                            });
                                         }else{
-                                            jumlah.setText(pojo.getJumlahSimpanan());
+                                            btnSimpan.setEnabled(false);
+                                            btnSimpan.setBackgroundColor(getResources().getColor(R.color.intro_description_color));
+                                            jumlah.setText("User sudah memiliki komitmen simpanan");
+                                            jumlah.setEnabled(false);
                                         }
                                     }
                                 });
@@ -162,6 +196,14 @@ public class SetSimpananFragment extends Fragment {
         Date date = new Date();
         return dateFormat.format(date);
     }
+    public String getDateAkhir() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "MMMM yyyy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,10);
+        Date date = calendar.getTime();
 
+        return dateFormat.format(date);
+    }
 
 }

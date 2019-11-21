@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,7 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
         DetailCicilanUserModel model =modelList.get(position);
 
         if (model.getStatus().equals("kosong")){
-            holder.status.setVisibility(View.GONE);
+            holder.linearLayout.setVisibility(View.GONE);
         }else if (model.getStatus().equals("lunas")){
             holder.cv.setCardBackgroundColor(R.color.gradient_end_color);
         }
@@ -60,13 +61,16 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
     public class DetailCicilanViewHolder extends RecyclerView.ViewHolder {
         TextView tv,header,status,tanggal;
         CardView cv;
+        LinearLayout linearLayout;
         public DetailCicilanViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tv = itemView.findViewById(R.id.jumlahbayar);
             header = itemView.findViewById(R.id.headerdetail);
             tanggal = itemView.findViewById(R.id.jatuhTempo);
             status = itemView.findViewById(R.id.statusBayar);
             cv = itemView.findViewById(R.id.cardview);
+            linearLayout = itemView.findViewById(R.id.linearstatus);
 
         }
     }

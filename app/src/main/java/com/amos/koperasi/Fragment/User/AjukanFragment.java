@@ -92,7 +92,7 @@ public class AjukanFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_ajukan, container, false);
         btnAjukan = view.findViewById(R.id.ajukan);
-        btnDetail = view.findViewById(R.id.detail);
+
         spinner = view.findViewById(R.id.spinner);
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
@@ -105,6 +105,7 @@ public class AjukanFragment extends Fragment {
         final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
+        recyclerView.setNestedScrollingEnabled(false);
         bulan = spinner.getSelectedItem().toString();
 
         jumlah.addTextChangedListener(new TextWatcher() {
