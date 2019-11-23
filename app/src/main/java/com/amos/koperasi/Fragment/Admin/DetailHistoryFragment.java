@@ -110,6 +110,7 @@ public class DetailHistoryFragment extends Fragment {
 
                                 ));
                                 recyclerView.setAdapter(historyAdapter);
+                                recyclerView.setLayoutManager(layoutManager);
                                 historyAdapter.notifyDataSetChanged();
                                 Log.d("res", "historyResponse: "+response);
                             }

@@ -1,6 +1,7 @@
 package com.amos.koperasi.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amos.koperasi.Fragment.Admin.DetailTransaksi;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.R;
 
@@ -34,11 +37,25 @@ public class PengeluaranAdapter extends RecyclerView.Adapter<PengeluaranAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull PengeluaranViewHolder holder, int position) {
-        ActivityModel model = models.get(position);
+        final ActivityModel model = models.get(position);
             holder.imageView.setImageResource(R.drawable.ic_recession);
             holder.desc.setText("meminjam pinjaman");
-            holder.nama.setText(model.getNama()+"jhaaa");
-            holder.jumlah.setText(model.getJumlah()+"jhaaa");
+            holder.nama.setText(model.getNama());
+            holder.jumlah.setText(model.getJumlah());
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DetailTransaksi detailTransaksi = new DetailTransaksi();
+                    ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_containera, detailTransaksi).addToBackStack(null)
+                            .commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ID_USER",model.getIduser());
+                    bundle.putString("ID_PINJAMAN",model.getIdpinjaman());
+                    detailTransaksi.setArguments(bundle);
+                }
+            });
     }
 
     @Override

@@ -90,7 +90,8 @@ public class SetSimpananFragment extends Fragment {
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray array = new JSONArray(response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = jsonObject.getJSONArray("list");
                             list = new ArrayList<>();
                             for (int i = 0 ; i< array.length();i++){
                                 JSONObject product = array.getJSONObject(i);
@@ -109,7 +110,7 @@ public class SetSimpananFragment extends Fragment {
                                         iduser = pojo.getId();
                                         namauser = pojo.getNama();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
-                                        if(jumlahKomitmen.equals("0")){
+                                        if(jumlahKomitmen.equals("0")||jumlahKomitmen.equals("null")){
                                             jumlah.setEnabled(true);
                                             jumlah.setText("");
                                             jumlah.addTextChangedListener(new TextWatcher() {

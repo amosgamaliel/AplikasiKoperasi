@@ -1,4 +1,4 @@
-package com.amos.koperasi.Fragment.User;
+package com.amos.koperasi.Fragment.Admin;
 
 
 import android.content.SharedPreferences;
@@ -14,11 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
-import com.amos.koperasi.Adapter.DisetujuiAdapter;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
-import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -34,19 +33,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import static com.android.volley.VolleyLog.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CicilanFragment extends Fragment {
+public class DetailTransaksi extends Fragment {
 
 
-    public CicilanFragment() {
+    public DetailTransaksi() {
         // Required empty public constructor
     }
+
     SharedPreferences mSettings;
     TextView jumlah,nama,tenor,tanggals,tanggalm;
     RecyclerView recyclerView;
@@ -55,69 +55,43 @@ public class CicilanFragment extends Fragment {
     String url,idpinjaman;
     DetailCicilanAdapter disetujuiAdapter;
     LinearLayoutManager layoutManager;
+    String idUser,idPinjaman;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cicilan, container, false);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            idUser = bundle.getString("ID_USER","user");
+            idPinjaman = bundle.getString("ID_PINJAMAN","idpinjaman");
+        }
+        View view = inflater.inflate(R.layout.fragment_detail_transaksi, container, false);
         jumlah = view.findViewById(R.id.jumlahpew);
         nama = view.findViewById(R.id.namapw);
         tenor = view.findViewById(R.id.tenorpew);
         tanggals = view.findViewById(R.id.tanggals);
+        tanggals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "id user "+idUser+"  "+idPinjaman, Toast.LENGTH_SHORT).show();
+            }
+        });
         tanggalm =view.findViewById(R.id.tanggalm);
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
         sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
-        url = sharedPreferenceConfig.getUrl()+"disetujui.php";
+        url = sharedPreferenceConfig.getUrl()+"detailpemasukan.php";
         disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(disetujuiAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
         disetujuiAdapter.notifyDataSetChanged();
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(final String response) {
-                                try {
-                                    JSONArray jsonArray = new JSONArray(response);
-                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                    String namaw = jsonObject.getString("nama");
-                                    idpinjaman = jsonObject.getString("id_pinjaman");
-                                    String tanggalw = jsonObject.getString("tanggal_mulai");
-                                    String tanggale = jsonObject.getString("tanggal_selesai");
-                                    int jumlahw = jsonObject.getInt("jumlah");
-                                    int tenorw = jsonObject.getInt("tenor");
-                                    int jatuhw = jsonObject.getInt("jatuh");
-                                    nama.setText(namaw);
-                                    tanggalm.setText(tanggalw);
-                                    tenor.setText(String.valueOf(tenorw));
-                                    tanggals.setText(tanggale);
-                                    jumlah.setText(String.valueOf(jumlahw));
-                                    Log.d("tes", "isiResponse: "+response);
-                                    getData2();
-                                    recyclerView.setLayoutManager(layoutManager);
-                                    recyclerView.setAdapter(disetujuiAdapter);
-                                    disetujuiAdapter.notifyDataSetChanged();
+        getData();
+        getData2();
 
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error", "error: "+error.toString());
-                    }
-                }){@Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("id",mSettings.getString("userid","1"));
-                    return params;
-                }};
-                Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
         return view;
     }
 
@@ -145,6 +119,7 @@ public class CicilanFragment extends Fragment {
                             disetujuiAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "onResponseanu: "+e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -155,8 +130,49 @@ public class CicilanFragment extends Fragment {
         }){@Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-            params.put("iduser",mSettings.getString("userid","1"));
-            params.put("idpin",idpinjaman);
+            params.put("iduser",idUser);
+            params.put("idpin",idPinjaman);
+            return params;
+        }};
+        Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
+    }
+
+    private void getData(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String namaw = jsonObject.getString("nama");
+                            idpinjaman = jsonObject.getString("id_pinjaman");
+                            String tanggalw = jsonObject.getString("tanggal_mulai");
+                            String tanggale = jsonObject.getString("tanggal_selesai");
+                            int jumlahw = jsonObject.getInt("jumlah");
+                            int tenorw = jsonObject.getInt("tenor");
+                            nama.setText(namaw);
+                            tanggalm.setText(tanggalw);
+                            tenor.setText(String.valueOf(tenorw));
+                            tanggals.setText(tanggale);
+                            jumlah.setText(String.valueOf(jumlahw));
+                            Log.d("tes", "isiResponse: "+response+"      "+idUser);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(disetujuiAdapter);
+                            disetujuiAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "onResponseanu: "+e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "error: "+error.toString());
+            }
+        }){@Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("iduser",idUser);
             return params;
         }};
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);

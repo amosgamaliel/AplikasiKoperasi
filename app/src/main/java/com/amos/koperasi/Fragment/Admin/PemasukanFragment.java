@@ -53,7 +53,7 @@ public class PemasukanFragment extends Fragment {
         rv = view.findViewById(R.id.rvpemasukan);
         layoutManager = new LinearLayoutManager(getActivity());
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        url = sharedPreferenceConfig.getUrl()+"detailpemasukan.php";
+        url = sharedPreferenceConfig.getUrl()+"activity.php";
         getData();
         adapter = new PemasukanAdapter(list,getActivity());
         rv.setAdapter(adapter);
@@ -75,8 +75,8 @@ public class PemasukanFragment extends Fragment {
                                 String tipe = activity.getString("tipe");
                                 if(tipe.equals("bayar")||tipe.equals("simpan")) {
                                     list.add(new ActivityModel(
-                                            activity.getString("id_user"),
                                             activity.getString("id_pinjaman"),
+                                            activity.getString("id_user"),
                                             activity.getString("nama"),
                                             activity.getString("jumlah"),
                                             activity.getString("tanggal"),

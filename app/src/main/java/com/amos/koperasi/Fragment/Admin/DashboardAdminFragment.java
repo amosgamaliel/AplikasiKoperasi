@@ -119,10 +119,12 @@ public class DashboardAdminFragment extends Fragment {
         getData();
         totaluang.setText("Rp."+hasil);
         list = new ArrayList<>();
-        activityAdapter = new AllActivityAdapter(list,getActivity());
-        recyclerView.setAdapter(activityAdapter);
-        recyclerView.setLayoutManager(layoutManager);
-        activityAdapter.notifyDataSetChanged();
+        if (list.size() > 0){
+            activityAdapter = new AllActivityAdapter(list,getActivity());
+            recyclerView.setAdapter(activityAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+            activityAdapter.notifyDataSetChanged();
+        }
         recyclerView.setNestedScrollingEnabled(false);
 
         return view;
@@ -155,7 +157,7 @@ public class DashboardAdminFragment extends Fragment {
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
     }
     private void getData(){
-        String url = url = sharedPreferenceConfig.getUrl()+"detailpemasukan.php";
+        String url = url = sharedPreferenceConfig.getUrl()+"activity.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -173,10 +175,13 @@ public class DashboardAdminFragment extends Fragment {
                                         activity.getString("tanggal"),
                                         activity.getString("tipe")
                                 ));
+                                if (list.size()>0){
+
                                 activityAdapter = new AllActivityAdapter(list,getActivity());
                                 recyclerView.setAdapter(activityAdapter);
                                 recyclerView.setLayoutManager(layoutManager);
                                 activityAdapter.notifyDataSetChanged();
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

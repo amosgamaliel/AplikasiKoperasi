@@ -83,7 +83,7 @@ public class HistoryFragment extends Fragment {
                                 JSONObject product = jsonArray.getJSONObject(i);
                                 list.add(new HistoryModel(
                                         product.getString("nama"),
-                                        product.getString("id"),
+                                        product.getString("id_user"),
                                         product.getString("id_pinjaman"),
                                         product.getString("id_user"),
                                         product.getString("tanggal_mulai"),
