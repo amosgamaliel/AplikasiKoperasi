@@ -65,8 +65,8 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
         holder.nama.setText(cicilanModel.getNama());
         holder.jumlah.setText(cicilanModel.getJumlah());
-        holder.tenor.setText(cicilanModel.getTenor());
-
+        holder.tenor.setText(cicilanModel.getJatuhTempo());
+        holder.idp.setText(cicilanModel.getId());
         holder.lunas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +106,6 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
                         params.put("id_pinjaman",id);
                         params.put("id_cicilan",cicilanModel.getIdCicilan());
                         params.put("id_user",iduser);
-                        params.put("tanggal_mulai",cicilanModel.getTanggalMulai());
                         params.put("tanggal",getDateTime());
                         params.put("jumlah",cicilanModel.getJumlah());
                         return params;
@@ -126,7 +125,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
     public class DisetujuiViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nama,jumlah,tenor;
+        TextView nama,jumlah,tenor,idp;
         Button lunas;
 
         public DisetujuiViewHolder(@NonNull View itemView) {
@@ -135,8 +134,9 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
             url = sharedPreferenceConfig.getUrl()+"cicilan.php";
             nama = itemView.findViewById(R.id.npeminjamc);
             jumlah = itemView.findViewById(R.id.jumlahc);
-            tenor=itemView.findViewById(R.id.tenorc);
+            tenor=itemView.findViewById(R.id.jatuhc);
             lunas = itemView.findViewById(R.id.btnLunas);
+            idp = itemView.findViewById(R.id.idpinjaman);
 
         }
     }

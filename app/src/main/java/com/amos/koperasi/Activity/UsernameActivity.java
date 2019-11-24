@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class UsernameActivity extends AppCompatActivity {
     Button btnLogSet,btnSave;
     EditText username,password,conpass;
     TextView title;
+    ImageView gambar;
     SharedPreferenceConfig sharedPreferenceConfig;
     String url,iduser;
     @Override
@@ -51,6 +53,7 @@ public class UsernameActivity extends AppCompatActivity {
         conpass = findViewById(R.id.conPass);
         title = findViewById(R.id.intro_we);
         btnSave = findViewById(R.id.buttonSave);
+        gambar = findViewById(R.id.intro_img);
 
         sharedPreferenceConfig =  new SharedPreferenceConfig(this);
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
@@ -91,6 +94,8 @@ public class UsernameActivity extends AppCompatActivity {
                     if (status.equals("200")) {
                         Toast.makeText(getApplicationContext(),"Berhasil",Toast.LENGTH_SHORT).show();
                         username.setVisibility(View.GONE);
+                        gambar.setImageResource(R.drawable.ic_undraw_authentication_fsn5);
+                        title.setText("Atur Password Anda");
                         password.setVisibility(View.VISIBLE);
                         conpass.setVisibility(View.VISIBLE);
                         btnLogSet.setVisibility(View.GONE);

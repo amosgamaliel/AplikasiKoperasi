@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/cvh"
+<androidx.cardview.widget.CardView android:id="@+id/cvh"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/btn_gradient_style"
         android:orientation="vertical">
 
         <LinearLayout
@@ -19,22 +22,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Nama Peminjam"/>
-
-            <TextView
+                android:textColor="#fff"
                 android:layout_weight="1"
                 android:id="@+id/namah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
-                android:textSize="13sp"
+                android:textSize="16sp"
                 android:text="nama disini"/>
 
 
@@ -42,27 +37,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="#fff"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
-                android:textSize="13sp"
+                android:gravity="left"
+                android:textSize="12sp"
                 android:text="Tanggal Mulai"/>
 
             <TextView
+                android:textColor="#fff"
+                android:gravity="end"
                 android:layout_weight="1"
-                android:id="@+id/tanggalmh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/teksDetail"
-                android:textSize="13sp"
                 android:layout_marginBottom="4dp"
-                android:text="Tanggal Mulai"/>
+                style="@style/teksDetail"
+                android:textSize="12sp"
+                android:text="Tanggal Selesai"/>
 
 
         </LinearLayout>
@@ -73,21 +70,27 @@
             android:layout_marginBottom="4dp">
 
             <TextView
+                android:textColor="#fff"
                 android:layout_weight="1"
+                android:id="@+id/tanggalmh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Tanggal Selesai"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:text="Tanggal Mulai"/>
+
+
 
             <TextView
+                android:textColor="#fff"
+                android:gravity="end"
                 android:layout_weight="1"
                 android:id="@+id/tanggalsh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/teksDetail"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:layout_marginBottom="4dp"
                 android:text="Tanggal Selesai"/>
 

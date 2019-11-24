@@ -76,4 +76,9 @@ public class PengeluaranAdapter extends RecyclerView.Adapter<PengeluaranAdapter.
             cardView = itemView.findViewById(R.id.cvp);
         }
     }
+    public void clear() {
+        int size = models.size();
+        models.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

@@ -168,8 +168,8 @@ public class DashboardAdminFragment extends Fragment {
                             for (int i = 0; i<array.length();i++){
                                 JSONObject activity = array.getJSONObject(i);
                                 list.add(new ActivityModel(
-                                        activity.getString("id_user"),
                                         activity.getString("id_pinjaman"),
+                                        activity.getString("id_user"),
                                         activity.getString("nama"),
                                         activity.getString("jumlah"),
                                         activity.getString("tanggal"),

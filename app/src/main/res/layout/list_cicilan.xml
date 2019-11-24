@@ -1,111 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/cardview"
+<androidx.cardview.widget.CardView android:id="@+id/cardview"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="8dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/linearcicilan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/headerdetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14.5sp"
-            style="@style/teksDetailHead"
-            android:text="Cicilan ke"/>
+        <ImageView
+            android:id="@+id/iconbantu"
+            android:src="@drawable/ic_checked"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
 
             <TextView
-                android:layout_weight="1"
+                android:id="@+id/headerdetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Jumlah Pinjaman"/>
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/jumlahbayar"
+                android:textSize="14.5sp"
+                style="@style/teksDetailHead"
+                android:text="Cicilan ke"/>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Jumlah Pinjaman disini"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:text="Jumlah Pinjaman"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/jumlahbayar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:text="Jumlah Pinjaman disini"/>
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Jatuh Tempo"/>
 
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/jatuhTempo"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jatempo"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:text="Jatuh Tempo"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/jatuhTempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Jatuh Tempo"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearstatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:layout_marginBottom="4dp"
-                android:text="Jatuh Tempo"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/textstatus"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:text="Status"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/statusBayar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/teksDetail"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Status"/>
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearstatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="4dp">
-
-            <TextView
-                android:id="@+id/textstatus"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Status"/>
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/statusBayar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:layout_marginBottom="4dp"
-                android:text="Status"/>
+            </LinearLayout>
 
 
-        </LinearLayout>
-
-
-
-
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -80,4 +80,9 @@ public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.Pema
             cardView = itemView.findViewById(R.id.cvp);
         }
     }
+    public void clear() {
+        int size = activityModels.size();
+        activityModels.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

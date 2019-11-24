@@ -69,6 +69,7 @@ public class PemasukanFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            adapter.clear();
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i<array.length();i++){
                                 JSONObject activity = array.getJSONObject(i);

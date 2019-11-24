@@ -19,10 +19,10 @@ public class DalamCicilanModel {
         this.jumlah = jumlah;
     }
 
-    String jumlah,tanggalMulai,idCicilan;
+    String jumlah,jatuhTempo,idCicilan;
 
-    public DalamCicilanModel(String tanggalMulai, String idCicilan, String tanggal, String nama, int total, String sisaCicilan, String id, String tenor, String iduser, String jumlah) {
-        this.tanggalMulai = tanggalMulai;
+    public DalamCicilanModel(String jatuhTempo, String idCicilan, String tanggal, String nama, int total, String sisaCicilan, String id, String tenor, String iduser, String jumlah) {
+        this.jatuhTempo = jatuhTempo;
         this.idCicilan = idCicilan;
         this.tanggal = tanggal;
         this.nama = nama;
@@ -81,12 +81,12 @@ public class DalamCicilanModel {
     public void setIduser(String iduser) {
         this.iduser = iduser;
     }
-    public String getTanggalMulai() {
-        return tanggalMulai;
+    public String getJatuhTempo() {
+        return jatuhTempo;
     }
 
-    public void setTanggalMulai(String tanggalMulai) {
-        this.tanggalMulai = tanggalMulai;
+    public void setJatuhTempo(String jatuhTempo) {
+        this.jatuhTempo = jatuhTempo;
     }
 
     public String getIdCicilan() {

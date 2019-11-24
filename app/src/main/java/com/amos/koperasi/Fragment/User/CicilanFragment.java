@@ -16,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
-import com.amos.koperasi.Adapter.DisetujuiAdapter;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
-import com.amos.koperasi.Model.InfoPengajuan;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -34,7 +32,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -87,9 +84,9 @@ public class CicilanFragment extends Fragment {
                                     idpinjaman = jsonObject.getString("id_pinjaman");
                                     String tanggalw = jsonObject.getString("tanggal_mulai");
                                     String tanggale = jsonObject.getString("tanggal_selesai");
-                                    int jumlahw = jsonObject.getInt("jumlah");
-                                    int tenorw = jsonObject.getInt("tenor");
-                                    int jatuhw = jsonObject.getInt("jatuh");
+                                    String jumlahw = jsonObject.getString("jumlah");
+                                    String tenorw = jsonObject.getString("tenor");
+                                    String jatuhw = jsonObject.getString("jatuh");
                                     nama.setText(namaw);
                                     tanggalm.setText(tanggalw);
                                     tenor.setText(String.valueOf(tenorw));

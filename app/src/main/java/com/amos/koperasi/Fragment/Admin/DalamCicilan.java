@@ -114,7 +114,7 @@ public class DalamCicilan extends Fragment {
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
-                                                product.getString("tanggal_mulai"),
+                                                product.getString("jatuh_tempo"),
                                                 product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),

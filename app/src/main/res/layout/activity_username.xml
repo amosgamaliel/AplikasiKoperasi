@@ -12,16 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.62" />
 
     <TextView
         android:id="@+id/intro_we"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:text="Masukkan ID Anggota"
         android:textColor="@color/intro_title_color"
@@ -29,8 +27,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/intro_img"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/edtuserna"
@@ -98,24 +98,23 @@
 
     <ImageView
         android:id="@+id/intro_img"
-        android:layout_width="wrap_content"
-        android:layout_height="222dp"
+        android:layout_width="314dp"
+        android:layout_height="383dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_undraw_security_o890"
         app:layout_constraintBottom_toTopOf="@+id/intro_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/buttoninside"
+        android:background="@drawable/btn_gradient_style"
         android:text="LOGIN"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"

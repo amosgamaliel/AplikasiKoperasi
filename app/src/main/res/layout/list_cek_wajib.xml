@@ -14,12 +14,11 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         app:rowCount="1"
-        app:columnCount="7"
+        app:columnCount="6"
         app:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image"
-            app:layout_columnWeight="1"
             android:layout_width="30dp"
             android:layout_marginRight="16dp"
             app:layout_gravity="center_vertical"
@@ -28,20 +27,17 @@
             android:id="@+id/linear"
             app:layout_columnWeight="5"
             android:layout_marginRight="8dp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/namawajib"
-                android:textColor="#fff"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama Transaksi"/>
             <TextView
                 android:id="@+id/tanggalwajib"
-                android:textColor="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"

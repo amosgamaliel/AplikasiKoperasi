@@ -122,6 +122,7 @@ public class SimpananFragment extends Fragment{
                                         final NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
                                         iduser = pojo.getId();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
+                                        tipe = "sukarela";
                                         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                             @Override
                                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -149,7 +150,7 @@ public class SimpananFragment extends Fragment{
 
                                             @Override
                                             public void onNothingSelected(AdapterView<?> parent) {
-
+                                                tipe = "sukarela";
                                             }
                                         });
 

@@ -54,6 +54,7 @@ public class PengeluaranFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"activity.php";
+
         getData();
         adapter = new PengeluaranAdapter(list,getActivity());
         rv.setAdapter(adapter);
@@ -67,6 +68,7 @@ public class PengeluaranFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            adapter.clear();
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i<array.length();i++){
                                 JSONObject activity = array.getJSONObject(i);

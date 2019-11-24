@@ -3,6 +3,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,13 +30,15 @@
 
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/tanggaldh"
+                android:textAlignment="viewEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
                 android:textSize="13sp"
-                android:text="Tanggal"/>
+                android:text="Jumlah Angsuran"/>
+
+
 
 
         </LinearLayout>
@@ -45,22 +49,23 @@
 
             <TextView
                 android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                style="@style/teksDetail"
-                android:textSize="13sp"
-                android:text="Jumlah Angsuran"/>
-
-            <TextView
-                android:layout_weight="1"
                 android:id="@+id/jumlahdh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:text="Jumlah disini"/>
+            <TextView
+                android:textAlignment="viewEnd"
+                android:layout_weight="1"
+                android:id="@+id/tanggaldh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="15sp"
+                android:text="Tanggal"/>
 
 
         </LinearLayout>

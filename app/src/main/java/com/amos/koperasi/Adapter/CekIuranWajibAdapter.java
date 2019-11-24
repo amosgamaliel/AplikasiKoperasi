@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,10 +41,10 @@ public class CekIuranWajibAdapter extends RecyclerView.Adapter<CekIuranWajibAdap
         String nominal = model.getNominal();
 
         if (nominal.equals("null")){
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#FF4927"));
+            holder.imageView.setImageResource(R.drawable.ic_belum);
             holder.tanggal.setText("Belum Membayar");
         }else{
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#067FC8"));
+            holder.imageView.setImageResource(R.drawable.ic_selesai);
             holder.tanggal.setText(model.getTanggal());
         }
         holder.nama.setText(model.getNama());
@@ -59,11 +60,13 @@ public class CekIuranWajibAdapter extends RecyclerView.Adapter<CekIuranWajibAdap
         TextView nama,nominal,tanggal;
         LinearLayout linearLayout;
         CardView cardView;
+        ImageView imageView;
         public CekIuranWajibViewHolder(@NonNull View itemView) {
             super(itemView);
             nama = itemView.findViewById(R.id.namawajib);
             tanggal = itemView.findViewById(R.id.tanggalwajib);
             cardView = itemView.findViewById(R.id.cvw);
+            imageView = itemView.findViewById(R.id.image);
         }
     }
 }
