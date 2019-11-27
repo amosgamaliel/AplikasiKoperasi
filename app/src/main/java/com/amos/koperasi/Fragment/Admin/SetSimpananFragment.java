@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.android.volley.VolleyLog.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -113,6 +115,8 @@ public class SetSimpananFragment extends Fragment {
                                         if(jumlahKomitmen.equals("0")||jumlahKomitmen.equals("null")){
                                             jumlah.setEnabled(true);
                                             jumlah.setText("");
+                                            btnSimpan.setEnabled(true);
+                                            btnSimpan.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_gradient_style));
                                             jumlah.addTextChangedListener(new TextWatcher() {
                                                 @Override
                                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -131,6 +135,7 @@ public class SetSimpananFragment extends Fragment {
                                                 }
                                             });
                                         }else{
+                                            prediksi.setVisibility(View.GONE);
                                             btnSimpan.setEnabled(false);
                                             btnSimpan.setBackgroundColor(getResources().getColor(R.color.intro_description_color));
                                             jumlah.setText("User sudah memiliki komitmen simpanan");
@@ -160,16 +165,17 @@ public class SetSimpananFragment extends Fragment {
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray array = new JSONArray(response);
-                            JSONObject jsonObject = array.getJSONObject(0);
+                            JSONObject jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("code");
                             if (code.equals("200")){
-                                Toast.makeText(getActivity(), "Mantap", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Berhasil membuat komitmen", Toast.LENGTH_SHORT).show();
                             }
+                            Log.d(TAG, "onResponse: "+response);
 
 
                         }catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "tidak terkirim: "+e.getMessage());
                         }
 
                     }

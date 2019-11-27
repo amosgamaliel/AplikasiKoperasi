@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 style="@style/teksDetail"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 android:text="Jumlah"/>
 
             <TextView
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:textAlignment="viewEnd"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 style="@style/teksDetail"
                 android:text="Jatuh Tempo"/>
 
@@ -91,13 +91,16 @@
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/jumlahc"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/teksDetail"
-                android:textSize="16sp"
+                android:textSize="24sp"
                 android:layout_marginBottom="4dp"
                 android:text="Jumlah"/>
             <TextView
+                android:layout_marginTop="2dp"
+                android:layout_gravity="end"
                 android:layout_weight="1"
                 android:id="@+id/jatuhc"
                 android:layout_width="match_parent"
@@ -111,15 +114,25 @@
 
         </LinearLayout>
         <Button
-            android:id="@+id/btnLunas"
+            android:id="@+id/btnNormal"
             android:textSize="13sp"
             android:layout_marginBottom="3dp"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
-            android:text="lunasin"
+            android:text="Bayar"
             android:textColor="#fff"
             android:background="@drawable/btn_gradient_style"/>
+        <Button
+            android:id="@+id/btnLangsung"
+            android:textSize="13sp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:text="Lunas Semua"
+            android:textColor="#fff"
+            android:background="@drawable/green_lunas_gradient"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

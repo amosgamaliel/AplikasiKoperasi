@@ -101,9 +101,7 @@ public class IntroActivity extends AppCompatActivity {
 
                 }
 
-                if (position == mList.size()-1) { // when we rech to the last screen
-
-                    // TODO : show the GETSTARTED Button and hide the indicator and the next button
+                if (position == mList.size()-1) {
 
                     loaddLastScreen();
 

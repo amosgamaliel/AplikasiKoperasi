@@ -128,8 +128,8 @@ public class DetailHistoryFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("idpin",idPinjaman);
-                params.put("iduser",idUser);
+                params.put("id_pinjaman",idPinjaman);
+                params.put("id_user",idUser);
                 return params;
             }
         };

@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.ContentValues.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +73,7 @@ public class CicilanFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(disetujuiAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
         disetujuiAdapter.notifyDataSetChanged();
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -91,7 +94,7 @@ public class CicilanFragment extends Fragment {
                                     tanggalm.setText(tanggalw);
                                     tenor.setText(String.valueOf(tenorw));
                                     tanggals.setText(tanggale);
-                                    jumlah.setText(String.valueOf(jumlahw));
+                                    jumlah.setText("Rp. "+String.valueOf(jumlahw));
                                     Log.d("tes", "isiResponse: "+response);
                                     getData2();
                                     recyclerView.setLayoutManager(layoutManager);
@@ -101,6 +104,7 @@ public class CicilanFragment extends Fragment {
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    Log.d(TAG, "onResponsegagal: "+e.getMessage());
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -111,7 +115,7 @@ public class CicilanFragment extends Fragment {
                 }){@Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("id",mSettings.getString("userid","1"));
+                    params.put("id_user",mSettings.getString("userid","1"));
                     return params;
                 }};
                 Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
@@ -152,8 +156,8 @@ public class CicilanFragment extends Fragment {
         }){@Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-            params.put("iduser",mSettings.getString("userid","1"));
-            params.put("idpin",idpinjaman);
+            params.put("id_user",mSettings.getString("userid","1"));
+            params.put("id_pinjaman",idpinjaman);
             return params;
         }};
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);

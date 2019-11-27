@@ -36,7 +36,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,29 +51,32 @@ public class DashboardAdminFragment extends Fragment {
         // Required empty public constructor
     }
     LinearLayoutManager layoutManager;
-    CardView logout,history,setsimpanan;
+    CardView logoutadmin,history,setsimpanan;
     ArrayList<ActivityModel> list;
     AllActivityAdapter activityAdapter;
     TextView totaluang;
     String hasil,url,spemasukan,spengeluaran;
     SharedPreferenceConfig sharedPreferenceConfig;
     LinearLayout pemasukan,pengeluaran;
-    TextView totalPemasukan,totalPengeluaran;
+    TextView totalPemasukan,totalPengeluaran,today,logout;
     RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard_admin, container, false);
-        logout = view.findViewById(R.id.logoutadmin);
+        logoutadmin = view.findViewById(R.id.logoutadmin);
         totaluang = view.findViewById(R.id.totalUang);
         totalPemasukan = view.findViewById(R.id.totalPemasukan);
         totalPengeluaran = view.findViewById(R.id.totalPengeluaran);
         setsimpanan = view.findViewById(R.id.setsimpanan);
+        today = view.findViewById(R.id.today);
+        logout = view.findViewById(R.id.logout);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.rv_daily_detail);
         history = view.findViewById(R.id.history);
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
+        today.setText("Hari ini "+getDateTime());
         url = sharedPreferenceConfig.getUrl()+"dashboard.php";
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +85,15 @@ public class DashboardAdminFragment extends Fragment {
                 sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
                 sharedPreferenceConfig.writeLoginAdminStatus(false);
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
+        logoutadmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new NotifikasiAdminFragment()).addToBackStack(null)
+                        .commit();
             }
         });
         pengeluaran = view.findViewById(R.id.pengeluaran);
@@ -141,8 +156,8 @@ public class DashboardAdminFragment extends Fragment {
                             spemasukan = jsonObject.getString("pemasukan");
                             spengeluaran = jsonObject.getString("pengeluaran");
                             totaluang.setText("Rp."+hasil);
-                            totalPemasukan.setText(spemasukan);
-                            totalPengeluaran.setText(spengeluaran);
+                            totalPemasukan.setText("Rp. "+spemasukan);
+                            totalPengeluaran.setText("Rp. "+spengeluaran);
                             Log.d("der", "onResponse: "+response);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -165,7 +180,7 @@ public class DashboardAdminFragment extends Fragment {
                         try {
                             JSONArray array = new JSONArray(response);
                             list = new ArrayList<>();
-                            for (int i = 0; i<array.length();i++){
+                            for (int i = 0; i<7;i++){
                                 JSONObject activity = array.getJSONObject(i);
                                 list.add(new ActivityModel(
                                         activity.getString("id_pinjaman"),
@@ -194,6 +209,13 @@ public class DashboardAdminFragment extends Fragment {
             }
         });
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
+    }
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd MMMM yyyy", Locale.getDefault());
+//        Date date = new Date();
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
 }

@@ -5,8 +5,8 @@ public class DalamCicilanModel {
     String id;
     String iduser;
     String nama;
-    int total;
-    String sisaCicilan;
+    int jumlahpinjaman;
+    int sisaCicilan;
     String cicilanKe;
     String tenor;
     String cicilan;
@@ -21,12 +21,12 @@ public class DalamCicilanModel {
 
     String jumlah,jatuhTempo,idCicilan;
 
-    public DalamCicilanModel(String jatuhTempo, String idCicilan, String tanggal, String nama, int total, String sisaCicilan, String id, String tenor, String iduser, String jumlah) {
+    public DalamCicilanModel(String jatuhTempo, String idCicilan, String tanggal, String nama, int jumlahpinjaman, int sisaCicilan, String id, String tenor, String iduser, String jumlah) {
         this.jatuhTempo = jatuhTempo;
         this.idCicilan = idCicilan;
         this.tanggal = tanggal;
         this.nama = nama;
-        this.total = total;
+        this.jumlahpinjaman = jumlahpinjaman;
         this.tenor=tenor;
         this.id= id;
         this.sisaCicilan = sisaCicilan;
@@ -51,16 +51,16 @@ public class DalamCicilanModel {
     public void setNama(String nama) {
         this.nama = nama;
     }
-    public int getTotal() {
-        return total;
+    public int getJumlahpinjaman() {
+        return jumlahpinjaman;
     }
-    public void setTotal(int total) {
-        this.total = total;
+    public void setJumlahpinjaman(int total) {
+        this.jumlahpinjaman = total;
     }
-    public String getSisaCicilan() {
+    public int getSisaCicilan() {
         return sisaCicilan;
     }
-    public void setSisaCicilan(String sisaCicilan) {
+    public void setSisaCicilan(int sisaCicilan) {
         this.sisaCicilan = sisaCicilan;
     }
     public String getCicilanKe() {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.amos.koperasi.Fragment.Admin.AkunFragment;
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.User.AjukanFragment;
 import com.amos.koperasi.Fragment.User.DahboardFragment;
@@ -51,7 +52,7 @@ public class UserActivity extends AppCompatActivity {
                     selectedFragment = new NotifikasiAdminFragment();
                     break;
                 case R.id.nav_history:
-                    selectedFragment = new CicilanFragment();
+                    selectedFragment = new AkunFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack(null).commit();

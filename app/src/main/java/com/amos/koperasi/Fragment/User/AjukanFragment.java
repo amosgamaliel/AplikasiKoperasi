@@ -47,6 +47,8 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,7 +67,7 @@ public class AjukanFragment extends Fragment {
     Context mCtx;
     Button btnAjukan,btnDetail;
     Spinner spinner;
-    int sum;
+    double sum;
     EditText jumlah,tenor;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
@@ -73,7 +75,7 @@ public class AjukanFragment extends Fragment {
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
 
-    int hasil;
+    double hasil;
     SharedPreferenceConfig sharedPreferenceConfig;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     String url,bulan;
@@ -97,6 +99,15 @@ public class AjukanFragment extends Fragment {
         terbilang = view.findViewById(R.id.terbilang);
         jumlah = view.findViewById(R.id.jumlah);
         total = view.findViewById(R.id.total);
+
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
 
         sharedPreferenceConfig =  new SharedPreferenceConfig(getContext());
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
@@ -122,6 +133,8 @@ public class AjukanFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 adapter.clear();
+                total.setVisibility(View.VISIBLE);
+                terbilang.setVisibility(View.VISIBLE);
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
                 final int bulann = Integer.valueOf(value[pos]);
@@ -135,7 +148,8 @@ public class AjukanFragment extends Fragment {
                 }else{
                     recyclerView.setVisibility(View.VISIBLE);
                     iJumlah =Integer.parseInt(jumlahs);
-                    total.setText(String.valueOf(sum));
+                    String f = kursIndonesia.format(sum);
+                    total.setText(f);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -190,7 +204,7 @@ public class AjukanFragment extends Fragment {
 
                     arrayList.add(new DetailCicilanUserModel(
                             cicilan,
-                            "tanggal bebas",
+                            getJatuhTempo(i),
                             "kosong"
                     ));
                     integers.add(cicilan);
@@ -213,10 +227,8 @@ public class AjukanFragment extends Fragment {
                 int pos= spinner.getSelectedItemPosition();
                 String[] value = getResources().getStringArray(R.array.bulan);
                 if (jumlah.getText().toString().equals("")||
-                    total.getText().toString().equals("")
-                ){
-                    builder.setTitle("Error");
-                    builder.setMessage("Semua field harus diisi");
+                    total.getText().toString().equals("")){
+                    jumlah.setError("Field harus diisi");
                 }else {
                     StringRequest stringRequest = new StringRequest(
                             Request.Method.POST,
@@ -342,5 +354,15 @@ public class AjukanFragment extends Fragment {
             NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);
         }
+    }
+    public String getJatuhTempo(int ok) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd MMMM yyyy", Locale.getDefault());
+//        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,ok);
+        Date date = calendar.getTime();
+
+        return dateFormat.format(date);
     }
 }

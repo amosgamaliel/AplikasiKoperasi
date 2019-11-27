@@ -130,8 +130,8 @@ public class DetailTransaksi extends Fragment {
         }){@Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-            params.put("iduser",idUser);
-            params.put("idpin",idPinjaman);
+            params.put("id_user",idUser);
+            params.put("id_pinjaman",idPinjaman);
             return params;
         }};
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
@@ -154,7 +154,7 @@ public class DetailTransaksi extends Fragment {
                             tanggalm.setText(tanggalw);
                             tenor.setText(String.valueOf(tenorw));
                             tanggals.setText(tanggale);
-                            jumlah.setText(String.valueOf(jumlahw));
+                            jumlah.setText("Rp. "+String.valueOf(jumlahw));
                             Log.d("tes", "isiResponse: "+response+"      "+idUser);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(disetujuiAdapter);
@@ -172,7 +172,7 @@ public class DetailTransaksi extends Fragment {
         }){@Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-            params.put("iduser",idUser);
+            params.put("id_user",idUser);
             return params;
         }};
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);

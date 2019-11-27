@@ -108,7 +108,7 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<>();
                         params.put("id_user",iduser);
-                        params.put("idpin",id);
+                        params.put("id_pinjaman",id);
                         params.put("jumlah",total);
                         params.put("tenor",String.valueOf(infoPengajuan.getTenor()));
                         params.put("tanggal",getDateTime());

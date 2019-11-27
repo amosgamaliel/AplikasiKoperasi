@@ -108,7 +108,6 @@ public class DalamCicilan extends Fragment {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
                                 try {
                                     JSONArray jsonArray = new JSONArray(response);
                                     for (int i = 0 ; i< jsonArray.length();i++) {
@@ -118,12 +117,12 @@ public class DalamCicilan extends Fragment {
                                                 product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),
-                                                product.getInt("total"),
-                                                product.getString("sisa_cicilan"),
+                                                product.getInt("jumlah_pinjaman"),
+                                                product.getInt("lunas"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
                                                 product.getString("id_user"),
-                                                product.getString("jumlah")
+                                                product.getString("jumlah_cicilan")
                                         ));
                                     }
                                     recyclerView.setAdapter(adapter);
@@ -177,16 +176,15 @@ public class DalamCicilan extends Fragment {
                                     for (int i = 0 ; i< jsonArray.length();i++) {
                                         JSONObject product = jsonArray.getJSONObject(i);
                                         list.add(new DalamCicilanModel(
-                                                product.getString("tanggal_mulai"),
+                                                product.getString("jatuh_tempo"),
                                                 product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),
-                                                product.getInt("total"),
-                                                product.getString("sisa_cicilan"),
+                                                product.getInt("jumlah"),
+                                                product.getInt("lunas"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
                                                 product.getString("id_user"),
-
                                                 product.getString("jumlah")));
                                     }
                                     recyclerView.setAdapter(adapter);

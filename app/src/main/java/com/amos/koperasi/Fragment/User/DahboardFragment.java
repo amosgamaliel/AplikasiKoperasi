@@ -35,9 +35,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -58,7 +61,7 @@ public class DahboardFragment extends Fragment {
     LinearLayout layout;
     RelativeLayout relativeLayout;
     SharedPreferenceConfig sharedPreferenceConfig;
-    TextView nama,jumlahpinjaman,tanggalm,tanggals;
+    TextView nama,jumlahpinjaman,tanggalm,tanggals,today;
     Button btnDetail;
     TextView total,sukarela,wajib,tahara;
 
@@ -91,6 +94,8 @@ public class DahboardFragment extends Fragment {
         btnDetail = view.findViewById(R.id.btndetail);
         wajib = view.findViewById(R.id.wajib);
         tahara = view.findViewById(R.id.tahara);
+        today = view.findViewById(R.id.today);
+        today.setText("Hari ini, "+getDateTime());
         sukarela = view.findViewById(R.id.sukarela);
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,10 +206,17 @@ public class DahboardFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("iduser",idUser);
+                params.put("id_user",idUser);
                 return params;
             }
         };
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
+    }
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd MMMM yyyy", Locale.getDefault());
+//        Date date = new Date();
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

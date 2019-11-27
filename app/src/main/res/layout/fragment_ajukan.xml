@@ -66,17 +66,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
+                            android:visibility="gone"
                             android:textSize="14sp"
                             android:layout_marginLeft="8dp"/>
-
-
-
 
                         <TextView
                             android:id="@+id/terbilang"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
+                            android:visibility="gone"
                             android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
