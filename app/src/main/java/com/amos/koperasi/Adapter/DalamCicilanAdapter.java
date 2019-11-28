@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
     Context mCtx;
     List<DalamCicilanModel> list;
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url;
+    String url,kurs;
     Date awalBulan,akhirbulan,tanggalcicilan;
 
     int angka = 0;
@@ -66,75 +68,87 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         final DalamCicilanModel cicilanModel = list.get(position);
         holder.lunas.setVisibility(View.GONE);
         String jumlahcicilan = cicilanModel.getJumlah();
-        try {
-            awalBulan = new SimpleDateFormat("yyyyMMdd").parse(getDateAwal());
-            akhirbulan = new SimpleDateFormat("yyyyMMdd").parse(getDateAkhir());
-            tanggalcicilan = new SimpleDateFormat("yyyyMMdd").parse(cicilanModel.getJatuhTempo());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        if (!tanggalcicilan.after(awalBulan)&&tanggalcicilan.before(akhirbulan)){
-            holder.lunas.setVisibility(View.VISIBLE);
-            final int jumlah = (cicilanModel.getJumlahpinjaman());
-            int tenor = Integer.parseInt(cicilanModel.getTenor());
-            int lunas = cicilanModel.getSisaCicilan();
-            int perbulan = jumlah/tenor;
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-            int bayar = jumlah-perbulan*lunas;
-            holder.lunas.setText(String.valueOf(bayar));
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlahcicilan));
+        holder.jumlah.setText(kurs);
 
-            holder.lunas.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        if (cicilanModel.getJatuhTempo() == null || cicilanModel.getJatuhTempo().isEmpty()) {
+            try {
+                awalBulan = new SimpleDateFormat("yyyyMMdd").parse(getDateAwal());
+                akhirbulan = new SimpleDateFormat("yyyyMMdd").parse(getDateAkhir());
+                tanggalcicilan = new SimpleDateFormat("yyyyMMdd").parse(cicilanModel.getJatuhTempo());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (!tanggalcicilan.after(awalBulan) && tanggalcicilan.before(akhirbulan)) {
+                holder.lunas.setVisibility(View.VISIBLE);
+                final int jumlah = (cicilanModel.getJumlahpinjaman());
+                int tenor = Integer.parseInt(cicilanModel.getTenor());
+                int lunas = cicilanModel.getSisaCicilan();
+                int perbulan = jumlah / tenor;
 
-                    final String iduser = String.valueOf(cicilanModel.getIduser());
-                    final String id = String.valueOf(cicilanModel.getId());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                            url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        JSONArray jsonArray = new JSONArray(response);
-                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                int bayar = jumlah - perbulan * lunas;
+                holder.lunas.setText(String.valueOf(bayar));
 
-                                        Log.d("tes response", "onResponse: "+response);
+                holder.lunas.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                                        String status = jsonObject.getString("code");
+                        final String iduser = String.valueOf(cicilanModel.getIduser());
+                        final String id = String.valueOf(cicilanModel.getId());
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                                url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONArray jsonArray = new JSONArray(response);
+                                            JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                                        Toast.makeText(mCtx,status,Toast.LENGTH_SHORT).show();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Log.d("ah", "onResponse: "+e.getMessage());
+                                            Log.d("tes response", "onResponse: " + response);
+
+                                            String status = jsonObject.getString("code");
+
+                                            Toast.makeText(mCtx, status, Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            Log.d("ah", "onResponse: " + e.getMessage());
+                                        }
+
                                     }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("VoleyError", "Error: "+id+error.toString());
-                                }
-                            }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String,String> params = new HashMap<>();
-                            params.put("id_pinjaman",id);
-                            params.put("id_cicilan",cicilanModel.getIdCicilan());
-                            params.put("id_user",iduser);
-                            params.put("tanggal",getDateTime());
-                            params.put("jumlah",String.valueOf(jumlah));
-                            params.put("method","langsung");
-                            return params;
-                        }
-                    };
-                    Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
-                    deleteItem(position);
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("VoleyError", "Error: " + id + error.toString());
+                                    }
+                                }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("id_pinjaman", id);
+                                params.put("id_cicilan", cicilanModel.getIdCicilan());
+                                params.put("id_user", iduser);
+                                params.put("tanggal", getDateTime());
+                                params.put("jumlah", String.valueOf(jumlah));
+                                params.put("method", "langsung");
+                                return params;
+                            }
+                        };
+                        Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
+                        deleteItem(position);
 
 
-                }
-            });
+                    }
+                });
+            }
         }
             holder.bayar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,7 +202,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
 
         holder.nama.setText(cicilanModel.getNama());
-        holder.jumlah.setText("Rp. "+jumlahcicilan);
+        holder.jumlah.setText(kurs);
         holder.tenor.setText(cicilanModel.getJatuhTempo());
         holder.idp.setText(cicilanModel.getId());
 

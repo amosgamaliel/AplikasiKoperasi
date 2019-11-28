@@ -148,12 +148,12 @@ public class AjukanFragment extends Fragment {
                 }else{
                     recyclerView.setVisibility(View.VISIBLE);
                     iJumlah =Integer.parseInt(jumlahs);
-                    String f = kursIndonesia.format(sum);
-                    total.setText(f);
+
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             adapter.clear();
+                            sum = 0;
                             int pos= spinner.getSelectedItemPosition();
                             String[] value = getResources().getStringArray(R.array.bulan);
                             final int bulann = Integer.valueOf(value[pos]);
@@ -174,15 +174,16 @@ public class AjukanFragment extends Fragment {
 
                                 arrayList.add(new DetailCicilanUserModel(
                                         cicilan,
-                                        "tanggal bebas",
+                                        getJatuhTempo(i),
                                         "kosong"
                                 ));
                                 integers.add(cicilan);
-                                sum = 0;
-                                sum =+ integers.get(i);
+                                hasil =sum += cicilan;
 
                             }
 
+                            String f = kursIndonesia.format(sum);
+                            total.setText(f);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
                             Log.d("ba", "cekJabatan"+jabatan);
@@ -208,12 +209,10 @@ public class AjukanFragment extends Fragment {
                             "kosong"
                     ));
                     integers.add(cicilan);
-                    hasil =sum += integers.get(i);
+                    hasil =sum += cicilan;
                 }
-
-//                sum = 0;
-//                for(int i = 0; i < integers.size(); i++)
-//                total.setText(String.valueOf(hasil));   ;
+                String f = kursIndonesia.format(sum);
+                total.setText(f);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
             }

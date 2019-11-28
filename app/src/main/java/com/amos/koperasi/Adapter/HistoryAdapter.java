@@ -2,6 +2,7 @@ package com.amos.koperasi.Adapter;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.Admin.DashboardAdminFragment;
+import com.amos.koperasi.Fragment.Admin.DetailHistoryActivity;
 import com.amos.koperasi.Fragment.Admin.DetailHistoryFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
 import com.amos.koperasi.Fragment.User.CicilanFragment;
+import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.Model.HistoryModel;
 import com.amos.koperasi.R;
 
@@ -53,20 +56,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clear();
-                DetailHistoryFragment detailHistoryFragment = new DetailHistoryFragment();
-                 ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, detailHistoryFragment).addToBackStack(null)
-                        .commit();
-                 Bundle bundle = new Bundle();
-                 bundle.putString("ID_USER",idUser);
-                 bundle.putString("ID_PINJAMAN",idPinjaman);
-                 bundle.putString("NAMA",model.getNama());
-                 bundle.putString("TANGGAL_MULAI",model.getTanggalMulai());
-                 bundle.putString("TANGGAL_SELESAI",model.getTanggalSelesai());
-                 bundle.putString("TENOR",model.getTenor());
-                 bundle.putString("TOTAL",model.getJumlah());
-                 detailHistoryFragment.setArguments(bundle);
+
+                Intent intent = new Intent(mCtx, DetailHistoryActivity.class);
+                intent.putExtra("ID_USER",idUser);
+                intent.putExtra("ID_PINJAMAN",idPinjaman);
+                intent.putExtra("NAMA",model.getNama());
+                intent.putExtra("TANGGAL_MULAI",model.getTanggalMulai());
+                intent.putExtra("TANGGAL_SELESAI",model.getTanggalSelesai());
+                intent.putExtra("TENOR",model.getTenor());
+                intent.putExtra("TOTAL",model.getJumlah());
+                mCtx.startActivity(intent);
 
             }
         });
@@ -94,5 +93,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         int size = modelList.size();
         modelList.clear();
         notifyItemRangeRemoved(0, size);
+    }
+    public void updateData(List<HistoryModel> newList){
+        modelList = new ArrayList<>();
+        modelList.addAll(newList);
+        notifyDataSetChanged();
     }
 }

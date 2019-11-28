@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +56,7 @@ public class CicilanFragment extends Fragment {
     String url,idpinjaman;
     DetailCicilanAdapter disetujuiAdapter;
     LinearLayoutManager layoutManager;
+    DecimalFormat kursIndonesia;
 
 
     @Override
@@ -66,6 +69,15 @@ public class CicilanFragment extends Fragment {
         tenor = view.findViewById(R.id.tenorpew);
         tanggals = view.findViewById(R.id.tanggals);
         tanggalm =view.findViewById(R.id.tanggalm);
+        kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
         sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"disetujui.php";
@@ -90,11 +102,12 @@ public class CicilanFragment extends Fragment {
                                     String jumlahw = jsonObject.getString("jumlah");
                                     String tenorw = jsonObject.getString("tenor");
                                     String jatuhw = jsonObject.getString("jatuh");
+                                    String kurs = kursIndonesia.format(Double.parseDouble(jumlahw));
                                     nama.setText(namaw);
                                     tanggalm.setText(tanggalw);
                                     tenor.setText(String.valueOf(tenorw));
                                     tanggals.setText(tanggale);
-                                    jumlah.setText("Rp. "+String.valueOf(jumlahw));
+                                    jumlah.setText(kurs);
                                     Log.d("tes", "isiResponse: "+response);
                                     getData2();
                                     recyclerView.setLayoutManager(layoutManager);
@@ -146,6 +159,7 @@ public class CicilanFragment extends Fragment {
                             disetujuiAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "onResponse: "+e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {

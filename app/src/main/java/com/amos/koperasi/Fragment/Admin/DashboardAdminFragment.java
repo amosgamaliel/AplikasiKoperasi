@@ -22,6 +22,7 @@ import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.Adapter.AllActivityAdapter;
 import com.amos.koperasi.Adapter.PemasukanAdapter;
 import com.amos.koperasi.Adapter.PengeluaranAdapter;
+import com.amos.koperasi.Fragment.HistoryActivity;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.Model.NamaPenyimpanModel;
 import com.amos.koperasi.R;
@@ -36,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +53,7 @@ public class DashboardAdminFragment extends Fragment {
     public DashboardAdminFragment() {
         // Required empty public constructor
     }
+    String kurs;
     LinearLayoutManager layoutManager;
     CardView logoutadmin,history,setsimpanan;
     ArrayList<ActivityModel> list;
@@ -75,6 +79,7 @@ public class DashboardAdminFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.rv_daily_detail);
         history = view.findViewById(R.id.history);
+
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         today.setText("Hari ini "+getDateTime());
         url = sharedPreferenceConfig.getUrl()+"dashboard.php";
@@ -101,25 +106,22 @@ public class DashboardAdminFragment extends Fragment {
         pemasukan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new PemasukanFragment()).addToBackStack(null)
-                        .commit();
+                    Intent intent = new Intent(getActivity(),PemasukanActivity.class);
+                    startActivity(intent);
             }
         });
         pengeluaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new PengeluaranFragment()).addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(getActivity(),PengeluaranActivity.class);
+                startActivity(intent);
             }
         });
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new HistoryFragment()).addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                startActivity(intent);
             }
         });
         setsimpanan.setOnClickListener(new View.OnClickListener() {
@@ -151,13 +153,25 @@ public class DashboardAdminFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+                            DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+                            formatRp.setCurrencySymbol("Rp. ");
+                            formatRp.setMonetaryDecimalSeparator(',');
+                            formatRp.setGroupingSeparator('.');
+                            kursIndonesia.setDecimalFormatSymbols(formatRp);
+
+
                             JSONObject jsonObject = new JSONObject(response);
                             hasil = jsonObject.getString("saldo_terakhir");
                             spemasukan = jsonObject.getString("pemasukan");
                             spengeluaran = jsonObject.getString("pengeluaran");
-                            totaluang.setText("Rp."+hasil);
-                            totalPemasukan.setText("Rp. "+spemasukan);
-                            totalPengeluaran.setText("Rp. "+spengeluaran);
+                            kurs = kursIndonesia.format(Double.parseDouble(hasil));
+                            String kurspemasukan = kursIndonesia.format(Double.parseDouble(spemasukan));
+                            String kurspengeluaran = kursIndonesia.format(Double.parseDouble(spengeluaran));
+                            totaluang.setText(kurs);
+                            totalPemasukan.setText(kurspemasukan);
+                            totalPengeluaran.setText(kurspengeluaran);
                             Log.d("der", "onResponse: "+response);
                         } catch (JSONException e) {
                             e.printStackTrace();

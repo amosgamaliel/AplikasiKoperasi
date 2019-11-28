@@ -19,6 +19,8 @@ import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
 import com.amos.koperasi.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +28,12 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
 
     Context mCtx;
     List<DetailCicilanUserModel> modelList;
+    String kurs;
     public DetailCicilanAdapter(Context mCtx, List<DetailCicilanUserModel> list) {
         this.mCtx = mCtx;
         this.modelList = list;
     }
+
 
     @NonNull
     @Override
@@ -54,7 +58,16 @@ public class DetailCicilanAdapter extends RecyclerView.Adapter<DetailCicilanAdap
         }else {
             holder.imageView.setImageResource(R.drawable.ic_hourglass);
         }
-        holder.tv.setText(String.valueOf(model.getJmlCicilan(position)));
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        String jumlah = String.valueOf(model.getJmlCicilan(position));
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlah));
+        holder.tv.setText(kurs);
         holder.header.setText("Cicilan ke "+(position+1));
         holder.status.setText(model.getStatus());
         holder.tanggal.setText(model.getKe());

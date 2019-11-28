@@ -30,6 +30,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +42,7 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
     List<InfoPengajuan> pengajuanList;
     Context mCtx;
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url,jabatan;
+    String url,jabatan,kurs;
 
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
@@ -63,7 +65,16 @@ public class NotifikasiAdminAdapter extends RecyclerView.Adapter<NotifikasiAdmin
         final InfoPengajuan infoPengajuan = pengajuanList.get(position);
 
         holder.namapeminjam.setText(infoPengajuan.getNama());
-        holder.jumlah.setText(String.valueOf(infoPengajuan.getJumlah()));
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        String jumlah = String.valueOf(infoPengajuan.getJumlah());
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlah));
+        holder.jumlah.setText(kurs);
         holder.tenor.setText(String.valueOf(infoPengajuan.getTenor()));
         holder.cardView.setAnimation(AnimationUtils.loadAnimation(mCtx,R.anim.fade_kiri_ke_kanan));
         holder.setuju.setOnClickListener(new View.OnClickListener() {

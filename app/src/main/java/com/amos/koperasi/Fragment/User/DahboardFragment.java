@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +67,7 @@ public class DahboardFragment extends Fragment {
     TextView nama,jumlahpinjaman,tanggalm,tanggals,today;
     Button btnDetail;
     TextView total,sukarela,wajib,tahara;
+    DecimalFormat kursIndonesia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +77,15 @@ public class DahboardFragment extends Fragment {
 
         CardView logout,amos;
         listp = new ArrayList<>();
+
+        kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
 
 
         logout = view.findViewById(R.id.logoutuser);
@@ -139,13 +152,15 @@ public class DahboardFragment extends Fragment {
                                 relativeLayout.setVisibility(View.VISIBLE);
                                 layout.setVisibility(View.GONE);
                             }else{
-                                jumlahpinjaman.setText("Rp "+jumlahw);
+                                String x = kursIndonesia.format(jumlahw);
+                                jumlahpinjaman.setText(x);
                                 tanggalm.setText(tanggalw);
                                 tanggals.setText(tanggale);
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d("a", "onResponse: "+e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -180,17 +195,20 @@ public class DahboardFragment extends Fragment {
                             if (totalw.equals("null")){
                                 wajib.setText("Rp. 0");
                             }else {
-                                wajib.setText("Rp. "+totalw);
+                                String x = kursIndonesia.format(Double.parseDouble(totalw));
+                                wajib.setText(x);
                             }
                             if (totals.equals("null")){
                                 sukarela.setText("Rp. 0");
                             }else {
-                                sukarela.setText("Rp. "+totals);
+                                String x = kursIndonesia.format(Double.parseDouble(totals));
+                                sukarela.setText(x);
                             }
-                            if (totalw.equals("null")){
+                            if (totalt.equals("null")){
                                 tahara.setText("Rp. 0");
                             }else {
-                                tahara.setText("Rp. "+totalt);
+                                String x = kursIndonesia.format(Double.parseDouble(totalt));
+                                tahara.setText(x);
                             }
 
                         } catch (JSONException e) {

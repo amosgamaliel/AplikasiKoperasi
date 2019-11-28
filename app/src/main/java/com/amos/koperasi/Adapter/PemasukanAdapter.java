@@ -1,6 +1,7 @@
 package com.amos.koperasi.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Fragment.Admin.DetailHistoryFragment;
 import com.amos.koperasi.Fragment.Admin.DetailTransaksi;
+import com.amos.koperasi.Fragment.Admin.DetailTransaksiActivity;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.PemasukanViewHolder> {
     ArrayList<ActivityModel> activityModels;
     Context mCtx;
+    String kurs;
 
     public PemasukanAdapter(ArrayList<ActivityModel> activityModels, Context mCtx) {
         this.activityModels = activityModels;
@@ -39,23 +45,28 @@ public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.Pema
     @Override
     public void onBindViewHolder(@NonNull PemasukanViewHolder holder, int position) {
         final ActivityModel model = activityModels.get(position);
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        String jumlah = String.valueOf(model.getJumlah());
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlah));
+            holder.jumlah.setText(kurs);
             holder.imageView.setImageResource(R.drawable.ic_profit);
             holder.desc.setText("membayar cicilan");
             holder.nama.setText(model.getNama());
-            holder.jumlah.setText("+"+model.getJumlah());
             String tipe = model.getTipe();
             if (tipe.equals("bayar")) {
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DetailTransaksi detailTransaksi = new DetailTransaksi();
-                        ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_containera, detailTransaksi).addToBackStack(null)
-                                .commit();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("ID_USER", model.getIduser());
-                        bundle.putString("ID_PINJAMAN", model.getIdpinjaman());
-                        detailTransaksi.setArguments(bundle);
+                        Intent intent = new Intent(mCtx, DetailTransaksiActivity.class);
+                        intent.putExtra("ID_USER",model.getIduser());
+                        intent.putExtra("ID_PINJAMAN",model.getIdpinjaman());
+                        mCtx.startActivity(intent);
                     }
                 });
             }
@@ -84,5 +95,10 @@ public class PemasukanAdapter extends RecyclerView.Adapter<PemasukanAdapter.Pema
         int size = activityModels.size();
         activityModels.clear();
         notifyItemRangeRemoved(0, size);
+    }
+    public void updateData(List<ActivityModel> newList){
+        activityModels = new ArrayList<>();
+        activityModels.addAll(newList);
+        notifyDataSetChanged();
     }
 }
