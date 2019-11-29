@@ -1,6 +1,8 @@
 package com.amos.koperasi.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
     SharedPreferenceConfig sharedPreferenceConfig;
     String url,kurs;
     Date awalBulan,akhirbulan,tanggalcicilan;
+    AlertDialog.Builder builder;
 
     int angka = 0;
     public DalamCicilanAdapter(Context context, List<DalamCicilanModel> list){
@@ -101,50 +104,68 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
                     @Override
                     public void onClick(View v) {
 
-                        final String iduser = String.valueOf(cicilanModel.getIduser());
-                        final String id = String.valueOf(cicilanModel.getId());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                                url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONArray jsonArray = new JSONArray(response);
-                                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        builder = new AlertDialog.Builder(mCtx);
+                        builder.setTitle("Konfirmasi");
+                        builder.setMessage("Apakah anda user membayar semua sisa cicilan?");
+                        builder.setCancelable(true);
 
-                                            Log.d("tes response", "onResponse: " + response);
-
-                                            String status = jsonObject.getString("code");
-
-                                            Toast.makeText(mCtx, status, Toast.LENGTH_SHORT).show();
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            Log.d("ah", "onResponse: " + e.getMessage());
-                                        }
-
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("VoleyError", "Error: " + id + error.toString());
-                                    }
-                                }) {
+                        builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
                             @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<>();
-                                params.put("id_pinjaman", id);
-                                params.put("id_cicilan", cicilanModel.getIdCicilan());
-                                params.put("id_user", iduser);
-                                params.put("tanggal", getDateTime());
-                                params.put("jumlah", String.valueOf(jumlah));
-                                params.put("method", "langsung");
-                                return params;
-                            }
-                        };
-                        Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
-                        deleteItem(position);
+                            public void onClick(DialogInterface dialog, int which) {
 
+                                final String iduser = String.valueOf(cicilanModel.getIduser());
+                                final String id = String.valueOf(cicilanModel.getId());
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                                        url,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                try {
+                                                    JSONArray jsonArray = new JSONArray(response);
+                                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                                                    Log.d("tes response", "onResponse: " + response);
+
+                                                    String status = jsonObject.getString("code");
+
+                                                    Toast.makeText(mCtx, status, Toast.LENGTH_SHORT).show();
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                    Log.d("ah", "onResponse: " + e.getMessage());
+                                                }
+
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Log.d("VoleyError", "Error: " + id + error.toString());
+                                            }
+                                        }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id_pinjaman", id);
+                                        params.put("id_cicilan", cicilanModel.getIdCicilan());
+                                        params.put("id_user", iduser);
+                                        params.put("tanggal", getDateTime());
+                                        params.put("jumlah", String.valueOf(jumlah));
+                                        params.put("method", "langsung");
+                                        return params;
+                                    }
+                                };
+                                Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
+                                deleteItem(position);
+                            }
+                        });
+
+                        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.show();
 
                     }
                 });
@@ -154,49 +175,91 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
                 @Override
                 public void onClick(View v) {
 
-                    final String iduser = String.valueOf(cicilanModel.getIduser());
-                    final String id = String.valueOf(cicilanModel.getId());
-                    final int jumlah = (cicilanModel.getJumlahpinjaman());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                            url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        JSONArray jsonArray = new JSONArray(response);
-                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    builder = new AlertDialog.Builder(mCtx);
+                    builder.setTitle("Konfirmasi");
+                    builder.setMessage("Apakah anda yakin user sudah membayar cicilan ini?");
+                    builder.setCancelable(true);
 
-                                        Log.d("tes response", "onResponse: "+response);
-
-                                        String status = jsonObject.getString("code");
-
-                                        Toast.makeText(mCtx,status,Toast.LENGTH_SHORT).show();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("VoleyError", "Error: "+id+error.toString());
-                                }
-                            }){
+                    builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
                         @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String,String> params = new HashMap<>();
-                            params.put("id_pinjaman",id);
-                            params.put("id_cicilan",cicilanModel.getIdCicilan());
-                            params.put("id_user",iduser);
-                            params.put("tanggal",getDateTime());
-                            params.put("jumlah",cicilanModel.getJumlah());
-                            params.put("method","normal");
-                            return params;
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            final String iduser = String.valueOf(cicilanModel.getIduser());
+                            final String id = String.valueOf(cicilanModel.getId());
+                            final int jumlah = (cicilanModel.getJumlahpinjaman());
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                                    url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(response);
+                                                String status = jsonObject.getString("code");
+                                                if (status.equals("200")){
+                                                    builder = new AlertDialog.Builder(mCtx);
+                                                    builder.setTitle("Berhasil");
+                                                    builder.setMessage("Cicilan "+cicilanModel.getNama()+" berhasil dibayar");
+                                                    builder.setCancelable(false);
+
+                                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                    builder.show();
+                                                }else{
+                                                    builder = new AlertDialog.Builder(mCtx);
+                                                    builder.setTitle("Gagal");
+                                                    builder.setMessage("Cicilan "+cicilanModel.getNama()+" gagal dibayar...");
+                                                    builder.setCancelable(false);
+
+                                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                    builder.show();
+                                                }
+
+                                                Toast.makeText(mCtx,status,Toast.LENGTH_SHORT).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.d("VoleyError", "Error: "+id+error.toString());
+                                        }
+                                    }){
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String,String> params = new HashMap<>();
+                                    params.put("id_pinjaman",id);
+                                    params.put("id_cicilan",cicilanModel.getIdCicilan());
+                                    params.put("id_user",iduser);
+                                    params.put("tanggal",getDateTime());
+                                    params.put("jumlah",cicilanModel.getJumlah());
+                                    params.put("method","normal");
+                                    return params;
+                                }
+                            };
+                            Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
+                            deleteItem(position);
                         }
-                    };
-                    Singleton.getInstance(mCtx).addToRequestQue(stringRequest);
-                    deleteItem(position);
+                    });
+
+                    builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
                 }
             });
 
@@ -205,11 +268,7 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         holder.jumlah.setText(kurs);
         holder.tenor.setText(cicilanModel.getJatuhTempo());
         holder.idp.setText(cicilanModel.getId());
-
-
     }
-
-
     @Override
     public int getItemCount() {
         return list.size();

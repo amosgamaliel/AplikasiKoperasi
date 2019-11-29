@@ -166,6 +166,15 @@ public class DashboardAdminFragment extends Fragment {
                             hasil = jsonObject.getString("saldo_terakhir");
                             spemasukan = jsonObject.getString("pemasukan");
                             spengeluaran = jsonObject.getString("pengeluaran");
+                            if (hasil.equals("null")){
+                                hasil = "0";
+                            }
+                            if (spemasukan.equals("null")){
+                                spemasukan = "0";
+                            }
+                            if (spengeluaran.equals("null")){
+                                spengeluaran = "0";
+                            }
                             kurs = kursIndonesia.format(Double.parseDouble(hasil));
                             String kurspemasukan = kursIndonesia.format(Double.parseDouble(spemasukan));
                             String kurspengeluaran = kursIndonesia.format(Double.parseDouble(spengeluaran));

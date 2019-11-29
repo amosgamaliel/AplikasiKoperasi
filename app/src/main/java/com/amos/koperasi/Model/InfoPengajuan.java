@@ -5,6 +5,16 @@ public class InfoPengajuan {
     private String nama;
     private String tanggal;
 
+    public String getTanggalDiserahkan() {
+        return tanggalDiserahkan;
+    }
+
+    public void setTanggalDiserahkan(String tanggalDiserahkan) {
+        this.tanggalDiserahkan = tanggalDiserahkan;
+    }
+
+    private String tanggalDiserahkan;
+
     public String getIdUser() {
         return idUser;
     }
@@ -31,6 +41,14 @@ public class InfoPengajuan {
         this.jumlah = jumlah;
         this.tenor = tenor;
         this.jatuh = jatuh;
+    }
+    public InfoPengajuan(int id, String idUser, String nama, int jumlah, int tenor, String tanggaldiserahkan) {
+        this.id= id;
+        this.idUser=idUser;
+        this.nama = nama;
+        this.jumlah = jumlah;
+        this.tenor = tenor;
+        this.tanggalDiserahkan = tanggaldiserahkan;
     }
 
     public String getNama() {

@@ -66,7 +66,7 @@ public class DahboardFragment extends Fragment {
     SharedPreferenceConfig sharedPreferenceConfig;
     TextView nama,jumlahpinjaman,tanggalm,tanggals,today;
     Button btnDetail;
-    TextView total,sukarela,wajib,tahara;
+    TextView total,sukarela,wajib,tahara,wajibpb,cicilanpb,taharapb;
     DecimalFormat kursIndonesia;
 
     @Override
@@ -108,6 +108,10 @@ public class DahboardFragment extends Fragment {
         wajib = view.findViewById(R.id.wajib);
         tahara = view.findViewById(R.id.tahara);
         today = view.findViewById(R.id.today);
+        wajibpb = view.findViewById(R.id.iuranwajib);
+        taharapb = view.findViewById(R.id.iuran_tahara);
+        total = view.findViewById(R.id.total);
+        cicilanpb = view.findViewById(R.id.cicilan_pinjaman);
         today.setText("Hari ini, "+getDateTime());
         sukarela = view.findViewById(R.id.sukarela);
         btnDetail.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +156,7 @@ public class DahboardFragment extends Fragment {
                                 relativeLayout.setVisibility(View.VISIBLE);
                                 layout.setVisibility(View.GONE);
                             }else{
-                                String x = kursIndonesia.format(jumlahw);
+                                String x = kursIndonesia.format(Double.parseDouble(jumlahw));
                                 jumlahpinjaman.setText(x);
                                 tanggalm.setText(tanggalw);
                                 tanggals.setText(tanggale);
@@ -172,7 +176,7 @@ public class DahboardFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id",idUser);
+                params.put("id_user",idUser);
                 return params;
             }
         };
@@ -191,28 +195,63 @@ public class DahboardFragment extends Fragment {
                             String totalw = jsonObject.getString("total_wajib");
                             String totalt = jsonObject.getString("total_tahara");
                             String totals = jsonObject.getString("total_sukarela");
+                            String pbcicilan = jsonObject.getString("jumlah_cicilan");
+                            String wajibpbs = jsonObject.getString("jumlah_wajib");
+                            String taharapbs = jsonObject.getString("jumlah_tahara");
+
+
+
+
+
+                            if (pbcicilan.equals("null")){
+                                cicilanpb.setText("Rp. 0,00");
+                                pbcicilan = "0";
+                            }else {
+                                String x = kursIndonesia.format(Double.parseDouble(pbcicilan));
+                                cicilanpb.setText(x);
+                            }
+                            if (wajibpbs.equals("null")){
+                                wajibpb.setText("Rp. 0,00");
+                            }else {
+                                String x = kursIndonesia.format(Double.parseDouble(wajibpbs));
+                                wajibpb.setText(x);
+                            }
+                            if (pbcicilan.equals("null")){
+                                taharapb.setText("Rp. 0,00");
+                            }else {
+                                String x = kursIndonesia.format(Double.parseDouble(taharapbs));
+                                taharapb.setText(x);
+                            }
 
                             if (totalw.equals("null")){
-                                wajib.setText("Rp. 0");
+                                wajib.setText("Rp. 0,00");
                             }else {
                                 String x = kursIndonesia.format(Double.parseDouble(totalw));
                                 wajib.setText(x);
                             }
                             if (totals.equals("null")){
-                                sukarela.setText("Rp. 0");
+                                sukarela.setText("Rp. 0,00");
                             }else {
                                 String x = kursIndonesia.format(Double.parseDouble(totals));
                                 sukarela.setText(x);
                             }
                             if (totalt.equals("null")){
-                                tahara.setText("Rp. 0");
+                                tahara.setText("Rp. 0,00");
                             }else {
                                 String x = kursIndonesia.format(Double.parseDouble(totalt));
                                 tahara.setText(x);
                             }
+                            int jcicilan = Integer.parseInt(pbcicilan);
+                            int jwajib = Integer.parseInt(wajibpbs);
+                            int jtahara = Integer.parseInt(taharapbs);
+                            int jtotal = jcicilan+jwajib+jtahara;
+
+                            String y = kursIndonesia.format(jtotal);
+                            total.setText(y);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d("wey", "onResponse: "+e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -225,6 +264,8 @@ public class DahboardFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_user",idUser);
+                params.put("awalbulan",getDateAwal());
+                params.put("akhirbulan",getDateAkhir());
                 return params;
             }
         };
@@ -234,6 +275,18 @@ public class DahboardFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd MMMM yyyy", Locale.getDefault());
 //        Date date = new Date();
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    private String getDateAwal() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyyMM01");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    private String getDateAkhir() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyyMM31");
         Date date = new Date();
         return dateFormat.format(date);
     }

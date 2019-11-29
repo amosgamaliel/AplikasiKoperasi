@@ -15,6 +15,7 @@ import com.amos.koperasi.Fragment.Admin.CekSimpananWajib;
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
 import com.amos.koperasi.Fragment.Admin.DashboardAdminFragment;
 import com.amos.koperasi.Fragment.Admin.HistoryFragment;
+import com.amos.koperasi.Fragment.Admin.MenyerahkanFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
 import com.amos.koperasi.Fragment.Admin.SimpananFragment;
 import com.amos.koperasi.Fragment.User.AjukanFragment;
@@ -72,7 +73,7 @@ public class AdminActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_item_notif:
-                    selectedFragment = new CekSimpananWajib();
+                    selectedFragment = new MenyerahkanFragment();
                     break;
                 case R.id.nav_history:
                     selectedFragment = new DalamCicilan();
