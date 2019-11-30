@@ -180,12 +180,12 @@ public class DalamCicilan extends Fragment {
                                                 product.getString("id_cicilan"),
                                                 duar,
                                                 product.getString("nama"),
-                                                product.getInt("jumlah"),
+                                                product.getInt("jumlah_pinjaman"),
                                                 product.getInt("lunas"),
                                                 product.getString("id_pinjaman"),
                                                 product.getString("tenor"),
                                                 product.getString("id_user"),
-                                                product.getString("jumlah")));
+                                                product.getString("jumlah_cicilan")));
                                     }
                                     recyclerView.setAdapter(adapter);
                                     adapter.notifyDataSetChanged();

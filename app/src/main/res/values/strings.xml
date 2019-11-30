@@ -22,6 +22,7 @@
     </string-array>
     <string name="login_preferences">com.amos.koperasi_login_preferences</string>
     <string name="login_status_preferences">com.amos.koperasi_login_status_preferences</string>
+    <string name="login_status_admin_preferences">com.amos.koperasi_login_status_admin_preferences</string>
     <string name="keluar_peminjaman">meminjam uang</string>
     <string name="masuk_cicilan">membayar cicilan</string>
     <string name="masuk_simpanan">menyimpan simpanan</string>

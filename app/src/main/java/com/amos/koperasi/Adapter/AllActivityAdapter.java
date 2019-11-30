@@ -1,6 +1,7 @@
 package com.amos.koperasi.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +15,19 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Fragment.Admin.DetailTransaksi;
+import com.amos.koperasi.Fragment.Admin.DetailTransaksiActivity;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.AllActivityViewHolder> {
 
     ArrayList<ActivityModel> models;
     Context mCtx;
+    String kurs;
 
     public AllActivityAdapter(ArrayList<ActivityModel> models, Context mCtx) {
         this.models = models;
@@ -41,7 +46,16 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
         final ActivityModel model = models.get(position);
         String tipe = model.getTipe();
         holder.nama.setText(model.getNama());
-        holder.jumlah.setText(model.getJumlah());
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        String jumlah = model.getJumlah();
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlah));
+        holder.jumlah.setText(kurs);
         if (tipe.equals("bayar")||tipe.equals("simpan")){
             holder.imageView.setImageResource(R.drawable.ic_profit);
             if (tipe.equals("bayar")){
@@ -49,14 +63,10 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DetailTransaksi detailTransaksi = new DetailTransaksi();
-                        ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_containera, detailTransaksi).addToBackStack(null)
-                                .commit();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("ID_USER", model.getIduser());
-                        bundle.putString("ID_PINJAMAN", model.getIdpinjaman());
-                        detailTransaksi.setArguments(bundle);
+                        Intent intent = new Intent(mCtx, DetailTransaksiActivity.class);
+                        intent.putExtra("ID_USER",model.getIduser());
+                        intent.putExtra("ID_PINJAMAN",model.getIdpinjaman());
+                        mCtx.startActivity(intent);
                     }
                 });
 
@@ -91,6 +101,7 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
         TextView jumlah,nama,desc;
         CardView cardView;
         ImageView imageView;
+        String kurs;
         public AllActivityViewHolder(@NonNull View itemView) {
             super(itemView);
             jumlah = itemView.findViewById(R.id.jumlahactivity);

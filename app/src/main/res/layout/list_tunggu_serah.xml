@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvDC"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:padding="8dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amos Gamaliel"
+
+            android:id="@+id/npeminjamc"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="8dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="13sp"
+                android:text="ID Pinjaman"/>
+
+            <TextView
+                android:id="@+id/idpinjaman"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textAlignment="viewEnd"
+                android:textSize="13sp"
+                android:text="ID Pinjaman"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                style="@style/teksDetail"
+                android:textSize="10sp"
+                android:text="Jumlah"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp"
+                style="@style/teksDetail"
+                android:text="Tanggal Disetujui"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/jumlahc"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/teksDetail"
+                android:textSize="24sp"
+                android:layout_marginBottom="4dp"
+                android:text="Jumlah"/>
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:id="@+id/jatuhc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/teksDetail"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="viewEnd"
+                android:text="Tanggal Disetujui"/>
+
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnNormal"
+            android:textSize="13sp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:text="Sudah Diterima"
+            android:textColor="#fff"
+            android:background="@drawable/btn_gradient_style"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

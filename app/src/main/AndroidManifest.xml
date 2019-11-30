@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/fullscreen"
         android:usesCleartextTraffic="true">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <activity android:name=".Activity.UsernameActivity"></activity>
+        <activity android:name=".Fragment.Admin.DetailHistoryActivity"></activity>
+        <activity android:name=".Fragment.Admin.DetailTransaksiActivity" />
+        <activity android:name=".Fragment.Admin.CekWajibActivity" />
+        <activity
+            android:name=".Fragment.HistoryActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Fragment.Admin.PengeluaranActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Fragment.Admin.PemasukanActivity"
+            android:theme="@style/AppTheme" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".Activity.UsernameActivity" />
         <activity android:name=".Activity.AdminActivity" />
         <activity android:name=".Activity.UserActivity" />
         <activity android:name=".Activity.LoginActivity" />

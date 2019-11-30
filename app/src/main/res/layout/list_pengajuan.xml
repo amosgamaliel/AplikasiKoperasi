@@ -55,6 +55,19 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             android:layout_marginBottom="8dp">
             <TextView
+                android:id="@+id/lihatdetail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Lihat Detail"
+                android:textSize="13sp"
+                android:paddingRight="16dp"
+                android:gravity="left"
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/biru"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <TextView
                 android:id="@+id/btnTolak"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

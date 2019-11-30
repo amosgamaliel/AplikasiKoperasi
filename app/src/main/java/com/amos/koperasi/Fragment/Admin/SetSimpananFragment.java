@@ -1,9 +1,12 @@
 package com.amos.koperasi.Fragment.Admin;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,6 +55,7 @@ public class SetSimpananFragment extends Fragment {
     public SetSimpananFragment() {
         // Required empty public constructor
     }
+    AlertDialog.Builder builder;
     String iduser,jumlahKomitmen,namauser;
     SharedPreferenceConfig sharedPreferenceConfig;
     TextView prediksi;
@@ -79,7 +83,26 @@ public class SetSimpananFragment extends Fragment {
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postSimpanan();
+                builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Konfirmasi");
+                builder.setMessage("Apakah anda yakin ingin menyimpan simpanan user ini?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        postSimpanan();
+                    }
+                });
+
+                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
             }
         });
         return view;
@@ -146,6 +169,7 @@ public class SetSimpananFragment extends Fragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "onResponse: "+e.getMessage());
                         }
 
                     }
@@ -168,7 +192,23 @@ public class SetSimpananFragment extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("code");
                             if (code.equals("200")){
-                                Toast.makeText(getActivity(), "Berhasil membuat komitmen", Toast.LENGTH_SHORT).show();
+                                builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Berhasil");
+                                builder.setMessage(namauser+" berhasil membuat komitmen baru");
+                                builder.setCancelable(false);
+
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        edtNama.setText("");
+                                        jumlah.setText("");
+                                        ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.fragment_containera, new DashboardAdminFragment()).addToBackStack(null)
+                                                .commit();
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.show();
                             }
                             Log.d(TAG, "onResponse: "+response);
 
@@ -191,6 +231,7 @@ public class SetSimpananFragment extends Fragment {
                 params.put("id_user",iduser);
                 params.put("jumlah",jumlah.getText().toString());
                 params.put("tanggal",getDateTime());
+                params.put("tanggal_selesai",getDateAkhirPost());
                 return params;
             }
         };
@@ -206,6 +247,15 @@ public class SetSimpananFragment extends Fragment {
     public String getDateAkhir() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "MMMM yyyy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,10);
+        Date date = calendar.getTime();
+
+        return dateFormat.format(date);
+    }
+    public String getDateAkhirPost() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyyMMdd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH,10);
         Date date = calendar.getTime();

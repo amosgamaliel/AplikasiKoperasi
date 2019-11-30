@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amos.koperasi.Model.HistoryModel;
 import com.amos.koperasi.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class DetailHistoryAdapter extends RecyclerView.Adapter<DetailHistoryAdapter.DetailHistoryViewHolder> {
     List<HistoryModel> historyModels;
     Context mCtx;
+    String kurs;
 
     public DetailHistoryAdapter(List<HistoryModel> historyModels, Context mCtx) {
         this.historyModels = historyModels;
@@ -33,8 +36,17 @@ public class DetailHistoryAdapter extends RecyclerView.Adapter<DetailHistoryAdap
     @Override
     public void onBindViewHolder(@NonNull DetailHistoryAdapter.DetailHistoryViewHolder holder, int position) {
         HistoryModel historyModel = historyModels.get(position);
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        String jumlah = String.valueOf(historyModel.getJumlah());
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        kurs = kursIndonesia.format(Double.parseDouble(jumlah));
+        holder.jml.setText(kurs);
         holder.tgl.setText(historyModel.getTanggalBayar());
-        holder.jml.setText(historyModel.getJumlah());
     }
 
     @Override

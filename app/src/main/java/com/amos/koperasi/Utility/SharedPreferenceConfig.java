@@ -9,7 +9,7 @@ public class SharedPreferenceConfig {
     private SharedPreferences sharedPreferences;
     private Context context;
 
-    public static final String url ="http://192.168.42.114/koperasi_API/";
+    public static final String url ="http://192.168.42.186/koperasi_API/";
 
     public String getUrl() {
         return url;
@@ -24,7 +24,7 @@ public class SharedPreferenceConfig {
 
     public void writeLoginAdminStatus(boolean status){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(context.getResources().getString(R.string.login_status_preferences),status);
+        editor.putBoolean(context.getResources().getString(R.string.login_status_admin_preferences),status);
         editor.commit();
     }
     public void writeLoginUserStatus(boolean status){
@@ -39,7 +39,7 @@ public class SharedPreferenceConfig {
     }
     public boolean readLoginAdminStatus(){
         boolean status = false;
-        status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_preferences),false);
+        status= sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status_admin_preferences),false);
         return status;
     }
     public void getUsername(){

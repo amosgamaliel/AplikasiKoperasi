@@ -6,6 +6,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amos.koperasi.Activity.AdminActivity;
+import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.Adapter.DetailCicilanAdapter;
 import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanUserModel;
@@ -71,6 +73,7 @@ public class AjukanFragment extends Fragment {
     EditText jumlah,tenor;
     TextView total,terbilang;
     AlertDialog.Builder builder ;
+    View dialogView;
     int bln;
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
@@ -79,7 +82,9 @@ public class AjukanFragment extends Fragment {
     SharedPreferenceConfig sharedPreferenceConfig;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     String url,bulan;
+    DetailCicilanAdapter adapter;
     String jabatan;
+    SharedPreferences mSettings;
 
     public AjukanFragment() {
         // Required empty public constructor
@@ -111,9 +116,9 @@ public class AjukanFragment extends Fragment {
 
         sharedPreferenceConfig =  new SharedPreferenceConfig(getContext());
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
-        final SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mSettings = PreferenceManager.getDefaultSharedPreferences(getContext());
         jabatan = mSettings.getString("jabatan","user");
-        final DetailCicilanAdapter adapter = new DetailCicilanAdapter(getActivity(),arrayList);
+        adapter = new DetailCicilanAdapter(getActivity(),arrayList);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final RecyclerView recyclerView = view.findViewById(R.id.rvdetail);
         recyclerView.setNestedScrollingEnabled(false);
@@ -148,12 +153,12 @@ public class AjukanFragment extends Fragment {
                 }else{
                     recyclerView.setVisibility(View.VISIBLE);
                     iJumlah =Integer.parseInt(jumlahs);
-                    String f = kursIndonesia.format(sum);
-                    total.setText(f);
+
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             adapter.clear();
+                            sum = 0;
                             int pos= spinner.getSelectedItemPosition();
                             String[] value = getResources().getStringArray(R.array.bulan);
                             final int bulann = Integer.valueOf(value[pos]);
@@ -174,15 +179,16 @@ public class AjukanFragment extends Fragment {
 
                                 arrayList.add(new DetailCicilanUserModel(
                                         cicilan,
-                                        "tanggal bebas",
+                                        getJatuhTempo(i),
                                         "kosong"
                                 ));
                                 integers.add(cicilan);
-                                sum = 0;
-                                sum =+ integers.get(i);
+                                hasil =sum += cicilan;
 
                             }
 
+                            String f = kursIndonesia.format(sum);
+                            total.setText(f);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
                             Log.d("ba", "cekJabatan"+jabatan);
@@ -208,12 +214,10 @@ public class AjukanFragment extends Fragment {
                             "kosong"
                     ));
                     integers.add(cicilan);
-                    hasil =sum += integers.get(i);
+                    hasil =sum += cicilan;
                 }
-
-//                sum = 0;
-//                for(int i = 0; i < integers.size(); i++)
-//                total.setText(String.valueOf(hasil));   ;
+                String f = kursIndonesia.format(sum);
+                total.setText(f);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
             }
@@ -230,66 +234,7 @@ public class AjukanFragment extends Fragment {
                     total.getText().toString().equals("")){
                     jumlah.setError("Field harus diisi");
                 }else {
-                    StringRequest stringRequest = new StringRequest(
-                            Request.Method.POST,
-                            url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(response);
-                                        Log.d("cek", "onResponse: "+response);
-                                        String nama = jsonObject.getString("nama");
-                                        String status = jsonObject.getString("code");
-                                        if (status.equals("200")){
-                                            Log.d("cek status", "statusnya apa"+status);
-                                            if (jabatan.equals("admin")){
-                                                createNotificationChannel();
-
-                                                Intent landingIntent = new Intent(getActivity(), AdminActivity.class);
-                                                landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                landingIntent.putExtra("menuFragment","notifikasiAdmin");
-
-                                                PendingIntent landingPendingIntent = PendingIntent.getActivity(getActivity(),0,landingIntent,PendingIntent.FLAG_ONE_SHOT);
-                                                NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),CHANNEL_ID);
-                                                builder.setSmallIcon(R.drawable.ic_collections_bookmark_white_24dp);
-                                                builder.setContentTitle("Ada Pengajuan Baru");
-                                                builder.setContentText(nama+" mengajukan pinjaman");
-                                                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                                                builder.setContentIntent(landingPendingIntent);
-
-                                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
-                                                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
-                                            }
-                                        }
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("gagal tapi bae", "wleeee"+mSettings.getString("userid","1"));
-                                }
-                            }){
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-
-                            params.put("jumlah_pinjaman",jumlah.getText().toString());
-                            params.put("tenor",String.valueOf(bln));
-                            params.put("total_pinjaman",total.getText().toString());
-                            params.put("id_user",mSettings.getString("userid","1"));
-                            params.put("tanggal",getDateTime());
-                            params.put("tanggal_selesai",getDateAkhir());
-                            return params;
-                        }
-                    };
-                    Singleton.getInstance(getContext()).addToRequestQue(stringRequest);
+                    showDialog();
                 }
             }
         });
@@ -365,4 +310,99 @@ public class AjukanFragment extends Fragment {
 
         return dateFormat.format(date);
     }
+    private void showDialog(){
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Konfirmasi");
+        builder.setMessage("Apakah anda yakin ingin mengajukan?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getData();
+                adapter.clear();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    void getData(){
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                Log.d("cek", "onResponse: "+response);
+                                String status = jsonObject.getString("code");
+                                if (status.equals("200")){
+                                    builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle("Berhasil");
+                                    builder.setMessage("Pengajuan peminjaman anda sudah terkirim ke admin");
+                                    builder.setCancelable(false);
+
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            jumlah.setText("");
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                                    builder.show();
+                                }else if (status.equals("501")){
+                                    builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle("Tidak bisa mengajukan");
+                                    builder.setMessage("Anda hanya bisa mengajukan 1 pengajuan dalam 1 waktu");
+                                    builder.setCancelable(false);
+
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            jumlah.setText("");
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                                    builder.show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("gagal tapi bae", "wleeee"+mSettings.getString("userid","1"));
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("jumlah_pinjaman",jumlah.getText().toString());
+                    params.put("tenor",String.valueOf(bln));
+                    params.put("total_pinjaman",String.valueOf(sum));
+                    params.put("id_user",mSettings.getString("userid","1"));
+                    params.put("tanggal",getDateTime());
+                    params.put("tanggal_selesai",getDateAkhir());
+                    return params;
+                }
+            };
+            Singleton.getInstance(getContext()).addToRequestQue(stringRequest);
+        }
 }

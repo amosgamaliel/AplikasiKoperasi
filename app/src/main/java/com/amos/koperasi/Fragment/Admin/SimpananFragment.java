@@ -1,7 +1,9 @@
 package com.amos.koperasi.Fragment.Admin;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -49,7 +51,7 @@ import java.util.Map;
  */
 public class SimpananFragment extends Fragment{
 
-
+AlertDialog.Builder builder;
     public SimpananFragment() {
         // Required empty public constructor
     }
@@ -65,6 +67,7 @@ public class SimpananFragment extends Fragment{
     AutoCompleteTextView editText;
     TextView edthasil;
     Button simpan;
+    String namauser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +89,26 @@ public class SimpananFragment extends Fragment{
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postSimpanan();
-                Toast.makeText(getActivity(), ""+tipe, Toast.LENGTH_SHORT).show();
+                builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Konfirmasi");
+                builder.setMessage("Apakah anda yakin ingin menyimpan simpanan user ini?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    postSimpanan();
+                    }
+                });
+
+                builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
             }
         });
         return view;
@@ -122,6 +143,7 @@ public class SimpananFragment extends Fragment{
                                         final NamaPenyimpanModel pojo = arrayAdapter.getItem(position);
                                         iduser = pojo.getId();
                                         jumlahKomitmen = pojo.getJumlahSimpanan();
+                                        namauser = pojo.getNama();
                                         tipe = "sukarela";
                                         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                             @Override
@@ -179,23 +201,59 @@ public class SimpananFragment extends Fragment{
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray array = new JSONArray(response);
-                            JSONObject jsonObject = array.getJSONObject(0);
+                            JSONObject jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("code");
+                            String message = jsonObject.getString("message");
                             if (code.equals("200")){
-                                Toast.makeText(getActivity(), "Mantap", Toast.LENGTH_SHORT).show();
+                                builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Berhasil");
+                                builder.setMessage("Simpanan "+namauser+" berhasil disimpan");
+                                builder.setCancelable(false);
+
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.show();
+                            }else if (code.equals("312")){
+                                builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Gagal");
+                                builder.setMessage(namauser+" sudah membayar simpanan wajib");
+                                builder.setCancelable(false);
+
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.show();
                             }
 
 
                         }catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d("t", "onResponse: "+e.getMessage());
                         }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Gagal");
+                builder.setMessage("Periksa koneksi anda dan coba lagi");
+                builder.setCancelable(false);
 
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
             }
         }){
             @Override

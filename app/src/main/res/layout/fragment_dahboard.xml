@@ -12,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
 <!--        <TextView-->
@@ -32,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="Hari ini, Senin, 16 November"
             android:textSize="13sp"/>
+
 
         <androidx.cardview.widget.CardView
             android:layout_marginLeft="16dp"
@@ -66,6 +66,7 @@
                     android:src="@drawable/ic_undraw_no_data_qbuo"/>
 
             </RelativeLayout>
+
 
             <LinearLayout
                 android:id="@+id/ngutang"
@@ -168,6 +169,159 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="30dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/green_lunas_gradient"
+                    android:text="Papan Bulanan"
+                    android:textAllCaps="false"
+                    android:textColor="#fff">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Papan Bulanan"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#008F8F8F"
+                    android:layout_marginBottom="15dp">
+
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="11dp"
+                        android:text="Cicilan Pinjaman Anda" />
+
+                    <TextView
+                        android:id="@+id/iuranwajib"
+                        android:textSize="13sp"
+                        android:gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="11dp"
+                        android:text="Iuran Wajib Anda" />
+
+                    <TextView
+                        android:id="@+id/iuran_tahara"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cicilan_pinjaman"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:text="TextView"
+                        android:gravity="right"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView5"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="11dp"
+                        android:text="Iuran Tahara Anda" />
+
+                    <TextView
+                        android:id="@+id/cicilan_pinjaman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iuranwajib"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="24dp"
+                        android:gravity="right"
+                        android:text="TextView"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/textView7"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@color/intro_description_color"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/divider"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Total" />
+
+                    <TextView
+                        android:id="@+id/total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/divider"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="26dp"
+                        android:text="Rp. Sekian" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
