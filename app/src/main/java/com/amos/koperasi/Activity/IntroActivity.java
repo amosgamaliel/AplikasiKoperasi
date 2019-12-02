@@ -78,8 +78,8 @@ public class IntroActivity extends AppCompatActivity {
         mList.add(new ScreenItem("Siapkan Keamanan anda","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.ic_undraw_connecting_teams_8ntu));
 
         // setup viewpager
-        screenPager =findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
+        screenPager =findViewById(R.id.screen_viewpagers);
         screenPager.setAdapter(introViewPagerAdapter);
 
         // setup tablayout with viewpager

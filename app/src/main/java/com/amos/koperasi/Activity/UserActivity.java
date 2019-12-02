@@ -14,6 +14,7 @@ import com.amos.koperasi.Fragment.User.AjukanFragment;
 import com.amos.koperasi.Fragment.User.DahboardFragment;
 import com.amos.koperasi.Fragment.Admin.NotifikasiAdminFragment;
 import com.amos.koperasi.Fragment.User.CicilanFragment;
+import com.amos.koperasi.Fragment.User.NotifikasiFragment;
 import com.amos.koperasi.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -49,7 +50,7 @@ public class UserActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_item_notif:
-                    selectedFragment = new NotifikasiAdminFragment();
+                    selectedFragment = new NotifikasiFragment();
                     break;
                 case R.id.nav_history:
                     selectedFragment = new AkunFragment();

@@ -73,7 +73,7 @@ public class AdminActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_item_notif:
-                    selectedFragment = new MenyerahkanFragment();
+                    selectedFragment = new NotifikasiAdminFragment();
                     break;
                 case R.id.nav_history:
                     selectedFragment = new DalamCicilan();

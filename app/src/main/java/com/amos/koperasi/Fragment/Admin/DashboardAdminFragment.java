@@ -55,7 +55,7 @@ public class DashboardAdminFragment extends Fragment {
     }
     String kurs;
     LinearLayoutManager layoutManager;
-    CardView logoutadmin,history,setsimpanan;
+    CardView komitmen,history,setsimpanan,cekwajib,gantipassword,penyerahan;
     ArrayList<ActivityModel> list;
     AllActivityAdapter activityAdapter;
     TextView totaluang;
@@ -69,11 +69,14 @@ public class DashboardAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard_admin, container, false);
-        logoutadmin = view.findViewById(R.id.logoutadmin);
+        komitmen = view.findViewById(R.id.komitmen);
         totaluang = view.findViewById(R.id.totalUang);
         totalPemasukan = view.findViewById(R.id.totalPemasukan);
         totalPengeluaran = view.findViewById(R.id.totalPengeluaran);
         setsimpanan = view.findViewById(R.id.setsimpanan);
+        cekwajib = view.findViewById(R.id.cekwajib);
+        gantipassword = view.findViewById(R.id.changepass);
+        penyerahan = view.findViewById(R.id.penyerahan);
         today = view.findViewById(R.id.today);
         logout = view.findViewById(R.id.logout);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -93,14 +96,31 @@ public class DashboardAdminFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        logoutadmin.setOnClickListener(new View.OnClickListener() {
+        komitmen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new NotifikasiAdminFragment()).addToBackStack(null)
+                        .replace(R.id.fragment_containera, new SetSimpananFragment()).addToBackStack(null)
                         .commit();
             }
         });
+        penyerahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new MenyerahkanFragment()).addToBackStack(null)
+                        .commit();
+            }
+        });
+        cekwajib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new CekSimpananWajib()).addToBackStack(null)
+                        .commit();
+            }
+        });
+
         pengeluaran = view.findViewById(R.id.pengeluaran);
         pemasukan = view.findViewById(R.id.pemasukan);
         pemasukan.setOnClickListener(new View.OnClickListener() {

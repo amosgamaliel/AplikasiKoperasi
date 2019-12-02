@@ -66,8 +66,10 @@ public class DahboardFragment extends Fragment {
     SharedPreferenceConfig sharedPreferenceConfig;
     TextView nama,jumlahpinjaman,tanggalm,tanggals,today;
     Button btnDetail;
-    TextView total,sukarela,wajib,tahara,wajibpb,cicilanpb,taharapb;
+    TextView total,sukarela,wajib,tahara,wajibpb,cicilanpb,taharapb,keterangan;
     DecimalFormat kursIndonesia;
+    TextView tanggaldisetujui;
+    String action;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,9 +98,10 @@ public class DahboardFragment extends Fragment {
             }
         });
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        url = sharedPreferenceConfig.getUrl()+"disetujui.php";
+        url = sharedPreferenceConfig.getUrl()+"infopinjamanuser.php";
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         idUser = mSettings.getString("userid","1");
+        keterangan = view.findViewById(R.id.keterangan);
         jumlahpinjaman = view.findViewById(R.id.totalUang);
         tanggalm = view.findViewById(R.id.tanggalmulai);
         tanggals =view.findViewById(R.id.tanggal_selesai);
@@ -117,9 +120,13 @@ public class DahboardFragment extends Fragment {
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CicilanFragment cicilanFragment = new CicilanFragment();
                 ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new CicilanFragment()).addToBackStack(null)
+                        .replace(R.id.fragment_container, cicilanFragment).addToBackStack(null)
                         .commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("ACTION", action);
+                cicilanFragment.setArguments(bundle);
                 }
             });
         getData();
@@ -127,12 +134,12 @@ public class DahboardFragment extends Fragment {
         return view;
     }
 
-
     public void userLogout(){
         SharedPreferenceConfig sharedPreferenceConfig;
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         sharedPreferenceConfig.writeLoginUserStatus(false);
         startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 
     private void getData(){
@@ -151,16 +158,28 @@ public class DahboardFragment extends Fragment {
                             String jumlahw = jsonObject.getString("jumlah");
                             String tenorw = jsonObject.getString("tenor");
                             String jatuhw = jsonObject.getString("jatuh");
+                            String status = jsonObject.getString("status");
 
-                            if (tanggalw.equals("null")){
+                            if (status.equals("lunas")){
                                 relativeLayout.setVisibility(View.VISIBLE);
                                 layout.setVisibility(View.GONE);
-                            }else{
+                            }else if (status.equals("disetujui")||status.equals("diterima")){
+                                if (status.equals("disetujui")){
+                                    action = "ESTIMASI";
+                                }else {
+                                    action = "PASTI";
+                                }
                                 String x = kursIndonesia.format(Double.parseDouble(jumlahw));
                                 jumlahpinjaman.setText(x);
                                 tanggalm.setText(tanggalw);
                                 tanggals.setText(tanggale);
+                            }else if (status.equals("belum")){
+                                relativeLayout.setVisibility(View.VISIBLE);
+                                layout.setVisibility(View.GONE);
+                                keterangan.setText("Pengajuan pinjaman anda sedang ditinjau oleh admin");
                             }
+
+                            Log.d("ya", "onResponse: "+status+response);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -189,6 +208,8 @@ public class DahboardFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        Log.d("bebas", "onResponse: Hmm"+response);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);

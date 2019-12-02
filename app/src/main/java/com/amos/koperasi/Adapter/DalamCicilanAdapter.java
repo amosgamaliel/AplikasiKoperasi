@@ -3,6 +3,7 @@ package com.amos.koperasi.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amos.koperasi.Fragment.Admin.DalamCicilan;
+import com.amos.koperasi.Fragment.Admin.DetailTransaksi;
+import com.amos.koperasi.Fragment.User.CicilanFragment;
 import com.amos.koperasi.Model.DalamCicilanModel;
 import com.amos.koperasi.Model.DetailCicilanModel;
 import com.amos.koperasi.R;
@@ -82,6 +87,19 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         kurs = kursIndonesia.format(Double.parseDouble(jumlahcicilan));
         holder.jumlah.setText(kurs);
 
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DetailTransaksi detailTransaksi = new DetailTransaksi();
+                ((FragmentActivity) mCtx).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, detailTransaksi).addToBackStack(null)
+                        .commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("ID_USER", cicilanModel.getIduser());
+                bundle.putString("ID_PINJAMAN", cicilanModel.getId());
+                detailTransaksi.setArguments(bundle);
+            }
+        });
         if (cicilanModel.getJatuhTempo() == null || cicilanModel.getJatuhTempo().isEmpty()) {
             try {
                 awalBulan = new SimpleDateFormat("yyyyMMdd").parse(getDateAwal());
@@ -278,9 +296,10 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
 
         TextView nama,jumlah,tenor,idp;
         Button bayar,lunas;
-
+        CardView cardView;
         public DisetujuiViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cvDC);
             sharedPreferenceConfig =  new SharedPreferenceConfig(mCtx);
             url = sharedPreferenceConfig.getUrl()+"cicilan.php";
             nama = itemView.findViewById(R.id.npeminjamc);

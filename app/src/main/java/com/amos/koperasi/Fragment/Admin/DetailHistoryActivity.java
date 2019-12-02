@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +34,7 @@ public class DetailHistoryActivity extends AppCompatActivity {
 
     String nama,tanggalm,tanggals,idUser,idPinjaman,jumlah,tenor;
     TextView tvJumlah,tvNama,tvTenor,tvTs,tvTm;
-    TextView tvnama,tvtanggal;
+    TextView tvnama,tvtanggal,tanggaldiajukan;
     List<HistoryModel> list = new ArrayList<>();
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -50,6 +52,16 @@ public class DetailHistoryActivity extends AppCompatActivity {
         tvTenor = findViewById(R.id.tenorpew);
         tvTs = findViewById(R.id.tanggals);
         tvTm = findViewById(R.id.tanggalm);
+        tanggaldiajukan = findViewById(R.id.tanggaldiajukan);
+
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
 
         recyclerView = findViewById(R.id.rvdh);
         historyAdapter = new DetailHistoryAdapter(list,this);
@@ -62,15 +74,18 @@ public class DetailHistoryActivity extends AppCompatActivity {
 
             nama = getIntent().getStringExtra("NAMA");
             tanggalm = getIntent().getStringExtra("TANGGAL_MULAI");
+            String tanggalmc = getIntent().getStringExtra("TANGGAL_MULAI_CICILAN");
             tanggals = getIntent().getStringExtra("TANGGAL_SELESAI");
             idUser = getIntent().getStringExtra("ID_USER");
             idPinjaman = getIntent().getStringExtra("ID_PINJAMAN");
             jumlah = getIntent().getStringExtra("TOTAL");
             tenor = getIntent().getStringExtra("TENOR");
-            tvJumlah.setText(jumlah);
-            tvTm.setText(tanggalm);
+            String x = kursIndonesia.format(Double.parseDouble(jumlah));
+            tvJumlah.setText(x);
+            tanggaldiajukan.setText(tanggalm);
+            tvTm.setText(tanggalmc);
             tvTs.setText(tanggals);
-            tvTenor.setText(tenor+" bulan");
+            tvTenor.setText(tenor);
             tvnama.setText(nama);
 
         getData();

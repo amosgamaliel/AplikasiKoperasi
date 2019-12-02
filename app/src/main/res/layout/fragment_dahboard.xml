@@ -48,6 +48,7 @@
                 android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/keterangan"
                     android:layout_width="199dp"
                     android:layout_height="36dp"
                     android:layout_alignParentTop="true"

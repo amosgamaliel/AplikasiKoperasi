@@ -71,7 +71,6 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_width="match_parent"
@@ -80,7 +79,7 @@
             app:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/logoutadmin"
+                android:id="@+id/komitmen"
                 app:layout_columnWeight="1"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
@@ -102,7 +101,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pengajuan"
+                        android:text="Komitmen Tahara"
                         android:textSize="9sp"/>
 
                 </LinearLayout>
@@ -164,6 +163,110 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Set Simpanan"
+                        android:textSize="9sp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <androidx.gridlayout.widget.GridLayout
+
+            app:columnCount="3"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_width="match_parent"
+            app:alignmentMode="alignMargins"
+            android:layout_height="105dp"
+            app:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cekwajib"
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_report"/>
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cek Wajib"
+                        android:textSize="9sp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/penyerahan"
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp"
+                android:elevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_processing"/>
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Penyerahan"
+                        android:textSize="9sp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/changepass"
+                app:layout_columnWeight="1"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                app:cardCornerRadius="4dp"
+                android:backgroundTint="#fff"
+                app:layout_gravity="center"
+                app:cardElevation="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_pen"/>
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ganti Password"
                         android:textSize="9sp"/>
 
                 </LinearLayout>

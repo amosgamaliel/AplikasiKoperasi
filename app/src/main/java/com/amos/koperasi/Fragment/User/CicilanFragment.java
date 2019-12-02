@@ -32,8 +32,12 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -49,14 +53,16 @@ public class CicilanFragment extends Fragment {
         // Required empty public constructor
     }
     SharedPreferences mSettings;
-    TextView jumlah,nama,tenor,tanggals,tanggalm;
+    TextView jumlah,nama,tenor,tanggals,tanggalm,detail,tanggaldiajukan;
     RecyclerView recyclerView;
+    DetailCicilanAdapter adapter;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     SharedPreferenceConfig sharedPreferenceConfig;
     String url,idpinjaman;
     DetailCicilanAdapter disetujuiAdapter;
     LinearLayoutManager layoutManager;
     DecimalFormat kursIndonesia;
+    String action;
 
 
     @Override
@@ -69,6 +75,15 @@ public class CicilanFragment extends Fragment {
         tenor = view.findViewById(R.id.tenorpew);
         tanggals = view.findViewById(R.id.tanggals);
         tanggalm =view.findViewById(R.id.tanggalm);
+        detail = view.findViewById(R.id.linear);
+        tanggaldiajukan = view.findViewById(R.id.tanggaldiajukan);
+
+        Bundle bundle = this.getArguments();
+
+        if (bundle != null) {
+            action = bundle.getString("ACTION","none");
+        }
+
         kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
@@ -81,12 +96,25 @@ public class CicilanFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvdetailcicilanuser);
         sharedPreferenceConfig =  new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"disetujui.php";
-        disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
+
         layoutManager = new LinearLayoutManager(getActivity());
+
+        if (action.equals("PASTI")){
+            disetujuiAdapter = new DetailCicilanAdapter(getActivity(),arrayList);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(disetujuiAdapter);
+            disetujuiAdapter.notifyDataSetChanged();
+        }else {
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new DetailCicilanAdapter(getActivity(),arrayList);
+            recyclerView.setAdapter(adapter);
+            detail.setText("Detail Cicilan (Perkiraan)");
+            adapter.notifyDataSetChanged();
+        }
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(disetujuiAdapter);
+//        recyclerView.setAdapter(disetujuiAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-        disetujuiAdapter.notifyDataSetChanged();
+//        disetujuiAdapter.notifyDataSetChanged();
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
@@ -99,20 +127,51 @@ public class CicilanFragment extends Fragment {
                                     idpinjaman = jsonObject.getString("id_pinjaman");
                                     String tanggalw = jsonObject.getString("tanggal_mulai");
                                     String tanggale = jsonObject.getString("tanggal_selesai");
+                                    String tanggaldis = jsonObject.getString("tanggal_diserahkan");
                                     String jumlahw = jsonObject.getString("jumlah");
                                     String tenorw = jsonObject.getString("tenor");
                                     String jatuhw = jsonObject.getString("jatuh");
                                     String kurs = kursIndonesia.format(Double.parseDouble(jumlahw));
                                     nama.setText(namaw);
-                                    tanggalm.setText(tanggalw);
+                                    if (tanggaldis.equals("null")){
+                                        tanggaldis = "Belum mulai";
+                                    }
+                                    tanggalm.setText(tanggaldis);
+                                    tanggaldiajukan.setText("Diajukan tanggal : "+tanggalw);
                                     tenor.setText(String.valueOf(tenorw));
                                     tanggals.setText(tanggale);
                                     jumlah.setText(kurs);
-                                    Log.d("tes", "isiResponse: "+response);
-                                    getData2();
-                                    recyclerView.setLayoutManager(layoutManager);
-                                    recyclerView.setAdapter(disetujuiAdapter);
-                                    disetujuiAdapter.notifyDataSetChanged();
+                                    Log.d("tes", "isiResponse: "+response+"isi action"+action);
+                                    if (action.equals("PASTI")) {
+                                        getData2();
+                                        recyclerView.setLayoutManager(layoutManager);
+                                        recyclerView.setAdapter(disetujuiAdapter);
+                                        disetujuiAdapter.notifyDataSetChanged();
+                                    }else{
+                                        int sum = 0,hasil = 0;
+                                        final int perBulan = Integer.parseInt(jumlahw)/Integer.parseInt(tenorw);
+                                        ArrayList<Integer> integers = new ArrayList<>();
+                                        for (int i = 0; i< Integer.parseInt(tenorw) ; i++){
+                                            int sisa = Integer.parseInt(jumlahw) - perBulan*i;
+                                            int cicilan = (int) (perBulan+(sisa*0.02));
+
+                                            arrayList.add(new DetailCicilanUserModel(
+                                                    cicilan,
+                                                    getJatuhTempo(i),
+                                                    "kosong"
+                                            ));
+                                            integers.add(cicilan);
+                                            hasil =sum += cicilan;
+
+                                        }
+
+                                        String f = kursIndonesia.format(sum);
+                                        recyclerView.setLayoutManager(layoutManager);
+//                                        adapter = new DetailCicilanAdapter(getActivity(),arrayList);
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
 
 
                                 } catch (JSONException e) {
@@ -176,5 +235,14 @@ public class CicilanFragment extends Fragment {
         }};
         Singleton.getInstance(getActivity()).addToRequestQue(stringRequest);
     }
+    public String getJatuhTempo(int ok) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd MMMM yyyy", Locale.getDefault());
+//        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,ok);
+        Date date = calendar.getTime();
 
+        return dateFormat.format(date);
+    }
 }

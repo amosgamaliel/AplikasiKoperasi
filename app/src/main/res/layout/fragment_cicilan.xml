@@ -41,8 +41,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="14dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="-3dp" />
+                android:layout_marginEnd="6dp" />
 
             <TextView
                 android:id="@+id/namapw"
@@ -51,9 +50,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="17dp"
-                android:layout_marginEnd="47dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="49dp"
                 android:text="Nama Anggota Disini"
                 android:textSize="16sp" />
 
@@ -61,9 +60,9 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namapw"
+                android:layout_below="@+id/tanggaldiajukan"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:text="Jumlah"
                 android:textSize="10sp" />
@@ -84,10 +83,10 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namapw"
+                android:layout_below="@+id/tanggaldiajukan"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="79dp"
+                android:layout_marginEnd="57dp"
                 android:text="Tenor"
                 android:textSize="10sp" />
 
@@ -98,11 +97,11 @@
                 android:layout_below="@+id/textView4"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="82dp"
+                android:layout_marginEnd="62dp"
                 android:gravity="center_horizontal"
                 android:text="3"
-                android:textStyle="bold"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/bebas"
@@ -169,6 +168,18 @@
 
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tanggaldiajukan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/namapw"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="2dp"
+                android:text="Diajukan tanggal :2 Desember 2019"
+                android:textAlignment="textStart"
+                android:textSize="10sp" />
 
 
         </RelativeLayout>

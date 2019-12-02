@@ -23,27 +23,26 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
-public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.AllActivityViewHolder> {
+public class ActivityUserAdapter extends RecyclerView.Adapter<ActivityUserAdapter.ActivityUserViewHolder> {
 
-    ArrayList<ActivityModel> models;
-    Context mCtx;
-    String kurs;
-
-    public AllActivityAdapter(ArrayList<ActivityModel> models, Context mCtx) {
-        this.models = models;
+    public ActivityUserAdapter(ArrayList<ActivityModel> list, Context mCtx) {
+        this.list = list;
         this.mCtx = mCtx;
     }
+    String kurs;
 
+    ArrayList<ActivityModel> list;
+    Context mCtx;
     @NonNull
     @Override
-    public AllActivityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ActivityUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_activity,parent,false);
-        return new AllActivityViewHolder(view);
+        return new ActivityUserViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllActivityViewHolder holder, int position) {
-        final ActivityModel model = models.get(position);
+    public void onBindViewHolder(@NonNull ActivityUserViewHolder holder, int position) {
+        final ActivityModel model = list.get(position);
         String tipe = model.getTipe();
         holder.nama.setText(model.getNama());
         final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
@@ -57,7 +56,7 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
         kurs = kursIndonesia.format(Double.parseDouble(jumlah));
         holder.jumlah.setText(kurs);
         if (tipe.equals("bayar")||tipe.equals("simpan")){
-            holder.imageView.setImageResource(R.drawable.ic_profit);
+            holder.imageView.setImageResource(R.drawable.ic_recession);
             if (tipe.equals("bayar")){
                 holder.desc.setText("Membayar cicilan");
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,7 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
                 holder.desc.setText("menyimpan ke koperasi");
             }
         }else{
-            holder.imageView.setImageResource(R.drawable.ic_recession);
+            holder.imageView.setImageResource(R.drawable.ic_profit);
             holder.desc.setText("meminjam pinjaman");
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,21 +93,15 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return list.size();
     }
 
-    public void clear() {
-        int size = models.size();
-        models.clear();
-        notifyItemRangeRemoved(0, size);
-    }
-
-    public class AllActivityViewHolder extends RecyclerView.ViewHolder {
+    public class ActivityUserViewHolder extends RecyclerView.ViewHolder {
         TextView jumlah,nama,desc;
         CardView cardView;
         ImageView imageView;
         String kurs;
-        public AllActivityViewHolder(@NonNull View itemView) {
+        public ActivityUserViewHolder(@NonNull View itemView) {
             super(itemView);
             jumlah = itemView.findViewById(R.id.jumlahactivity);
             nama = itemView.findViewById(R.id.namaactivity);
@@ -116,5 +109,10 @@ public class AllActivityAdapter extends RecyclerView.Adapter<AllActivityAdapter.
             imageView = itemView.findViewById(R.id.image);
             cardView = itemView.findViewById(R.id.cvp);
         }
+    }
+    public void clear() {
+        int size = list.size();
+        list.clear();
+        notifyItemRangeRemoved(0, size);
     }
 }
