@@ -201,7 +201,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_report"/>
+                        android:src="@drawable/ic_cekwajib"/>
                     <TextView
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
@@ -231,7 +231,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_processing"/>
+                        android:src="@drawable/ic_penyerahan"/>
                     <TextView
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_pen"/>
+                        android:src="@drawable/ic_password"/>
                     <TextView
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"

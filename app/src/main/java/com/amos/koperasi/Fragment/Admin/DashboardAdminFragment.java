@@ -22,6 +22,7 @@ import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.Adapter.AllActivityAdapter;
 import com.amos.koperasi.Adapter.PemasukanAdapter;
 import com.amos.koperasi.Adapter.PengeluaranAdapter;
+import com.amos.koperasi.Fragment.GantiPassword;
 import com.amos.koperasi.Fragment.HistoryActivity;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.Model.NamaPenyimpanModel;
@@ -86,6 +87,15 @@ public class DashboardAdminFragment extends Fragment {
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         today.setText("Hari ini "+getDateTime());
         url = sharedPreferenceConfig.getUrl()+"dashboard.php";
+
+        gantipassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new GantiPassword()).addToBackStack(null)
+                        .commit();
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

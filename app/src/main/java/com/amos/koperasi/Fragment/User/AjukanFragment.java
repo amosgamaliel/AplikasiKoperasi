@@ -79,12 +79,12 @@ public class AjukanFragment extends Fragment {
     private final int NOTIFICATION_ID = 001;
 
     double hasil;
+    SharedPreferences mSettings;
     SharedPreferenceConfig sharedPreferenceConfig;
     ArrayList<DetailCicilanUserModel> arrayList = new ArrayList<>();
     String url,bulan;
     DetailCicilanAdapter adapter;
     String jabatan;
-    SharedPreferences mSettings;
 
     public AjukanFragment() {
         // Required empty public constructor

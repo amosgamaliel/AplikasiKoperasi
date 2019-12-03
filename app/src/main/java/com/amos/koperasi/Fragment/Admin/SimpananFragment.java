@@ -220,13 +220,16 @@ AlertDialog.Builder builder;
                             }else if (code.equals("312")){
                                 builder = new AlertDialog.Builder(getActivity());
                                 builder.setTitle("Gagal");
-                                builder.setMessage(namauser+" sudah membayar simpanan wajib");
+                                builder.setMessage(namauser+message);
                                 builder.setCancelable(false);
 
                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
+                                        jumlah.setText("");
+                                        nama.setText("");
+
                                     }
                                 });
                                 builder.show();

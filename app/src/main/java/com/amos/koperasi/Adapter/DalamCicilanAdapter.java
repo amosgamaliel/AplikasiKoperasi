@@ -87,6 +87,8 @@ public class DalamCicilanAdapter extends RecyclerView.Adapter<DalamCicilanAdapte
         kurs = kursIndonesia.format(Double.parseDouble(jumlahcicilan));
         holder.jumlah.setText(kurs);
 
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yy");
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
