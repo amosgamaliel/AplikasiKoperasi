@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "279010242657",
+    "firebase_url": "https://koperasi-5dcfc.firebaseio.com",
+    "project_id": "koperasi-5dcfc",
+    "storage_bucket": "koperasi-5dcfc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279010242657:android:b041c2ab4f095a02147a20",
+        "android_client_info": {
+          "package_name": "com.amos.koperasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279010242657-1mm5unr6bs3vllu947tngu1qbm5n4ijo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amos.koperasi",
+            "certificate_hash": "73eda5fefa64debf6b89036888e6b3a6432c6bb1"
+          }
+        },
+        {
+          "client_id": "279010242657-jmh1co9e75ju28c5qbiv8b16kh5ea77l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmkxQcx0Y12bf9Hj4I0u3vdR63kQo78fM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279010242657-jmh1co9e75ju28c5qbiv8b16kh5ea77l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

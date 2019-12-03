@@ -89,7 +89,8 @@ public class HistoryFragment extends Fragment {
                                         product.getString("tanggal_mulai"),
                                         product.getString("tanggal_selesai"),
                                         product.getString("tenor"),
-                                        product.getString("total_pinjaman")
+                                        product.getString("total_pinjaman"),
+                                        product.getString("tanggal_diserahkan")
 
                                 ));
                                 recyclerView.setAdapter(historyAdapter);

@@ -62,6 +62,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 intent.putExtra("ID_PINJAMAN",idPinjaman);
                 intent.putExtra("NAMA",model.getNama());
                 intent.putExtra("TANGGAL_MULAI",model.getTanggalMulai());
+                intent.putExtra("TANGGAL_MULAI_CICILAN",model.getTanggalDiserahkan());
                 intent.putExtra("TANGGAL_SELESAI",model.getTanggalSelesai());
                 intent.putExtra("TENOR",model.getTenor());
                 intent.putExtra("TOTAL",model.getJumlah());

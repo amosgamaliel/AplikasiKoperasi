@@ -58,8 +58,8 @@ public class DetailHistoryAdapter extends RecyclerView.Adapter<DetailHistoryAdap
         TextView tgl,jml;
         public DetailHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tgl = itemView.findViewById(R.id.tanggaldh);
-            jml = itemView.findViewById(R.id.jumlahdh);
+            tgl = itemView.findViewById(R.id.jumlahbayar);
+            jml = itemView.findViewById(R.id.tglbayar);
         }
     }
 }

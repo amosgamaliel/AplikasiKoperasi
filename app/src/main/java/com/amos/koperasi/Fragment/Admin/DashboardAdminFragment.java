@@ -22,6 +22,7 @@ import com.amos.koperasi.Activity.LoginActivity;
 import com.amos.koperasi.Adapter.AllActivityAdapter;
 import com.amos.koperasi.Adapter.PemasukanAdapter;
 import com.amos.koperasi.Adapter.PengeluaranAdapter;
+import com.amos.koperasi.Fragment.GantiPassword;
 import com.amos.koperasi.Fragment.HistoryActivity;
 import com.amos.koperasi.Model.ActivityModel;
 import com.amos.koperasi.Model.NamaPenyimpanModel;
@@ -55,7 +56,7 @@ public class DashboardAdminFragment extends Fragment {
     }
     String kurs;
     LinearLayoutManager layoutManager;
-    CardView logoutadmin,history,setsimpanan;
+    CardView komitmen,history,setsimpanan,cekwajib,gantipassword,penyerahan;
     ArrayList<ActivityModel> list;
     AllActivityAdapter activityAdapter;
     TextView totaluang;
@@ -69,11 +70,14 @@ public class DashboardAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard_admin, container, false);
-        logoutadmin = view.findViewById(R.id.logoutadmin);
+        komitmen = view.findViewById(R.id.komitmen);
         totaluang = view.findViewById(R.id.totalUang);
         totalPemasukan = view.findViewById(R.id.totalPemasukan);
         totalPengeluaran = view.findViewById(R.id.totalPengeluaran);
         setsimpanan = view.findViewById(R.id.setsimpanan);
+        cekwajib = view.findViewById(R.id.cekwajib);
+        gantipassword = view.findViewById(R.id.changepass);
+        penyerahan = view.findViewById(R.id.penyerahan);
         today = view.findViewById(R.id.today);
         logout = view.findViewById(R.id.logout);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -83,6 +87,15 @@ public class DashboardAdminFragment extends Fragment {
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         today.setText("Hari ini "+getDateTime());
         url = sharedPreferenceConfig.getUrl()+"dashboard.php";
+
+        gantipassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new GantiPassword()).addToBackStack(null)
+                        .commit();
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,14 +106,31 @@ public class DashboardAdminFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        logoutadmin.setOnClickListener(new View.OnClickListener() {
+        komitmen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_containera, new NotifikasiAdminFragment()).addToBackStack(null)
+                        .replace(R.id.fragment_containera, new SetSimpananFragment()).addToBackStack(null)
                         .commit();
             }
         });
+        penyerahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new MenyerahkanFragment()).addToBackStack(null)
+                        .commit();
+            }
+        });
+        cekwajib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_containera, new CekSimpananWajib()).addToBackStack(null)
+                        .commit();
+            }
+        });
+
         pengeluaran = view.findViewById(R.id.pengeluaran);
         pemasukan = view.findViewById(R.id.pemasukan);
         pemasukan.setOnClickListener(new View.OnClickListener() {

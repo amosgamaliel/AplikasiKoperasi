@@ -1,5 +1,6 @@
 package com.amos.koperasi.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
@@ -24,6 +26,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,19 +48,25 @@ public class LoginActivity extends AppCompatActivity {
     Button btn,btnAdmin;
     String idInput, passInput;
     SharedPreferenceConfig preferenceConfig;
-    String url;
+    String url,id,nama,jabatan,code;
+    FirebaseAuth mAuth;
+    String isiResponse;
     AlertDialog.Builder builder;
     ProgressDialog progressDialog;
+
+
+
+    public static final String gabung = "@koperasi.com";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         iduser = findViewById(R.id.edtID);
         pass = findViewById(R.id.edtPass);
         user =findViewById(R.id.userlogin);
 
+        mAuth = FirebaseAuth.getInstance();
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
 
 
@@ -60,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(this, UserActivity.class));
             finish();
         }
+
+
 
         idInput = iduser.getText().toString();
         passInput = pass.getText().toString();
@@ -82,40 +101,28 @@ public class LoginActivity extends AppCompatActivity {
                 url,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse( String response) {
                         try {
                             //get data dari server
+                            isiResponse = response;
 
                             JSONObject jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("code");
 
                             if (code.equals("200")){
-                                final String id = jsonObject.getString("id");
+                                createUser();
+                                id = jsonObject.getString("id");
+                                nama = jsonObject.getString("nama");
+                                jabatan = jsonObject.getString("jabatan");
+
                                 //menyimpan user id kedalam shared preferences untuk dipanggil kembali di setiap action transaksi
                                 SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                                 SharedPreferences.Editor editor = mSettings.edit();
                                 editor.putString("userid",id);
+                                editor.putString("namauser",nama);
+
                                 editor.apply();
-                                String jabatan = jsonObject.getString("jabatan");
-                                if (jabatan.equals("2")){
-                                    Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                                    preferenceConfig.writeLoginUserStatus(true);
-                                    editor.putString("jabatan","user");
-                                    editor.apply();
-                                    startActivity(intent);
-//                                    progressDialog.dismiss();
-                                    finish();
-                                    Log.d("berhasil user", "onResponse: "+response);
-                                }else if (jabatan.equals("1")){
-                                    Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                                    preferenceConfig.writeLoginAdminStatus(true);
-                                    editor.putString("jabatan","admin");
-                                    editor.apply();
-                                    startActivity(intent);
-//                                    progressDialog.dismiss();
-                                    finish();
-                                    Log.d("berhasil admin", "onResponse: "+response);
-                                }
+
                             }else if (code.equals("404")){
                                 builder = new AlertDialog.Builder(LoginActivity.this);
                                 builder.setTitle("Login Gagal");
@@ -156,6 +163,65 @@ public class LoginActivity extends AppCompatActivity {
         };
         Singleton.getInstance(LoginActivity.this).addToRequestQue(request);
     }
+
+    private void createUser(){
+        final String usernameinput = iduser.getText().toString()+gabung;
+        final String passwordinput = pass.getText().toString();
+
+        if (passwordinput.isEmpty()){
+            pass.setError("Masukkan Password");
+            pass.requestFocus();
+            return;
+        }
+        mAuth.createUserWithEmailAndPassword(usernameinput,passwordinput)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()){
+                            userLogin();
+                        }else{
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                                userLoginAuth(usernameinput,passwordinput);
+                            }else{
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage()+usernameinput+gabung, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                });
+    }
+    void userLoginAuth(final String usernameinput, String passwordinput){
+        mAuth.signInWithEmailAndPassword(usernameinput,passwordinput)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Log.d("frbs", "onComplete: berhasil login");
+                            if (jabatan.equals("2")){
+                                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+                                preferenceConfig.writeLoginUserStatus(true);
+                                startActivity(intent);
+//                                    progressDialog.dismiss();
+                                finish();
+                                Log.d("berhasil user", "onResponse: "+isiResponse);
+                            }else if (jabatan.equals("1")){
+                                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                                preferenceConfig.writeLoginAdminStatus(true);
+                                startActivity(intent);
+//                                    progressDialog.dismiss();
+                                finish();
+                                Log.d("berhasil admin", "onResponse: "+isiResponse);
+                            }
+                        }else {
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage()+usernameinput, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+    }
+
+
 
 
 }

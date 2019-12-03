@@ -14,6 +14,16 @@ public class HistoryModel {
     String idCicilan;
     String idPinjaman;
     String idUser;
+    String tanggalDiserahkan;
+
+    public String getTanggalDiserahkan() {
+        return tanggalDiserahkan;
+    }
+
+    public void setTanggalDiserahkan(String tanggalDiserahkan) {
+        this.tanggalDiserahkan = tanggalDiserahkan;
+    }
+
     String tanggalMulai;
     String tanggalSelesai;
     String tanggalBayar,jumlah;
@@ -85,7 +95,7 @@ public class HistoryModel {
         this.tanggalSelesai = tanggalSelesai;
     }
 
-    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai,String tenor,String jumlah) {
+    public HistoryModel(String nama, String idCicilan, String idPinjaman, String idUser, String tanggalMulai, String tanggalSelesai,String tenor,String jumlah,String tanggalDiserahkan) {
         this.nama = nama;
         this.jumlah = jumlah;
         this.tenor = tenor;
@@ -94,6 +104,7 @@ public class HistoryModel {
         this.idUser = idUser;
         this.tanggalMulai = tanggalMulai;
         this.tanggalSelesai = tanggalSelesai;
+        this.tanggalDiserahkan = tanggalDiserahkan;
     }
     public HistoryModel(String tanggalBayar,String jumlah) {
         this.tanggalBayar = tanggalBayar;

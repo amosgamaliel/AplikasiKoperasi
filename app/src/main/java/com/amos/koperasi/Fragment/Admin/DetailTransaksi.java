@@ -148,6 +148,7 @@ public class DetailTransaksi extends Fragment {
                             idpinjaman = jsonObject.getString("id_pinjaman");
                             String tanggalw = jsonObject.getString("tanggal_mulai");
                             String tanggale = jsonObject.getString("tanggal_selesai");
+                            String tanggalds = jsonObject.getString("tanggal_diserahkan");
                             int jumlahw = jsonObject.getInt("jumlah");
                             int tenorw = jsonObject.getInt("tenor");
                             nama.setText(namaw);

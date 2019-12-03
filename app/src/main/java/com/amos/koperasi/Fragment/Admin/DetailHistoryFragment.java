@@ -29,6 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +68,14 @@ public class DetailHistoryFragment extends Fragment {
         tvTm =view.findViewById(R.id.tanggalm);
 
 
+        final DecimalFormat kursIndonesia = (DecimalFormat)DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
         recyclerView = view.findViewById(R.id.rvdh);
         historyAdapter = new DetailHistoryAdapter(list,getActivity());
         layoutManager = new LinearLayoutManager(getActivity());
@@ -84,10 +93,11 @@ public class DetailHistoryFragment extends Fragment {
             idPinjaman = bundle.getString("ID_PINJAMAN","pinjaman");
             jumlah = bundle.getString("TOTAL","total");
             tenor = bundle.getString("TENOR","tenor");
-            tvJumlah.setText(jumlah);
+            String x = kursIndonesia.format(Double.parseDouble(jumlah));
+            tvJumlah.setText(x);
             tvTm.setText(tanggalm);
             tvTs.setText(tanggals);
-            tvTenor.setText(tenor+" bulan");
+            tvTenor.setText(tenor);
             tvnama.setText(nama);
         }
         getData();

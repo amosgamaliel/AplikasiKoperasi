@@ -81,7 +81,9 @@ public class HistoryActivity extends AppCompatActivity implements SearchView.OnQ
                                         product.getString("tanggal_mulai"),
                                         product.getString("tanggal_selesai"),
                                         product.getString("tenor"),
-                                        product.getString("total_pinjaman")
+                                        product.getString("total_pinjaman"),
+                                        product.getString("tanggal_diserahkan")
+
 
                                 ));
                                 recyclerView.setAdapter(historyAdapter);
@@ -90,6 +92,7 @@ public class HistoryActivity extends AppCompatActivity implements SearchView.OnQ
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d("hias", "onResponse: "+e.getMessage());
                         }
 
                     }
