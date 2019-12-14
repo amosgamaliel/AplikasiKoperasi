@@ -1,7 +1,10 @@
 package com.amos.koperasi.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amos.koperasi.Fragment.Admin.AkunFragment;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -34,7 +38,8 @@ public class UsernameActivity extends AppCompatActivity {
     TextView title;
     ImageView gambar;
     SharedPreferenceConfig sharedPreferenceConfig;
-    String url,iduser;
+    String url,iduser, iPass, iConpass;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +63,6 @@ public class UsernameActivity extends AppCompatActivity {
 
         sharedPreferenceConfig =  new SharedPreferenceConfig(this);
         url = sharedPreferenceConfig.getUrl()+"peminjaman.php";
-        final String iPass = password.getText().toString();
-        final String iConpass = conpass.getText().toString();
 
         btnLogSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +73,8 @@ public class UsernameActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                iPass = password.getText().toString();
+                iConpass = conpass.getText().toString();
                 if (!iPass.equals(iConpass)){
                     password.setError("Tidak sama");
                     password.setText("");
@@ -91,8 +96,8 @@ public class UsernameActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.getString("code");
-                    iduser = jsonObject.getString("id");
                     if (status.equals("200")) {
+                        iduser = jsonObject.getString("id");
                         Toast.makeText(getApplicationContext(),"Berhasil",Toast.LENGTH_SHORT).show();
                         username.setVisibility(View.GONE);
                         gambar.setImageResource(R.drawable.ic_undraw_authentication_fsn5);
@@ -102,7 +107,21 @@ public class UsernameActivity extends AppCompatActivity {
                         btnLogSet.setVisibility(View.GONE);
                         btnSave.setVisibility(View.VISIBLE);
                     }else{
-                        username.setError("Username anda tidak terdaftar");
+
+                        builder = new AlertDialog.Builder(UsernameActivity.this);
+                        builder.setTitle("Gagal");
+                        builder.setMessage("Username tidak terdaftar");
+                        builder.setCancelable(false);
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+
+                            }
+                        });
+                        builder.show();
                     }
 
                 } catch (JSONException e) {
