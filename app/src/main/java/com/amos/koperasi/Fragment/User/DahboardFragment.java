@@ -90,13 +90,7 @@ public class DahboardFragment extends Fragment {
         kursIndonesia.setDecimalFormatSymbols(formatRp);
 
 
-        logout = view.findViewById(R.id.logoutuser);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLogout();
-            }
-        });
+
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"infopinjamanuser.php";
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -133,15 +127,6 @@ public class DahboardFragment extends Fragment {
         getData2();
         return view;
     }
-
-    public void userLogout(){
-        SharedPreferenceConfig sharedPreferenceConfig;
-        sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
-        sharedPreferenceConfig.writeLoginUserStatus(false);
-        startActivity(new Intent(getActivity(), LoginActivity.class));
-        getActivity().finish();
-    }
-
     private void getData(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

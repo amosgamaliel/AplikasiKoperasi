@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.amos.koperasi.Fragment.Admin.AkunFragment;
 import com.amos.koperasi.R;
 import com.amos.koperasi.Utility.SharedPreferenceConfig;
 import com.amos.koperasi.Utility.Singleton;
@@ -57,19 +59,20 @@ public class GantiPassword extends Fragment {
         konfirmasipassword = view.findViewById(R.id.konfirmasipassword);
         passwordbaru = view.findViewById(R.id.passwordbaru);
         ganti = view.findViewById(R.id.senddata);
-
+        isikonpassword = konfirmasipassword.getText().toString();
+        isipasswordbaru = passwordbaru.getText().toString();
         sharedPreferenceConfig = new SharedPreferenceConfig(getActivity());
         url = sharedPreferenceConfig.getUrl()+"gantipassword.php";
         ganti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isikonpassword.equals(isipassword)){
-
-                    showDialog();
+                isikonpassword = passwordbaru.getText().toString();
+                isipasswordbaru = konfirmasipassword.getText().toString();
+                if (!isikonpassword.equals(isipasswordbaru)){
+                    passwordbaru.setError("tidak cocok");
+                    konfirmasipassword.setError("tidak cocok");
                 }else{
-                    password.setError("gagal");
-                    konfirmasipassword.setError("gagal");
-                    password.setError("error");
+                    showDialog();
                 }
             }
         });
@@ -107,7 +110,12 @@ public class GantiPassword extends Fragment {
                                         password.setText("");
                                         konfirmasipassword.setText("");
                                         passwordbaru.setText("");
+                                        AkunFragment akunFragment = new AkunFragment();
+                                        ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.fragment_container, akunFragment).addToBackStack(null)
+                                                .commit();
                                         dialog.dismiss();
+
 
                                     }
                                 });
@@ -147,8 +155,8 @@ public class GantiPassword extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_user",mSettings.getString("userid","1"));
-                params.put("password",isipassword);
-                params.put("password_baru",isipasswordbaru);
+                params.put("password",password.getText().toString());
+                params.put("password_baru",passwordbaru.getText().toString());
                 return params;
             }
         };
@@ -164,7 +172,7 @@ public class GantiPassword extends Fragment {
         builder.setPositiveButton("Yakin", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (isipassword.equals(isikonpassword)){
+                if (isipasswordbaru.equals(isikonpassword)){
                     getData();
                     dialog.dismiss();
                 }else{
